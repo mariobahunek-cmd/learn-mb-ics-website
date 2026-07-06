@@ -1,0 +1,82 @@
+---
+layout: null
+permalink: /sitemap.xml
+sitemap: false
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+    {%- comment -%} Hub (EN root ↔ DE) mit Hreflang {%- endcomment -%}
+    <url>
+        <loc>{{ '/' | absolute_url }}</loc>
+        <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="{{ '/' | absolute_url }}"/>
+        <xhtml:link rel="alternate" hreflang="de" href="{{ '/de/' | absolute_url }}"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="{{ '/' | absolute_url }}"/>
+    </url>
+    <url>
+        <loc>{{ '/de/' | absolute_url }}</loc>
+        <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="{{ '/' | absolute_url }}"/>
+        <xhtml:link rel="alternate" hreflang="de" href="{{ '/de/' | absolute_url }}"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="{{ '/' | absolute_url }}"/>
+    </url>
+
+    {%- comment -%} Blog-Listings {%- endcomment -%}
+    <url>
+        <loc>{{ '/blog/de/' | absolute_url }}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="de" href="{{ '/blog/de/' | absolute_url }}"/>
+        <xhtml:link rel="alternate" hreflang="en" href="{{ '/blog/en/' | absolute_url }}"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="{{ '/blog/en/' | absolute_url }}"/>
+    </url>
+    <url>
+        <loc>{{ '/blog/en/' | absolute_url }}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="de" href="{{ '/blog/de/' | absolute_url }}"/>
+        <xhtml:link rel="alternate" hreflang="en" href="{{ '/blog/en/' | absolute_url }}"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="{{ '/blog/en/' | absolute_url }}"/>
+    </url>
+
+    {%- comment -%} Rechtstexte {%- endcomment -%}
+    <url>
+        <loc>{{ '/impressum/' | absolute_url }}</loc>
+        <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.2</priority>
+    </url>
+    <url>
+        <loc>{{ '/datenschutz/' | absolute_url }}</loc>
+        <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    {%- comment -%} Posts dynamisch, mit Hreflang-Cross-Verlinkung über translation_key {%- endcomment -%}
+    {%- for post in site.posts -%}
+    <url>
+        <loc>{{ post.url | absolute_url }}</loc>
+        <lastmod>{{ post.last_modified_at | default: post.date | date_to_xmlschema }}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        {%- if post.translation_key -%}
+            {%- assign siblings = site.posts | where: "translation_key", post.translation_key -%}
+            {%- for sib in siblings -%}
+        <xhtml:link rel="alternate" hreflang="{{ sib.lang }}" href="{{ sib.url | absolute_url }}"/>
+            {%- endfor -%}
+            {%- assign en_sib = siblings | where: "lang", "en" | first -%}
+            {%- if en_sib -%}
+        <xhtml:link rel="alternate" hreflang="x-default" href="{{ en_sib.url | absolute_url }}"/>
+            {%- endif -%}
+        {%- endif -%}
+    </url>
+    {%- endfor -%}
+
+</urlset>

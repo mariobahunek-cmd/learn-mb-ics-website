@@ -1,0 +1,42 @@
+{%- comment -%}
+  Wiederverwendbarer CTA-Block (Blog-Listing + Posts).
+  Primär: Team-Training/Beratung → mb-ics.com/#contact (Lead-Motor).
+  Sekundär: Newsletter-E-Mail-Capture. KEIN Video-/Kaufen-Button.
+{%- endcomment -%}
+<aside class="academy-cta" aria-label="{% if page.lang == 'de' %}Angebot{% else %}Offer{% endif %}">
+    <div class="academy-cta__inner">
+        <div class="academy-cta__primary">
+            <span class="academy-cta__tag">{% if page.lang == 'de' %}Für Teams{% else %}For teams{% endif %}</span>
+            <h2 class="academy-cta__title">
+                {%- if page.lang == 'de' -%}
+                    SAP-Training oder Beratung für dein Team?
+                {%- else -%}
+                    SAP training or consulting for your team?
+                {%- endif -%}
+            </h2>
+            <p class="academy-cta__body">
+                {%- if page.lang == 'de' -%}
+                    Diese Erklärartikel sind der kostenlose Teil. Wenn dein Team SAP wirklich beherrschen
+                    soll, biete ich als SAP-zertifizierter Trainer (&gt;98&nbsp;% Bestehensquote, Note&nbsp;1,07)
+                    maßgeschneiderte Schulungen und Beratung — hands-on im System, in DE, EN oder ES.
+                {%- else -%}
+                    These explainer articles are the free part. When your team needs to truly master SAP,
+                    I deliver tailored training and consulting as a SAP-certified instructor
+                    (&gt;98% pass rate, instructor rating 1.07) — hands-on in the system, in EN, DE or ES.
+                {%- endif -%}
+            </p>
+            <a href="{{ site.mbics_contact }}" class="btn btn--primary">
+                {% if page.lang == 'de' %}Training / Beratung anfragen{% else %}Request training / consulting{% endif %}
+            </a>
+        </div>
+        <div class="academy-cta__secondary" id="newsletter-inline">
+            <h3 class="academy-cta__sub">
+                {% if page.lang == 'de' %}Neue Artikel per E-Mail{% else %}New articles by email{% endif %}
+            </h3>
+            <p class="academy-cta__sub-body">
+                {% if page.lang == 'de' %}Kein Spam — nur neue Erklärstücke, wenn sie erscheinen.{% else %}No spam — just new explainers when they go live.{% endif %}
+            </p>
+            {% include email-capture.html id="cta" %}
+        </div>
+    </div>
+</aside>

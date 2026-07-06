@@ -1,0 +1,87 @@
+name: Build Check (non-main branches)
+
+# Baut Jekyll für jeden Push auf einem Nicht-Main-Branch und für jeden
+# Pull-Request gegen main — mit exakt der Action, die GitHub Pages selbst nutzt.
+# Geht der Build hier durch, geht er auch auf main/Pages durch. Fängt
+# Liquid-/YAML-/Permalink-/Plugin-Fehler VOR dem main-Push, damit die Live-Site
+# nicht riskiert wird.
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: build-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build with Jekyll (GH-Pages-äquivalent)
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+          future: false
+          verbose: true
+
+      - name: Smoke-test Build-Output
+        run: |
+          set -euo pipefail
+          missing=0
+          for path in \
+            "_site/index.html" \
+            "_site/de/index.html" \
+            "_site/blog/de/index.html" \
+            "_site/blog/en/index.html" \
+            "_site/sitemap.xml" \
+            "_site/robots.txt" \
+            "_site/llms.txt" \
+            "_site/impressum/index.html" \
+            "_site/datenschutz/index.html"; do
+            if [ ! -s "$path" ]; then
+              echo "❌ MISSING or empty: $path"
+              missing=$((missing + 1))
+            else
+              echo "✓ $path ($(wc -c < "$path") bytes)"
+            fi
+          done
+          # Mindestens ein Post sollte gebaut werden, falls _posts/ nicht leer ist
+          if [ -d "_posts" ] && [ -n "$(find _posts -maxdepth 1 -name '*.md' -print -quit)" ]; then
+            built_posts=$(find _site/blog -name 'index.html' -path '*/blog/*/*/index.html' | wc -l | tr -d ' ')
+            if [ "$built_posts" -eq 0 ]; then
+              echo "❌ _posts/ enthält Posts, aber kein Post wurde gebaut"
+              missing=$((missing + 1))
+            else
+              echo "✓ ${built_posts} Post(s) gebaut"
+            fi
+          fi
+          # Verbotene Muster dürfen im Output nicht vorkommen (Legal-Gate)
+          if grep -rniE 'PeopleToWork|UC_(MM|SD|FI|EWM|HCM|TS)|exam dump|Prüfungsfragen im Prüfungsstil' _site/ ; then
+            echo "❌ Verbotenes Muster im Build-Output gefunden"
+            missing=$((missing + 1))
+          else
+            echo "✓ keine verbotenen Muster im Output"
+          fi
+          exit $missing
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## Build-Check Summary" >> "$GITHUB_STEP_SUMMARY"
+          echo "Branch: \`${{ github.ref_name }}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "Commit: \`${{ github.sha }}\`" >> "$GITHUB_STEP_SUMMARY"
+          if [ -d _site ]; then
+            echo "_site/ contents (top level):" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+            ls -la _site/ | head -25 >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          fi

@@ -1,0 +1,104 @@
+{%- comment -%}
+  E-Mail-Capture-Formular (Primär-CTA der Academy).
+  Aufruf: {% include email-capture.html id="newsletter" %}
+  Postet an site.lead_endpoint (aktuell Formspree; TODO Brevo — siehe _config.yml).
+  Bei Fehler/Non-2xx: sauberer mailto-Fallback an mario@mb-ics.com, nie „broken".
+  Das JS ist ein Guarded-Singleton und bindet ALLE .js-lead-form auf der Seite,
+  d.h. der Include darf mehrfach vorkommen.
+{%- endcomment -%}
+{%- assign cid = include.id | default: 'newsletter' -%}
+<form class="lead-form js-lead-form" data-endpoint="{{ site.lead_endpoint }}" data-source="learn-academy-{{ cid }}" novalidate>
+    <div class="lead-form__row">
+        <input type="text" name="first_name" required autocomplete="given-name"
+               placeholder="{% if page.lang == 'de' %}Vorname{% else %}First name{% endif %}"
+               aria-label="{% if page.lang == 'de' %}Vorname{% else %}First name{% endif %}" />
+        <input type="email" name="email" required autocomplete="email"
+               placeholder="{% if page.lang == 'de' %}E-Mail-Adresse{% else %}Email address{% endif %}"
+               aria-label="{% if page.lang == 'de' %}E-Mail-Adresse{% else %}Email address{% endif %}" />
+        <button type="submit" class="btn btn--primary">
+            {% if page.lang == 'de' %}Anmelden{% else %}Subscribe{% endif %}
+        </button>
+    </div>
+    <label class="lead-form__consent">
+        <input type="checkbox" name="consent" required />
+        <span>
+            {%- if page.lang == 'de' -%}
+            Ja, schickt mir neue SAP-Erklärartikel per E-Mail. Abmeldung jederzeit möglich. Es gilt die
+            <a href="{{ '/datenschutz/' | relative_url }}">Datenschutzerklärung</a>.
+            {%- else -%}
+            Yes, email me new SAP explainer articles. You can unsubscribe anytime. See our
+            <a href="{{ '/datenschutz/' | relative_url }}">privacy policy</a>.
+            {%- endif -%}
+        </span>
+    </label>
+    <p class="lead-form__error" role="alert" hidden></p>
+    <div class="lead-form__thanks" role="status" hidden>
+        <strong>{% if page.lang == 'de' %}Fast geschafft — bitte E-Mail bestätigen.{% else %}Almost there — please confirm your email.{% endif %}</strong>
+        <span>{% if page.lang == 'de' %}Danke! Neue Artikel landen ab jetzt in deinem Postfach.{% else %}Thanks! New articles will land in your inbox from now on.{% endif %}</span>
+    </div>
+</form>
+
+<script>
+(function () {
+    if (window.__leadFormInit) return;
+    window.__leadFormInit = true;
+
+    function bind(form) {
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            var errEl = form.querySelector('.lead-form__error');
+            var thanks = form.querySelector('.lead-form__thanks');
+            var btn = form.querySelector('button[type="submit"]');
+            errEl.hidden = true;
+
+            var first = (form.querySelector('[name="first_name"]').value || '').trim();
+            var email = (form.querySelector('[name="email"]').value || '').trim();
+            var consent = form.querySelector('[name="consent"]').checked;
+
+            if (!first || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !consent) {
+                errEl.textContent = document.documentElement.lang === 'de'
+                    ? 'Bitte Vorname, gültige E-Mail und Einwilligung ausfüllen.'
+                    : 'Please fill in first name, a valid email and the consent box.';
+                errEl.hidden = false;
+                return;
+            }
+
+            btn.disabled = true;
+            var endpoint = form.getAttribute('data-endpoint') || '';
+            var source = form.getAttribute('data-source') || 'learn-academy';
+
+            var fd = new FormData();
+            fd.append('first_name', first);
+            fd.append('email', email);
+            fd.append('form_type', 'academy-newsletter');
+            fd.append('source', source);
+            fd.append('_subject', 'SAP Academy Newsletter — ' + first);
+            fd.append('_replyto', email);
+            try {
+                var t = window.mbicsTracking && window.mbicsTracking.readTracking && window.mbicsTracking.readTracking();
+                if (t) { ['gclid','utm_source','utm_medium','utm_campaign','referrer'].forEach(function (k) { if (t[k]) fd.append('attr_' + k, t[k]); }); }
+            } catch (_) {}
+
+            try {
+                if (!endpoint) throw new Error('no endpoint');
+                var res = await fetch(endpoint, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } });
+                if (!res.ok) throw new Error('bad status ' + res.status);
+                form.reset();
+                form.querySelectorAll('.lead-form__row, .lead-form__consent').forEach(function (n) { n.style.display = 'none'; });
+                thanks.hidden = false;
+                if (typeof window.gtag === 'function') {
+                    window.gtag('event', 'generate_lead', { form_id: 'academy-newsletter', value: 0, currency: 'USD' });
+                }
+            } catch (err) {
+                // Sauberer Fallback: E-Mail-Programm öffnen, damit der Lead nie verloren geht.
+                var subject = encodeURIComponent('SAP Academy Newsletter — ' + first);
+                var body = encodeURIComponent('Bitte für den SAP-Academy-Newsletter eintragen.\n\nVorname: ' + first + '\nE-Mail: ' + email);
+                window.location.href = 'mailto:mario@mb-ics.com?subject=' + subject + '&body=' + body;
+                btn.disabled = false;
+            }
+        });
+    }
+
+    document.querySelectorAll('.js-lead-form').forEach(bind);
+})();
+</script>

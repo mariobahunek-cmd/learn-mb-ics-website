@@ -1,0 +1,49 @@
+{%- comment -%} Academy-Footer — Legal-Links, reziproker mb-ics-Link, SAP-Trademark-Hinweis. {%- endcomment -%}
+<footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__top">
+            <div class="footer__brand">
+                <span class="nav__logo-mark">MB</span>
+                <span>SAP Academy — {% if page.lang == 'de' %}SAP für Anwender verständlich erklärt{% else %}SAP explained for everyday users{% endif %}</span>
+            </div>
+            <div class="footer__social">
+                <a href="{{ site.linkedin }}" target="_blank" rel="noopener" class="footer__social-link" aria-label="LinkedIn">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M13.33 6.67a5 5 0 015 5v5.83h-3.33v-5.83a1.67 1.67 0 00-3.33 0v5.83H8.33V6.67h3.34v.83a5 5 0 011.66-.83zM1.67 7.5h3.33v10H1.67zM3.33 5a1.67 1.67 0 100-3.33 1.67 1.67 0 000 3.33z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <a href="mailto:mario@mb-ics.com" class="footer__social-link" aria-label="Email">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="1.67" y="3.33" width="16.67" height="13.33" rx="1.67" stroke="currentColor" stroke-width="1.5"/><path d="M1.67 5.83L10 11.67l8.33-5.84" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <p class="footer__reciprocal">
+            {%- if page.lang == 'de' -%}
+                Du bildest ein ganzes Team aus oder brauchst SAP-Beratung?
+                <a href="{{ site.mbics_contact }}">SAP-Training &amp; Beratung auf mb-ics.com →</a>
+            {%- else -%}
+                Training a whole team or need SAP consulting?
+                <a href="{{ site.mbics_contact }}">SAP training &amp; consulting at mb-ics.com →</a>
+            {%- endif -%}
+        </p>
+
+        <div class="footer__bottom">
+            <span>© {{ site.time | date: '%Y' }} MB International Contracting Service LLC</span>
+            <span class="footer__divider">·</span>
+            <span>Fort Lauderdale, FL</span>
+            <span class="footer__divider">·</span>
+            <a href="{{ '/datenschutz/' | relative_url }}" class="footer__link">{% if page.lang == 'de' %}Datenschutz{% else %}Privacy{% endif %}</a>
+            <span class="footer__divider">·</span>
+            <a href="{{ '/impressum/' | relative_url }}" class="footer__link">{% if page.lang == 'de' %}Impressum{% else %}Legal Notice{% endif %}</a>
+            <span class="footer__divider">·</span>
+            <a href="#" id="cookieSettingsLink" class="footer__link">{% if page.lang == 'de' %}Cookie-Einstellungen{% else %}Cookie settings{% endif %}</a>
+        </div>
+
+        <p class="footer__legal-note">
+            {%- if page.lang == 'de' -%}
+                Unabhängiges Lernangebot. Nicht von SAP SE angeboten oder unterstützt. SAP und SAP S/4HANA sind Marken der SAP SE.
+            {%- else -%}
+                Independent educational content. Not offered or endorsed by SAP SE. SAP and SAP S/4HANA are trademarks of SAP SE.
+            {%- endif -%}
+        </p>
+    </div>
+</footer>

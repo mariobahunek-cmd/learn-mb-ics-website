@@ -1,0 +1,69 @@
+{%- comment -%}
+  Academy-Nav.
+  - Logo → Sprach-Startseite (/ für EN, /de/ für DE)
+  - Links: Themen (#topics auf der Startseite), Blog, Newsletter (#newsletter)
+  - Lang-Switcher DE/EN (home ↔, blog ↔, posts über translation_key)
+  - CTA: Team-Training → mb-ics.com/#contact (Lead-Motor, externes B2B-Schaufenster)
+{%- endcomment -%}
+
+{%- assign home_url = '/' -%}
+{%- if page.lang == 'de' -%}{%- assign home_url = '/de/' -%}{%- endif -%}
+{%- assign blog_url = '/blog/' | append: page.lang | append: '/' -%}
+
+{%- comment -%} Sprach-Ziele des Switchers je nach Seitentyp {%- endcomment -%}
+{%- assign de_url = '/de/' -%}
+{%- assign en_url = '/' -%}
+{%- if page.layout == 'blog' -%}
+  {%- assign de_url = '/blog/de/' -%}
+  {%- assign en_url = '/blog/en/' -%}
+{%- elsif page.translation_key -%}
+  {%- assign alt_post = site.posts | where: "translation_key", page.translation_key | where_exp: "p", "p.lang != page.lang" | first -%}
+  {%- if page.lang == 'de' -%}
+    {%- assign de_url = page.url -%}
+    {%- if alt_post -%}{%- assign en_url = alt_post.url -%}{%- else -%}{%- assign en_url = '/blog/en/' -%}{%- endif -%}
+  {%- else -%}
+    {%- assign en_url = page.url -%}
+    {%- if alt_post -%}{%- assign de_url = alt_post.url -%}{%- else -%}{%- assign de_url = '/blog/de/' -%}{%- endif -%}
+  {%- endif -%}
+{%- elsif page.layout == 'legal' -%}
+  {%- assign de_url = page.url -%}
+  {%- assign en_url = page.url -%}
+{%- endif -%}
+
+<a href="#main-content" class="skip-link">{% if page.lang == 'de' %}Zum Hauptinhalt springen{% else %}Skip to main content{% endif %}</a>
+
+<nav class="nav nav--blog" id="nav">
+    <div class="nav__inner">
+        <a href="{{ home_url | relative_url }}" class="nav__logo">
+            <span class="nav__logo-mark">MB</span>
+            <span class="nav__logo-text">SAP Academy</span>
+        </a>
+        <ul class="nav__links">
+            <li><a href="{{ home_url | relative_url }}#topics">{% if page.lang == 'de' %}Themen{% else %}Topics{% endif %}</a></li>
+            <li><a href="{{ blog_url | relative_url }}"{% if page.layout == 'blog' or page.layout == 'post' %} class="active"{% endif %}>{% if page.lang == 'de' %}Artikel{% else %}Articles{% endif %}</a></li>
+            <li><a href="{{ home_url | relative_url }}#newsletter">Newsletter</a></li>
+        </ul>
+        <div class="nav__actions">
+            <div class="lang-switcher">
+                <a href="{{ de_url | relative_url }}" class="lang-btn {% if page.lang == 'de' %}active{% endif %}" aria-label="Deutsch">DE</a>
+                <a href="{{ en_url | relative_url }}" class="lang-btn {% if page.lang == 'en' %}active{% endif %}" aria-label="English">EN</a>
+            </div>
+            <a href="{{ site.mbics_contact }}" class="nav__cta">{% if page.lang == 'de' %}Team-Training{% else %}Team training{% endif %}</a>
+        </div>
+        <button class="nav__burger" aria-label="Menu" type="button">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+    <div class="nav__mobile">
+        <ul class="nav__mobile-links">
+            <li><a href="{{ home_url | relative_url }}#topics">{% if page.lang == 'de' %}Themen{% else %}Topics{% endif %}</a></li>
+            <li><a href="{{ blog_url | relative_url }}">{% if page.lang == 'de' %}Artikel{% else %}Articles{% endif %}</a></li>
+            <li><a href="{{ home_url | relative_url }}#newsletter">Newsletter</a></li>
+        </ul>
+        <div class="lang-switcher lang-switcher--mobile">
+            <a href="{{ de_url | relative_url }}" class="lang-btn {% if page.lang == 'de' %}active{% endif %}" aria-label="Deutsch">DE</a>
+            <a href="{{ en_url | relative_url }}" class="lang-btn {% if page.lang == 'en' %}active{% endif %}" aria-label="English">EN</a>
+        </div>
+        <a href="{{ site.mbics_contact }}" class="nav__cta nav__cta--mobile">{% if page.lang == 'de' %}Team-Training anfragen{% else %}Request team training{% endif %}</a>
+    </div>
+</nav>

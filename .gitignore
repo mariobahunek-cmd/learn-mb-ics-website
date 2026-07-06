@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+*~
+
+# Jekyll build artifacts
+_site/
+.jekyll-cache/
+.jekyll-metadata
+vendor/
+.bundle/
+Gemfile.lock
+.claude/
+
+# env / secrets — niemals committen
+.env
+.env.*
+*.pem

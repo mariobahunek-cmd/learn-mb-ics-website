@@ -1,0 +1,27 @@
+{%- comment -%}
+  Cookie-Consent-Banner. Gleiche ID-Struktur wie mb-ics.com — main.js bindet
+  die Listener per ID und ruft window.mbicsTracking.updateConsent() auf.
+  Analytics lädt nur, wenn site.ga4_id gesetzt ist (siehe tracking-head.html);
+  der Banner ist bewusst schon da, damit Consent sauber greift, sobald aktiviert.
+{%- endcomment -%}
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Cookie consent">
+    <div class="cookie-banner__inner">
+        <p class="cookie-banner__text">
+            {%- if page.lang == 'de' -%}
+            Wir würden gerne mit Google Analytics 4 verstehen, woher unsere Besucher kommen — nur mit deiner Zustimmung. Bis dahin läuft alles im Consent-Denied-Modus. Schriften werden lokal gehostet. Weitere Informationen in unserer
+            <a href="{{ '/datenschutz/' | relative_url }}" class="cookie-banner__link">Datenschutzerklärung</a>.
+            {%- else -%}
+            We'd like to use Google Analytics 4 to understand where our visitors come from — only with your consent. Until then everything runs in consent-denied mode. Fonts are hosted locally. For more information, see our
+            <a href="{{ '/datenschutz/' | relative_url }}" class="cookie-banner__link">Privacy Policy</a>.
+            {%- endif -%}
+        </p>
+        <div class="cookie-banner__actions">
+            <button class="cookie-banner__btn cookie-banner__btn--accept" id="cookieAcceptAll" type="button">
+                {%- if page.lang == 'de' -%}Alle akzeptieren{%- else -%}Accept all{%- endif -%}
+            </button>
+            <button class="cookie-banner__btn cookie-banner__btn--necessary" id="cookieNecessary" type="button">
+                {%- if page.lang == 'de' -%}Nur notwendige{%- else -%}Necessary only{%- endif -%}
+            </button>
+        </div>
+    </div>
+</div>

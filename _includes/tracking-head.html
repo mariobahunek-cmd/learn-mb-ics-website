@@ -1,0 +1,25 @@
+{%- comment -%}
+  GA4 mit Consent Mode v2 — nur wenn site.ga4_id gesetzt ist.
+  Ist ga4_id leer (Default), wird KEIN externer Tag geladen → kein Request,
+  privacy-first. Sobald eine eigene GA4-Property für learn.mb-ics.com existiert,
+  in _config.yml `ga4_id: "G-XXXXXXXXXX"` setzen — dann lädt der Consent-Mode-Tag
+  (Default-Consent = denied; Wechsel auf granted erst nach Cookie-Banner-Klick
+  über main.js → window.mbicsTracking.updateConsent).
+{%- endcomment -%}
+{%- if site.ga4_id and site.ga4_id != "" -%}
+<link rel="dns-prefetch" href="https://www.googletagmanager.com">
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ site.ga4_id }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    analytics_storage: 'denied',
+    wait_for_update: 500
+  });
+  gtag('js', new Date());
+  gtag('config', '{{ site.ga4_id }}', { anonymize_ip: true });
+</script>
+{%- endif -%}
