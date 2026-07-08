@@ -1,4 +1,4 @@
-# learn.mb-ics.com — SAP Academy (Endanwender) · Jekyll-Konfiguration
+# learn.mb-ics.com — MB-ICS Academy (Endanwender) · Jekyll-Konfiguration
 # Eigenständige GitHub-Pages-Site, getrennt vom B2B-Schaufenster mb-ics.com.
 # Zweck: dünne Marketing-/Autoritäts-Schicht — Endanwender-Erklärinhalte, die
 # in (a) E-Mail-Leads und (b) Anfragen für SAP-Training/Beratung münden.
@@ -7,7 +7,7 @@
 # Konvention analog mb-ics.com: Jekyll 3 (GitHub-Pages-Default), kramdown,
 # jekyll-seo-tag + jekyll-feed, KEIN jekyll-sitemap (eigenes sitemap.xml-Template).
 
-title: "SAP Academy — SAP für Anwender verständlich erklärt"
+title: "MB-ICS Academy — SAP für Anwender verständlich erklärt"
 description: "SAP für Anwender verständlich erklärt: Einkauf, Bestand, Rechnungsprüfung und mehr — ohne Fachchinesisch. Kostenlose Erklärartikel von einem SAP-zertifizierten Trainer."
 url: "https://learn.mb-ics.com"
 author: "Mario Bahunek"

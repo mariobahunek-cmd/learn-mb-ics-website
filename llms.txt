@@ -1,10 +1,10 @@
-# SAP Academy — learn.mb-ics.com
+# MB-ICS Academy — learn.mb-ics.com
 
 > Free, plain-language SAP explainer articles for the people who actually use SAP at work — key users, everyday users, and career changers. Covers Materials Management topics (purchasing, inventory, invoice verification, master data) and general SAP navigation. Written in German and English by Mario Bahunek, a SAP-certified instructor. Independent, not affiliated with SAP SE.
 
 ## What this site is
 
-The SAP Academy is a free educational resource. It explains how SAP works in everyday use — not certification drills, not exam questions, just clear explanations of the processes and screens users meet on the job. It is the open, self-serve companion to the paid, hands-on team training and consulting offered at mb-ics.com.
+The MB-ICS Academy is a free educational resource. It explains how SAP works in everyday use — not certification drills, not exam questions, just clear explanations of the processes and screens users meet on the job. It is the open, self-serve companion to the paid, hands-on team training and consulting offered at mb-ics.com.
 
 The site has two calls to action:
 

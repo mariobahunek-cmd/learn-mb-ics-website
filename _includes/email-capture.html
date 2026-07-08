@@ -72,7 +72,7 @@
             fd.append('email', email);
             fd.append('form_type', 'academy-newsletter');
             fd.append('source', source);
-            fd.append('_subject', 'SAP Academy Newsletter — ' + first);
+            fd.append('_subject', 'MB-ICS Academy Newsletter — ' + first);
             fd.append('_replyto', email);
             try {
                 var t = window.mbicsTracking && window.mbicsTracking.readTracking && window.mbicsTracking.readTracking();
@@ -91,7 +91,7 @@
                 }
             } catch (err) {
                 // Sauberer Fallback: E-Mail-Programm öffnen, damit der Lead nie verloren geht.
-                var subject = encodeURIComponent('SAP Academy Newsletter — ' + first);
+                var subject = encodeURIComponent('MB-ICS Academy Newsletter — ' + first);
                 var body = encodeURIComponent('Bitte für den SAP-Academy-Newsletter eintragen.\n\nVorname: ' + first + '\nE-Mail: ' + email);
                 window.location.href = 'mailto:mario@mb-ics.com?subject=' + subject + '&body=' + body;
                 btn.disabled = false;

@@ -6,7 +6,7 @@
 {%- endcomment -%}
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{{ page.title }} · SAP Academy</title>
+<title>{{ page.title }} · MB-ICS Academy</title>
 <meta name="description" content="{{ page.description | default: site.description }}">
 <meta name="author" content="Mario Bahunek">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
@@ -49,14 +49,14 @@
 {%- comment -%} Open Graph / Twitter {%- endcomment -%}
 <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
 <meta property="og:url" content="{{ page.url | absolute_url }}">
-<meta property="og:title" content="{{ page.title }} · SAP Academy">
+<meta property="og:title" content="{{ page.title }} · MB-ICS Academy">
 <meta property="og:description" content="{{ page.description | default: site.description }}">
 <meta property="og:image" content="{{ page.image | default: '/og-cover.jpg' | absolute_url }}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="{{ page.title }} — SAP Academy">
+<meta property="og:image:alt" content="{{ page.title }} — MB-ICS Academy">
 <meta property="og:locale" content="{% if page.lang == 'de' %}de_DE{% else %}en_US{% endif %}">
-<meta property="og:site_name" content="SAP Academy · mb-ics">
+<meta property="og:site_name" content="MB-ICS Academy">
 {%- if page.translation_key -%}
   {%- assign alt_post = site.posts | where: "translation_key", page.translation_key | where_exp: "p", "p.lang != page.lang" | first -%}
   {%- if alt_post -%}
@@ -67,7 +67,7 @@
 <meta name="twitter:title" content="{{ page.title }}">
 <meta name="twitter:description" content="{{ page.description | default: site.description }}">
 <meta name="twitter:image" content="{{ page.image | default: '/og-cover.jpg' | absolute_url }}">
-<meta name="twitter:image:alt" content="{{ page.title }} — SAP Academy">
+<meta name="twitter:image:alt" content="{{ page.title }} — MB-ICS Academy">
 
 {%- comment -%} ── JSON-LD: Organization + WebSite + Person (sitewide) ── {%- endcomment -%}
 <script type="application/ld+json">
@@ -78,7 +78,7 @@
       "@type": "Organization",
       "@id": "{{ '/#organization' | absolute_url }}",
       "name": "MB International Contracting Service LLC",
-      "alternateName": "SAP Academy · mb-ics",
+      "alternateName": "MB-ICS Academy",
       "url": "{{ '/' | absolute_url }}",
       "logo": "{{ '/favicon.svg' | absolute_url }}",
       "founder": { "@id": "{{ '/#mario' | absolute_url }}" },
@@ -90,7 +90,7 @@
     {
       "@type": "WebSite",
       "@id": "{{ '/#website' | absolute_url }}",
-      "name": "SAP Academy",
+      "name": "MB-ICS Academy",
       "alternateName": "SAP für Anwender verständlich erklärt",
       "url": "{{ '/' | absolute_url }}",
       "description": {{ site.description | jsonify }},

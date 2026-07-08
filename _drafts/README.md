@@ -1,6 +1,6 @@
 # _drafts/ — Review-Gate für Academy-Blog-Posts
 
-**Blog-Posts der SAP Academy gehen NICHT automatisch live.** Sie durchlaufen
+**Blog-Posts der MB-ICS Academy gehen NICHT automatisch live.** Sie durchlaufen
 Marios Freigabe.
 
 ## Ablauf
