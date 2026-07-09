@@ -86,9 +86,7 @@
                 form.reset();
                 form.querySelectorAll('.lead-form__row, .lead-form__consent').forEach(function (n) { n.style.display = 'none'; });
                 thanks.hidden = false;
-                if (typeof window.gtag === 'function') {
-                    window.gtag('event', 'generate_lead', { form_id: 'academy-newsletter', value: 0, currency: 'USD' });
-                }
+                if (window.plausible) plausible('Lead', { props: { form: 'academy-newsletter' } });
             } catch (err) {
                 // Sauberer Fallback: E-Mail-Programm öffnen, damit der Lead nie verloren geht.
                 var subject = encodeURIComponent('MB-ICS Academy Newsletter — ' + first);

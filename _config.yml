@@ -24,10 +24,8 @@ linkedin: "https://www.linkedin.com/in/mariobahunek/"
 # Liste steht, hier die Brevo-Form-Action (BREVO_FORM_URL) eintragen und
 # _includes/email-capture.html-Kommentar folgen.
 lead_endpoint: "https://formspree.io/f/xykdwnbk"
-# GA4 leer lassen = kein Tracking-Tag, kein externer Request (privacy-first).
-# Sobald eine eigene GA4-Property für learn.mb-ics.com existiert, hier die
-# Measurement-ID (G-XXXXXXXXXX) eintragen — der Consent-Mode-Tag lädt dann.
-ga4_id: ""
+# Analytics: cookieloses Plausible (Script in _includes/tracking-head.html) —
+# kein GA4, kein Consent-Banner nötig.
 
 # ── Build-Settings ────────────────────────────────────────────────────
 markdown: kramdown
