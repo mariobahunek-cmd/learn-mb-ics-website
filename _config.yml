@@ -24,8 +24,8 @@ linkedin: "https://www.linkedin.com/in/mariobahunek/"
 # Liste steht, hier die Brevo-Form-Action (BREVO_FORM_URL) eintragen und
 # _includes/email-capture.html-Kommentar folgen.
 lead_endpoint: "https://formspree.io/f/xykdwnbk"
-# Analytics: cookieloses Plausible (Script in _includes/tracking-head.html) —
-# kein GA4, kein Consent-Banner nötig.
+# Analytics: kein On-Site-Analytics — Reichweite nur über Google Search Console.
+# Kein GA4, kein Consent-Banner nötig (tracking-head.html lädt kein Script).
 
 # ── Build-Settings ────────────────────────────────────────────────────
 markdown: kramdown
