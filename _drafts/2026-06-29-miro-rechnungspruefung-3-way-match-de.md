@@ -87,7 +87,7 @@ Die Einbildtransaktion MIRO ist in mehrere Bildbereiche unterteilt:
 - **Kopfdaten** — Rechnungsdatum, Referenz (die Rechnungsnummer des Lieferanten), Bruttobetrag, Steuerbetrag mit Steuerkennzeichen, Buchungskreis.
 - **Zuordnung / Bestellbezug** — hier verknüpfst du die Rechnung mit Bestellung, Lieferschein oder Frachtbrief.
 - **Rechnungspositionen** — die Liste aller vorgeschlagenen Positionen; markierte Zeilen werden gebucht.
-- **Lieferantendaten** — Detaildaten zum Rechnungssteller aus dem Kreditorenstammsatz.
+- **Lieferantendaten** — Detaildaten zum Rechnungssteller aus dem Kreditorenstammsatz (in S/4HANA über den Geschäftspartner gepflegt).
 - **Saldo mit Ampel** — grün heißt buchbar, gelb heißt buchbar mit Zahlungssperre, rot heißt nicht buchbar.
 
 Beim Buchen passieren drei Dinge gleichzeitig:
@@ -131,9 +131,9 @@ Im Tagesgeschäft begegnen dir immer wieder dieselben Konstellationen. Hier ein 
 - **Rechnungspreis höher als Bestellpreis, innerhalb der Toleranz:** Die Rechnung wird gebucht. Bei Standardpreis-Material landet die Differenz auf einem Preisdifferenzenkonto. Bei gleitendem Durchschnittspreis wird der Materialstamm neu bewertet — der Bestand wird teurer.
 - **Rechnungspreis höher als Bestellpreis, außerhalb der Toleranz:** Die Rechnung wird gebucht, aber zur Zahlung gesperrt. Nach Klärung mit dem Lieferanten folgt die Freigabe über MRBR.
 - **Rechnungsmenge größer als gelieferte Menge:** eine Mengenabweichung. Entweder ist eine weitere Lieferung unterwegs — oder der Lieferant hat falsch fakturiert. Liegt die Überschreitung über der Toleranz, bleibt die Rechnung gesperrt.
-- **Frachtkosten auf der Rechnung, aber nicht in der Bestellung:** in MIRO als *ungeplante Bezugsnebenkosten* erfassen. Das System verteilt sie automatisch auf die Positionen.
+- **Frachtkosten auf der Rechnung, aber nicht in der Bestellung:** in MIRO als *ungeplante Bezugsnebenkosten* erfassen. Wie sie gebucht werden, steuert das Customizing — entweder verteilt das System sie auf die Rechnungspositionen (und damit auf Bestand oder Preisdifferenz) oder es bucht sie auf ein separates Sachkonto, so wie im Buchungsbeispiel oben auf Konto 5050.
 - **Rechnung kommt vor dem Wareneingang an:** möglich, aber heikel — der Saldo bleibt offen auf dem WE/RE-Konto. Üblich ist die Reihenfolge erst Wareneingang, dann Rechnung.
-- **Nachträgliche Belastung oder Entlastung:** Macht der Lieferant nachträglich eine Preisänderung geltend, erfasst du in MIRO eine „nachträgliche Belastung“ oder „nachträgliche Entlastung“. Eine vollständige Stornorechnung ist dagegen die *Gutschrift*.
+- **Nachträgliche Belastung oder Entlastung:** Macht der Lieferant nachträglich eine reine Preisänderung geltend, erfasst du in MIRO eine „nachträgliche Belastung“ oder „nachträgliche Entlastung“. Davon zu trennen ist die *Gutschrift* (eine eigene Vorgangsart in MIRO): Sie bildet eine echte Lieferantengutschrift ab — etwa für eine Rücklieferung — und mindert Menge und Wert. Das reine *Stornieren* eines bereits gebuchten Rechnungsbelegs ist wiederum ein anderer Vorgang (Belegstorno, Transaktion MR8M) und keine Gutschrift, die du selbst erfasst.
 
 Hilfreich ist außerdem die Bestellentwicklung: In jedem Bestellbeleg kannst du sehen, wie viel bereits geliefert und wie viel bereits berechnet wurde. Das ist die schnellste Methode, um die Konsistenz von Wareneingang und Rechnung zu prüfen.
 

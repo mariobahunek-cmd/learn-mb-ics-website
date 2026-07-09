@@ -7,7 +7,7 @@ slug: ewm-goods-receipt-goods-issue
 permalink: /blog/en/ewm-goods-receipt-goods-issue/
 translation_key: post-ewm-wareneingang-warenausgang
 date: 2026-07-07
-category: "Warehousing"
+category: "Warehouse"
 keywords: "SAP EWM, goods receipt, goods issue, Extended Warehouse Management, putaway, picking, warehouse task, warehouse order, inbound delivery"
 reading_time: 8
 sources:

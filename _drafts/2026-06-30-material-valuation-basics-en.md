@@ -16,7 +16,7 @@ sources:
     note: "Materials Management and inventory valuation — general background. Always check the current state in the Help Portal before relying on it in production."
 faq:
   - q: "What is the difference between standard price and moving average price?"
-    a: "The standard price (S) stays constant through the fiscal year; any deviation from the purchase price posts to a price-difference account. The moving average price (V) is recalculated as a weighted average with every receipt, so it adjusts continuously."
+    a: "The standard price (S) normally stays constant through the fiscal year; any deviation from the purchase price posts to a price-difference account. The moving average price (V) is recalculated as a weighted average with every receipt, so it adjusts continuously."
   - q: "Where is a material's price control maintained?"
     a: "In the material master, on the Accounting 1 view. That is where the S or V indicator sits, together with the current valuation price and the total stock value."
   - q: "What is the GR/IR clearing account for?"
@@ -44,7 +44,7 @@ Both documents are created at the same time but are independent. The material do
 
 A movement is valuation-relevant whenever the stock value on the balance sheet changes — that is, whenever financial accounting is affected.
 
-- **Valuation-relevant:** every external goods receipt (stock goes up, current assets grow), a goods issue to a customer, a scrapping, or a consumption posting to a cost centre.
+- **Valuation-relevant:** an external goods receipt (stock goes up, current assets grow), a goods issue to a customer, a scrapping, or a consumption posting to a cost centre.
 - **Not valuation-relevant:** a pure transfer within the same plant, for example from one storage location to another. The stock stays in the same company code, only the location changes — the balance sheet doesn't notice.
 
 Rule of thumb: if the stock value changes at company-code level, an accounting document is created. If the stock only moves internally from A to B, it isn't.
@@ -57,7 +57,7 @@ The company code of the accounting document is **derived automatically from the 
 
 In the material master, on the *Accounting 1* view, sits a key control field: **price control**. It has exactly two settings, and the choice shapes the entire valuation behaviour of the material.
 
-- **S — standard price:** the material is valued at a *fixed* price that stays constant through the fiscal year. When the actual purchase price deviates from it, the difference posts to a separate **price-difference account**. The stock account only ever moves at the standard price.
+- **S — standard price:** the material is valued at a *fixed* price that normally stays constant through the fiscal year. When the actual purchase price deviates from it, the difference posts to a separate **price-difference account**. The stock account only ever moves at the standard price.
 - **V — moving average price:** the valuation price is *recalculated* on every valuation-relevant receipt — as a weighted average of the old stock and the new receipt. Price differences normally don't arise, because the price always matches the current average.
 
 Which setting makes sense when is a matter of accounting policy. As a rule of thumb:
@@ -157,7 +157,7 @@ Material valuation keeps the **value of your stock** correct in accounting at al
 
 ### What is the difference between standard price and moving average price?
 
-The standard price (S) stays constant through the fiscal year; any deviation from the purchase price posts to a price-difference account. The moving average price (V) is recalculated as a weighted average with every receipt, so it adjusts continuously.
+The standard price (S) normally stays constant through the fiscal year; any deviation from the purchase price posts to a price-difference account. The moving average price (V) is recalculated as a weighted average with every receipt, so it adjusts continuously.
 
 ### Where is a material's price control maintained?
 

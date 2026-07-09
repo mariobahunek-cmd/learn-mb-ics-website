@@ -52,7 +52,7 @@ Die wichtigsten Sichten im Überblick:
 
 ### Grunddaten
 
-Die Grunddaten sind die Basis jedes Materialstamms. Sie gelten **für das gesamte Unternehmen** und enthalten allgemeine Informationen wie Materialkurztext, Basismengeneinheit (etwa Stück, Kilogramm, Liter), Materialgruppe sowie Gewichte und Abmessungen. Diese Sicht muss **immer** angelegt werden — ohne Grunddaten existiert kein Material.
+Die Grunddaten sind die Basis jedes Materialstamms. Sie gelten **für das gesamte Unternehmen** und enthalten allgemeine Informationen wie Materialkurztext, Basismengeneinheit (etwa Stück, Kilogramm, Liter), Warengruppe sowie Gewichte und Abmessungen. Diese Sicht muss **immer** angelegt werden — ohne Grunddaten existiert kein Material.
 
 ### Einkauf
 
@@ -80,7 +80,7 @@ Bevor du überhaupt einen Materialstamm anlegen kannst, legst du zwei zentrale F
 
 ### Die Materialart
 
-Die Materialart bestimmt die grundlegenden Eigenschaften eines Materials. Sie steuert unter anderem, welche Sichten überhaupt angelegt werden dürfen, wie die Materialnummer vergeben wird (intern oder extern), wie das Material bewertet wird und welche Bewegungsarten erlaubt sind.
+Die Materialart bestimmt die grundlegenden Eigenschaften eines Materials. Sie steuert unter anderem, welche Sichten überhaupt angelegt werden dürfen, wie die Materialnummer vergeben wird (intern oder extern), wie das Material bewertet wird und ob Bestände nur mengen- oder auch wertmäßig fortgeschrieben werden (Mengen- und Wertfortschreibung).
 
 Typische Materialarten im SAP-Standard sind zum Beispiel Rohstoffe (wird eingekauft, nicht verkauft), Halbfabrikate (intern produziert, nicht direkt verkauft), Fertigerzeugnisse (intern produziert und verkauft) sowie Handelsware und Dienstleistungen. Im Customizing können Unternehmen zusätzlich eigene Materialarten definieren. Die Wahl der Materialart ist eine Entscheidung mit Tragweite, weil sie viele weitere Eigenschaften vorbestimmt.
 

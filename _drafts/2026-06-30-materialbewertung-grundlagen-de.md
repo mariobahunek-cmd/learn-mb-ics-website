@@ -16,7 +16,7 @@ sources:
     note: "Bereich Materialwirtschaft und Bestandsbewertung — allgemeine Grundlagen. Vor produktivem Einsatz immer den aktuellen Stand im Help Portal prüfen."
 faq:
   - q: "Was ist der Unterschied zwischen Standardpreis und gleitendem Durchschnittspreis?"
-    a: "Der Standardpreis (S) bleibt über das Geschäftsjahr konstant; Abweichungen zum Einkaufspreis laufen auf ein Preisdifferenzen-Konto. Der gleitende Durchschnittspreis (V) wird bei jedem Zugang neu als gewichteter Durchschnitt berechnet und passt sich so laufend an."
+    a: "Der Standardpreis (S) bleibt in der Regel über das Geschäftsjahr konstant; Abweichungen zum Einkaufspreis laufen auf ein Preisdifferenzen-Konto. Der gleitende Durchschnittspreis (V) wird bei jedem Zugang neu als gewichteter Durchschnitt berechnet und passt sich so laufend an."
   - q: "Wo wird die Preissteuerung eines Materials gepflegt?"
     a: "Im Materialstammsatz in der Sicht „Buchhaltung 1“. Dort steht das Kennzeichen S oder V zusammen mit dem aktuellen Bewertungspreis und dem Gesamtbestandswert."
   - q: "Wozu dient das WE/RE-Verrechnungskonto?"
@@ -44,7 +44,7 @@ Beide Belege entstehen gleichzeitig, sind aber eigenständig. Der Materialbeleg 
 
 Bewertungsrelevant ist eine Bewegung immer dann, wenn sich der Bestandswert in der Bilanz ändert — also die Finanzbuchhaltung betroffen ist.
 
-- **Bewertungsrelevant:** jeder externe Wareneingang (der Bestand steigt, das Umlaufvermögen wächst), ein Warenausgang an einen Kunden, eine Verschrottung oder eine Verbrauchsbuchung auf eine Kostenstelle.
+- **Bewertungsrelevant:** ein externer Wareneingang (der Bestand steigt, das Umlaufvermögen wächst), ein Warenausgang an einen Kunden, eine Verschrottung oder eine Verbrauchsbuchung auf eine Kostenstelle.
 - **Nicht bewertungsrelevant:** eine reine Umlagerung innerhalb desselben Werks, etwa von einem Lagerort in einen anderen. Der Bestand bleibt im selben Buchungskreis, nur die Lokation ändert sich — die Bilanz merkt davon nichts.
 
 Merksatz: Ändert sich der Bestandswert auf Buchungskreisebene, entsteht ein Buchhaltungsbeleg. Wandert der Bestand nur intern von A nach B, nicht.
@@ -57,7 +57,7 @@ Der Buchungskreis des Buchhaltungsbelegs wird **automatisch aus dem Werk abgelei
 
 Im Materialstammsatz, in der Sicht *Buchhaltung 1*, steht ein zentrales Steuerfeld: die **Preissteuerung**. Sie kennt genau zwei Ausprägungen, und die Entscheidung dafür prägt das gesamte Bewertungsverhalten des Materials.
 
-- **S — Standardpreis:** Das Material wird mit einem *festen* Preis bewertet, der über das Geschäftsjahr konstant bleibt. Weicht der tatsächliche Einkaufspreis davon ab, landet die Differenz auf einem separaten **Preisdifferenzen-Konto**. Der Bestandswert bewegt sich ausschließlich zum Standardpreis.
+- **S — Standardpreis:** Das Material wird mit einem *festen* Preis bewertet, der in der Regel über das Geschäftsjahr konstant bleibt. Weicht der tatsächliche Einkaufspreis davon ab, landet die Differenz auf einem separaten **Preisdifferenzen-Konto**. Der Bestandswert bewegt sich ausschließlich zum Standardpreis.
 - **V — Gleitender Durchschnittspreis:** Der Bewertungspreis wird bei jedem bewertungsrelevanten Zugang *neu* berechnet — als gewichteter Durchschnitt aus altem Bestand und neuem Zugang. Preisdifferenzen entstehen dabei normalerweise nicht, weil der Preis immer dem aktuellen Durchschnitt entspricht.
 
 Welche Steuerung wann sinnvoll ist, ist eine bilanzpolitische Entscheidung. Als Faustregel:
@@ -157,7 +157,7 @@ Die Materialbewertung sorgt dafür, dass der **Wert deines Lagers** in der Buchh
 
 ### Was ist der Unterschied zwischen Standardpreis und gleitendem Durchschnittspreis?
 
-Der Standardpreis (S) bleibt über das Geschäftsjahr konstant; Abweichungen zum Einkaufspreis laufen auf ein Preisdifferenzen-Konto. Der gleitende Durchschnittspreis (V) wird bei jedem Zugang neu als gewichteter Durchschnitt berechnet und passt sich so laufend an.
+Der Standardpreis (S) bleibt in der Regel über das Geschäftsjahr konstant; Abweichungen zum Einkaufspreis laufen auf ein Preisdifferenzen-Konto. Der gleitende Durchschnittspreis (V) wird bei jedem Zugang neu als gewichteter Durchschnitt berechnet und passt sich so laufend an.
 
 ### Wo wird die Preissteuerung eines Materials gepflegt?
 

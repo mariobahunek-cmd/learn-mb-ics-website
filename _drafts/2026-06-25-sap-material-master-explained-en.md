@@ -80,7 +80,7 @@ Before you can even create a material master, you set two central fields: the **
 
 ### The material type
 
-The material type determines the fundamental properties of a material. Among other things, it controls which views may be created at all, how the material number is assigned (internally or externally), how the material is valuated and which movement types are allowed.
+The material type determines the fundamental properties of a material. Among other things, it controls which views may be created at all, how the material number is assigned (internally or externally), how the material is valuated and whether stock is updated by quantity only or by value as well (quantity and value update).
 
 Typical standard material types include, for example, raw materials (bought, not sold), semi-finished goods (produced internally, not sold directly), finished products (produced internally and sold), as well as trading goods and services. In customising, companies can also define their own material types. Choosing the material type is a decision with weight, because it predetermines many other properties.
 

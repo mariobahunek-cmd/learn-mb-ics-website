@@ -10,7 +10,7 @@ Marios Freigabe.
    Jekyll-Build **ignoriert** (kein `--drafts`-Flag; zusätzlich `_drafts/` in
    `_config.yml` unter `exclude`) → **nicht öffentlich sichtbar**.
 2. Mario sieht die wartenden Drafts in **Mission Control → Blog-Approval**
-   (`mc.sapprep.de/blog-approval`, Quelle `learn-draft`).
+   (`mc.mb-ics.com/blog-approval`, Quelle `learn-draft`).
 3. **Approve** feuert den Workflow `publish-drafts.yml` (nur `workflow_dispatch`,
    **kein** Cron/Auto-Publish): der älteste Draft wird samt `translation_key`-
    Pärling nach `_posts/` verschoben, Datum gesynct, Permalink injiziert,

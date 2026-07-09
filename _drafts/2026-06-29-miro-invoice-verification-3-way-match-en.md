@@ -87,7 +87,7 @@ The single-screen MIRO transaction is divided into several areas:
 - **Header data** — invoice date, reference (the supplier's invoice number), gross amount, tax amount with tax code, company code.
 - **Assignment / PO reference** — here you link the invoice to a purchase order, delivery note or bill of lading.
 - **Invoice items** — the list of all proposed items; the flagged lines are the ones that get posted.
-- **Supplier data** — details about the invoicing party from the supplier master record.
+- **Supplier data** — details about the invoicing party from the supplier master record (maintained via the business partner in S/4HANA).
 - **Balance with traffic light** — green means it can be posted, yellow means it can be posted with a payment block, red means it cannot be posted.
 
 Three things happen at once when you post:
@@ -131,9 +131,9 @@ Day to day, the same situations keep coming up. Here is an overview of how SAP h
 - **Invoice price higher than the order price, within tolerance:** The invoice is posted. For standard-price material, the difference lands on a price-difference account. For moving average price, the material master is revalued — the stock becomes more expensive.
 - **Invoice price higher than the order price, outside tolerance:** The invoice is posted but blocked for payment. After clarifying with the supplier, it is released via MRBR.
 - **Invoiced quantity greater than the delivered quantity:** a quantity variance. Either another delivery is on its way — or the supplier billed incorrectly. If the overage exceeds tolerance, the invoice stays blocked.
-- **Freight costs on the invoice, but not in the purchase order:** record them in MIRO as *unplanned delivery costs*. The system distributes them across the items automatically.
+- **Freight costs on the invoice, but not in the purchase order:** record them in MIRO as *unplanned delivery costs*. How they are posted depends on Customizing — the system either distributes them across the invoice items (and thus to stock or price differences) or posts them to a separate G/L account, as in the posting example above on account 5050.
 - **Invoice arrives before the goods receipt:** possible, but risky — the balance stays open on the GR/IR account. The usual order is goods receipt first, invoice second.
-- **Subsequent debit or credit:** If the supplier later claims a price change, you record a “subsequent debit” or “subsequent credit” in MIRO. A full reversal invoice, by contrast, is the *credit memo*.
+- **Subsequent debit or credit:** If the supplier later claims a pure price change, you record a “subsequent debit” or “subsequent credit” in MIRO. Distinct from that is the *credit memo* (a separate transaction type in MIRO): it represents an actual supplier credit — for example for a returned delivery — and reduces both quantity and value. Cancelling an already posted invoice document, in turn, is a different operation (invoice reversal, transaction MR8M) and not a credit memo you enter yourself.
 
 The purchase order history is also useful: in every purchase order you can see how much has already been delivered and how much has already been invoiced. It's the quickest way to check the consistency of goods receipt and invoice.
 

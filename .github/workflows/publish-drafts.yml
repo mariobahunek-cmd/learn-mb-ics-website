@@ -4,7 +4,7 @@ name: Publish Blog Draft (manual only)
 # Dieser Workflow hat BEWUSST KEINEN `schedule:`-Trigger (anders als das
 # mb-ics-Pendant) — es gibt also KEIN 2x/Woche-Auto-Publish. Er läuft NUR
 # per `workflow_dispatch`, d.h. wenn Mario einen Draft in Mission Control
-# (mc.sapprep.de/blog-approval) freigibt (die MC-Approve-Aktion feuert den
+# (mc.mb-ics.com/blog-approval) freigibt (die MC-Approve-Aktion feuert den
 # Dispatch) — oder Mario ihn manuell auf der Actions-Seite startet.
 #
 # Was er tut: verschiebt den ÄLTESTEN Draft (samt translation_key-Pärling)

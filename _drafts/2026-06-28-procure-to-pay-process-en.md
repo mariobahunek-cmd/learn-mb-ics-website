@@ -20,7 +20,7 @@ faq:
   - q: "What happens during a goods receipt in SAP?"
     a: "During a goods receipt for a purchase order, the goods are received into the system: the stock of the material increases, and SAP automatically creates a material document for the quantity movement and an accounting document for the value posting."
   - q: "What is the three-way match?"
-    a: "The three-way match compares the purchase order, the goods receipt and the invoice on quantity and price. Only when all three documents agree does the invoice go through cleanly. If there is a discrepancy, SAP blocks the invoice for clarification."
+    a: "The three-way match compares the purchase order, the goods receipt and the invoice on quantity and price. Only when all three documents agree does the invoice go through cleanly. If a discrepancy exceeds tolerance, SAP blocks the invoice for clarification."
   - q: "Why does a purchase order sometimes stay open?"
     a: "Common reasons are a release that is still pending, an invoice blocked because of a price or quantity discrepancy, or a delivery that has not yet been posted as a goods receipt. Purchase order monitoring shows where the process is stuck."
   - q: "Where does the procurement process end?"
@@ -55,7 +55,7 @@ Everything starts with a **demand**. Somewhere in the company, something is need
 
 Material requirements planning (MRP) automatically creates a purchase requisition when it detects a demand. That way, nobody has to track by hand when a given stock is running low.
 
-## Step 2: Creating the purchase requisition
+## Creating the purchase requisition
 
 After the demand has been determined, a **purchase requisition** is created. The key thing to understand: the requisition is a **purely internal document**. It doesn't go to the supplier — it's a request from the specialist department to purchasing: "Please procure the following for us."
 
@@ -68,7 +68,7 @@ A purchase requisition typically contains:
 
 It can be entered manually or created automatically by material requirements planning. For a closer look: [What is a purchase requisition in SAP?](/blog/en/what-is-a-purchase-requisition/)
 
-## Step 3: Finding a source of supply — who do we buy from?
+## Step 2: Finding a source of supply — who do we buy from?
 
 Once the purchase requisition exists, the next question comes up: **which supplier do we buy from?** Finding a source of supply is exactly this step. SAP offers several aids for it:
 
@@ -76,12 +76,12 @@ Once the purchase requisition exists, the next question comes up: **which suppli
 - **Source list:** governs which suppliers are allowed at all, and which one is preferred in a given period
 - **Outline agreements:** long-term arrangements with a supplier
 
-For outline agreements, SAP distinguishes two forms:
+For outline agreements, SAP distinguishes two forms — the contract and the scheduling agreement:
 
-- **Scheduling agreement:** quantities are called off distributed over time (typical in series production)
-- **Quantity contract:** a total quantity is agreed, and it's called off flexibly
+- **Contract:** a framework agreement over a total quantity (**quantity contract**) or a total value (**value contract**); it's called off flexibly via contract release orders
+- **Scheduling agreement:** specific delivery dates and quantities are scheduled and called off over time (typical in series production)
 
-## Step 4: Selecting the supplier and comparing terms
+## Step 3: Selecting the supplier and comparing terms
 
 Once possible sources have been identified, it comes down to the **final supplier selection**. Here purchasing compares:
 
@@ -92,7 +92,7 @@ Once possible sources have been identified, it comes down to the **final supplie
 
 Optionally, a **release procedure** kicks in at this point: for larger amounts in particular, a four-eyes principle is mandatory. The requisition or order first has to be released before it moves on — a deliberately built-in control step.
 
-## Step 5: Creating the purchase order
+## Step 4: Creating the purchase order
 
 Now comes the central step: the **purchase order** (PO for short). Unlike the requisition, the purchase order is an **external document**. It goes outward to the supplier and is legally binding.
 
@@ -107,7 +107,7 @@ Among other things, the purchase order contains:
 
 A purchase order can be created directly from a purchase requisition, from an outline agreement, or entirely manually. The data from the requisition — material, quantity, plant, date — is carried over in the process.
 
-## Step 6: Monitoring the order
+## Step 5: Monitoring the order
 
 After the purchase order has been sent, **order monitoring** runs. Purchasing tracks:
 
@@ -117,7 +117,7 @@ After the purchase order has been sent, **order monitoring** runs. Purchasing tr
 
 Ideally the supplier sends back an **order confirmation** in the meantime, so purchasing can store the agreed delivery date in the system. Order confirmations aren't mandatory, though.
 
-## Step 7: Goods receipt
+## Step 6: Goods receipt
 
 Once the goods physically arrive at the warehouse, the most interesting step from a user's point of view arrives: the **goods receipt**. The goods are **received** into SAP — that is, posted into the system both in quantity and in value.
 
@@ -127,9 +127,9 @@ What happens when you post it?
 - A **material document** is created automatically — it records the quantity movement.
 - An **accounting document** is created at the same time — it records the value posting.
 
-This double posting — quantity (material document) and value (accounting document) — is why a goods receipt in SAP never "only" changes stock levels, but always touches financial accounting as well.
+This double posting — quantity (material document) and value (accounting document) — is why a goods receipt in SAP, as a rule, doesn't "only" change stock levels but also touches financial accounting.
 
-## Step 7 (continued): Invoice verification and the three-way match
+## Step 7: Invoice verification and the three-way match
 
 At some point the **supplier's invoice** arrives. It's entered in SAP via logistics invoice verification. In doing so, the system does something very important: the **three-way match**.
 
@@ -141,7 +141,7 @@ Three documents are compared with one another:
 | **Goods receipt** | What was actually delivered? |
 | **Invoice** | What is the supplier charging us? |
 
-Only when these three documents **agree on quantity and price** does the invoice go through cleanly. If there's a discrepancy, SAP automatically blocks the invoice for clarification.
+Only when these three documents **agree on quantity and price** does the invoice go through cleanly. If the variances exceed the configured tolerances, SAP automatically blocks the invoice for clarification.
 
 An example: 100 pieces at 5 euros were ordered, and 100 pieces were delivered. But if the supplier now charges 6 euros per piece, SAP spots the price difference and holds the invoice back for review. It's exactly this mechanism that makes the three-way match one of the most important control points in the procurement process.
 
@@ -170,7 +170,7 @@ Which process applies to an order item is controlled by the **item category** in
 - **Confusing requisition and order.** The requisition is internal; the order goes outward. If you're asking a supplier why "the order" hasn't arrived, first check whether a purchase order even exists yet.
 - **Overlooking a missing release.** A requisition or order that hasn't been released won't be processed further. A glance at the release status saves a lot of searching.
 - **Mixing up material document and accounting document.** A goods receipt creates two documents: one for the quantity, one for the value. They belong together, but they aren't the same thing.
-- **Not recognising a blocked invoice.** If the invoice deviates on quantity or price, SAP blocks it automatically. The invoice is then entered but not yet ready for payment — it has to be clarified first.
+- **Not recognising a blocked invoice.** If the invoice deviates on quantity or price beyond tolerance, SAP blocks it automatically. The invoice is then entered but not yet ready for payment — it has to be clarified first.
 
 ## In a nutshell
 
@@ -188,7 +188,7 @@ During a goods receipt for a purchase order, the goods are received into the sys
 
 ### What is the three-way match?
 
-The three-way match compares the purchase order, the goods receipt and the invoice on quantity and price. Only when all three documents agree does the invoice go through cleanly. If there is a discrepancy, SAP blocks the invoice for clarification.
+The three-way match compares the purchase order, the goods receipt and the invoice on quantity and price. Only when all three documents agree does the invoice go through cleanly. If a discrepancy exceeds tolerance, SAP blocks the invoice for clarification.
 
 ### Why does a purchase order sometimes stay open?
 

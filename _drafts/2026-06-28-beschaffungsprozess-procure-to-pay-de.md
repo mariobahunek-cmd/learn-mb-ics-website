@@ -20,7 +20,7 @@ faq:
   - q: "Was passiert beim Wareneingang in SAP?"
     a: "Beim Wareneingang zur Bestellung wird die Ware im System vereinnahmt: Der Bestand des Materials erhöht sich, und SAP erzeugt automatisch einen Materialbeleg für die Mengenbewegung und einen Buchhaltungsbeleg für die wertmäßige Buchung."
   - q: "Was ist der dreiseitige Abgleich?"
-    a: "Der dreiseitige Abgleich vergleicht Bestellung, Wareneingang und Rechnung in Menge und Preis. Nur wenn die drei Belege zusammenpassen, läuft die Rechnung sauber durch. Bei Abweichungen sperrt SAP die Rechnung zur Klärung."
+    a: "Der dreiseitige Abgleich vergleicht Bestellung, Wareneingang und Rechnung in Menge und Preis. Nur wenn die drei Belege zusammenpassen, läuft die Rechnung sauber durch. Bei Abweichungen außerhalb der Toleranz sperrt SAP die Rechnung zur Klärung."
   - q: "Warum bleibt eine Bestellung manchmal offen?"
     a: "Häufige Gründe sind eine noch ausstehende Freigabe, eine gesperrte Rechnung wegen Preis- oder Mengenabweichung oder eine Lieferung, die noch nicht als Wareneingang gebucht wurde. Die Bestellüberwachung zeigt, an welcher Stelle der Prozess hängt."
   - q: "Wo endet der Beschaffungsprozess?"
@@ -55,7 +55,7 @@ Alles startet mit einem **Bedarf**. Irgendwo im Unternehmen wird etwas benötigt
 
 Die Bedarfsplanung (Material Requirements Planning, kurz MRP) erzeugt bei erkanntem Bedarf automatisch eine Bestellanforderung. So muss niemand von Hand nachhalten, wann welcher Bestand zur Neige geht.
 
-## Schritt 2: Bestellanforderung (BANF) anlegen
+## Bestellanforderung (BANF) anlegen
 
 Nach der Bedarfsermittlung entsteht eine **Bestellanforderung** (kurz **BANF**). Wichtig zu verstehen: Die BANF ist ein **rein internes Dokument**. Sie geht nicht an den Lieferanten, sondern ist eine Bitte der Fachabteilung an den Einkauf: „Bitte beschafft uns Folgendes."
 
@@ -68,7 +68,7 @@ Eine Bestellanforderung enthält typischerweise:
 
 Sie kann manuell erfasst werden oder automatisch durch die Bedarfsplanung entstehen. Mehr dazu im Detail: [Was ist eine Bestellanforderung (BANF) in SAP?](/blog/de/was-ist-eine-bestellanforderung/)
 
-## Schritt 3: Bezugsquellenfindung — bei wem kaufen wir?
+## Schritt 2: Bezugsquellenfindung — bei wem kaufen wir?
 
 Sobald die Bestellanforderung da ist, stellt sich die nächste Frage: **Bei welchem Lieferanten kaufen wir?** Die Bezugsquellenfindung ist genau dieser Schritt. SAP bietet dafür mehrere Hilfen:
 
@@ -76,12 +76,12 @@ Sobald die Bestellanforderung da ist, stellt sich die nächste Frage: **Bei welc
 - **Orderbuch:** regelt, welche Lieferanten überhaupt zugelassen sind und welcher in welchem Zeitraum bevorzugt wird
 - **Rahmenverträge (Outline Agreements):** langfristige Vereinbarungen mit einem Lieferanten
 
-Bei den Rahmenverträgen unterscheidet SAP zwischen zwei Formen:
+Bei den Rahmenverträgen unterscheidet SAP zwei Formen — den Kontrakt und den Lieferplan:
 
-- **Lieferplan:** Mengen werden über die Zeit verteilt abgerufen (typisch in der Serienfertigung)
-- **Mengenkontrakt:** eine Gesamtmenge ist vereinbart, abgerufen wird flexibel
+- **Kontrakt:** eine Rahmenvereinbarung über eine Gesamtmenge (**Mengenkontrakt**) oder einen Gesamtwert (**Wertkontrakt**); abgerufen wird flexibel über Kontraktabrufe
+- **Lieferplan:** konkrete Liefertermine und -mengen werden über die Zeit verteilt eingeplant und abgerufen (typisch in der Serienfertigung)
 
-## Schritt 4: Lieferantenauswahl und Konditionen vergleichen
+## Schritt 3: Lieferantenauswahl und Konditionen vergleichen
 
 Sind mögliche Bezugsquellen ermittelt, geht es um die **finale Lieferantenauswahl**. Hier vergleicht der Einkauf:
 
@@ -92,7 +92,7 @@ Sind mögliche Bezugsquellen ermittelt, geht es um die **finale Lieferantenauswa
 
 Optional greift an dieser Stelle ein **Freigabeverfahren**: Gerade bei größeren Beträgen ist das Mehraugenprinzip Pflicht. Die Anforderung oder Bestellung muss erst freigegeben werden, bevor sie weiterläuft — ein bewusst eingebauter Kontrollschritt.
 
-## Schritt 5: Bestellung erstellen
+## Schritt 4: Bestellung erstellen
 
 Jetzt kommt der zentrale Schritt: die **Bestellung** (englisch *Purchase Order*, kurz **PO**). Im Gegensatz zur Bestellanforderung ist die Bestellung ein **externer Beleg**. Sie geht nach außen an den Lieferanten und ist rechtlich verbindlich.
 
@@ -107,7 +107,7 @@ Die Bestellung enthält unter anderem:
 
 Eine Bestellung kann direkt aus einer Bestellanforderung erzeugt werden, aus einem Rahmenvertrag heraus oder komplett manuell entstehen. Die Daten aus der Anforderung — Material, Menge, Werk, Termin — werden dabei übernommen.
 
-## Schritt 6: Bestellüberwachung
+## Schritt 5: Bestellüberwachung
 
 Nach dem Versand der Bestellung läuft die **Bestellüberwachung**. Der Einkauf verfolgt:
 
@@ -117,7 +117,7 @@ Nach dem Versand der Bestellung läuft die **Bestellüberwachung**. Der Einkauf 
 
 Idealerweise schickt der Lieferant zwischendurch eine **Bestellbestätigung** zurück, sodass der Einkauf den vereinbarten Liefertermin im System hinterlegen kann. Bestellbestätigungen sind aber nicht zwingend.
 
-## Schritt 7: Wareneingang
+## Schritt 6: Wareneingang
 
 Sobald die Ware physisch im Lager ankommt, kommt der aus Anwendersicht spannendste Schritt: der **Wareneingang**. Die Ware wird in SAP **vereinnahmt** — das heißt, sie wird mengen- und wertmäßig ins System gebucht.
 
@@ -127,9 +127,9 @@ Was passiert beim Buchen?
 - Es wird automatisch ein **Materialbeleg** erzeugt — er dokumentiert die mengenmäßige Bewegung.
 - Es wird gleichzeitig ein **Buchhaltungsbeleg** erzeugt — er dokumentiert die wertmäßige Buchung.
 
-Diese Doppelbuchung — einmal Menge (Materialbeleg), einmal Wert (Buchhaltungsbeleg) — ist der Grund, warum ein Wareneingang in SAP nie „nur" den Lagerbestand verändert, sondern auch die Finanzbuchhaltung berührt.
+Diese Doppelbuchung — einmal Menge (Materialbeleg), einmal Wert (Buchhaltungsbeleg) — ist der Grund, warum ein Wareneingang in SAP in aller Regel nicht „nur" den Lagerbestand verändert, sondern zugleich die Finanzbuchhaltung berührt.
 
-## Schritt 7 (Fortsetzung): Rechnungsprüfung und der dreiseitige Abgleich
+## Schritt 7: Rechnungsprüfung und der dreiseitige Abgleich
 
 Irgendwann kommt die **Rechnung des Lieferanten**. Sie wird in SAP über die logistische Rechnungsprüfung erfasst. Das System macht dabei etwas sehr Wichtiges: den **dreiseitigen Abgleich** (englisch *three-way match*).
 
@@ -141,7 +141,7 @@ Dabei werden drei Belege miteinander verglichen:
 | **Wareneingang** | Was wurde tatsächlich geliefert? |
 | **Rechnung** | Was berechnet uns der Lieferant? |
 
-Nur wenn diese drei Dokumente in **Menge und Preis übereinstimmen**, läuft die Rechnung sauber durch. Bei Abweichungen sperrt SAP die Rechnung automatisch zur Klärung.
+Nur wenn diese drei Dokumente in **Menge und Preis übereinstimmen**, läuft die Rechnung sauber durch. Überschreiten die Abweichungen die eingestellten Toleranzen, sperrt SAP die Rechnung automatisch zur Klärung.
 
 Ein Beispiel: Bestellt waren 100 Stück zu 5 Euro, geliefert wurden ebenfalls 100 Stück. Berechnet der Lieferant jetzt aber 6 Euro pro Stück, erkennt SAP die Preisdifferenz und stellt die Rechnung zur Prüfung zurück. Genau dieser Mechanismus macht den dreiseitigen Abgleich zu einem der wichtigsten Kontrollpunkte im Beschaffungsprozess.
 
@@ -170,7 +170,7 @@ Welcher Prozess für eine Bestellposition gilt, steuert SAP über den **Position
 - **Bestellanforderung und Bestellung verwechseln.** Die Anforderung ist intern, die Bestellung geht nach außen. Wer beim Lieferanten nachfragt, warum „die Bestellung" nicht angekommen ist, sollte zuerst prüfen, ob überhaupt schon eine Bestellung existiert.
 - **Fehlende Freigabe übersehen.** Eine nicht freigegebene Anforderung oder Bestellung wird nicht weiterverarbeitet. Ein Blick auf den Freigabestatus spart viel Sucherei.
 - **Materialbeleg und Buchhaltungsbeleg vermischen.** Beim Wareneingang entstehen zwei Belege: einer für die Menge, einer für den Wert. Sie hängen zusammen, sind aber nicht dasselbe.
-- **Gesperrte Rechnung nicht erkennen.** Weicht die Rechnung in Menge oder Preis ab, sperrt SAP sie automatisch. Die Rechnung ist dann erfasst, aber noch nicht zahlungsreif — sie muss erst geklärt werden.
+- **Gesperrte Rechnung nicht erkennen.** Weicht die Rechnung in Menge oder Preis über die Toleranz hinaus ab, sperrt SAP sie automatisch. Die Rechnung ist dann erfasst, aber noch nicht zahlungsreif — sie muss erst geklärt werden.
 
 ## Kurz zusammengefasst
 
@@ -188,7 +188,7 @@ Beim Wareneingang zur Bestellung wird die Ware im System vereinnahmt: Der Bestan
 
 ### Was ist der dreiseitige Abgleich?
 
-Der dreiseitige Abgleich vergleicht Bestellung, Wareneingang und Rechnung in Menge und Preis. Nur wenn die drei Belege zusammenpassen, läuft die Rechnung sauber durch. Bei Abweichungen sperrt SAP die Rechnung zur Klärung.
+Der dreiseitige Abgleich vergleicht Bestellung, Wareneingang und Rechnung in Menge und Preis. Nur wenn die drei Belege zusammenpassen, läuft die Rechnung sauber durch. Bei Abweichungen außerhalb der Toleranz sperrt SAP die Rechnung zur Klärung.
 
 ### Warum bleibt eine Bestellung manchmal offen?
 
