@@ -26,10 +26,10 @@
             {%- if page.lang == 'de' -%}
                 Einkauf, Bestand, Rechnungsprüfung, Stammdaten — die SAP-Themen, die dir im Arbeitsalltag
                 begegnen, in klarer Sprache statt Fachchinesisch. Geschrieben von einem SAP-zertifizierten
-                Trainer, der genau diese Prozesse jeden Tag unterrichtet.
+                Berater (MM/SD) &amp; Trainer, der genau diese Prozesse jeden Tag unterrichtet.
             {%- else -%}
                 Procurement, inventory, invoice verification, master data — the SAP topics you actually meet
-                at work, in plain language instead of jargon. Written by a SAP-certified instructor who
+                at work, in plain language instead of jargon. Written by a SAP-certified consultant (MM/SD) &amp; trainer who
                 teaches these exact processes every day.
             {%- endif -%}
         </p>
@@ -42,9 +42,9 @@
             </a>
         </div>
         <ul class="hero-academy__trust">
-            <li><strong>SAP Certified</strong> {% if page.lang == 'de' %}Instructor{% else %}Instructor{% endif %}</li>
+            <li><strong>{% if page.lang == 'de' %}SAP-zertifizierter{% else %}SAP-certified{% endif %}</strong> {% if page.lang == 'de' %}Berater (MM/SD) &amp; Trainer{% else %}consultant (MM/SD) &amp; trainer{% endif %}</li>
             <li><strong>300+</strong> {% if page.lang == 'de' %}geschulte Teilnehmer{% else %}people trained{% endif %}</li>
-            <li><strong>DE · EN · ES</strong></li>
+            <li>{% if page.lang == 'de' %}Trainings in <strong>DE · EN · ES</strong>{% else %}Training in <strong>EN · DE · ES</strong>{% endif %}</li>
         </ul>
     </div>
 </section>
@@ -151,7 +151,7 @@
         <div class="authority__media">
             <picture>
                 <source type="image/webp" srcset="{{ '/mario-hero-400.webp' | relative_url }} 400w, {{ '/mario-hero-600.webp' | relative_url }} 600w" sizes="(max-width: 768px) 160px, 220px">
-                <img src="{{ '/mario-hero-400.jpg' | relative_url }}" srcset="{{ '/mario-hero-400.jpg' | relative_url }} 400w, {{ '/mario-hero-600.jpg' | relative_url }} 600w" sizes="(max-width: 768px) 160px, 220px" width="220" height="290" alt="Mario Bahunek — SAP Certified Instructor" loading="lazy" class="authority__photo">
+                <img src="{{ '/mario-hero-400.jpg' | relative_url }}" srcset="{{ '/mario-hero-400.jpg' | relative_url }} 400w, {{ '/mario-hero-600.jpg' | relative_url }} 600w" sizes="(max-width: 768px) 160px, 220px" width="220" height="290" alt="Mario Bahunek — SAP-certified consultant (MM/SD) &amp; trainer" loading="lazy" class="authority__photo">
             </picture>
         </div>
         <div class="authority__body">
@@ -159,12 +159,12 @@
             <h2 class="section-title">{% if page.lang == 'de' %}Erklärt von jemandem, der es unterrichtet{% else %}Explained by someone who teaches it{% endif %}</h2>
             <p>
                 {%- if page.lang == 'de' -%}
-                    Ich bin Mario Bahunek, SAP Certified Instructor. Ich schule seit Jahren SAP MM &amp; SD —
+                    Ich bin Mario Bahunek, SAP-zertifizierter Berater (MM/SD) &amp; Trainer. Ich schule seit Jahren SAP MM &amp; SD —
                     über 300 Teilnehmer, eine Bestehensquote von über 98&nbsp;% und eine Trainer-Note von 1,07.
                     Diese Academy ist der offene Teil davon: dieselben Erklärungen, die im Kurs den Groschen
                     fallen lassen, frei zum Nachlesen.
                 {%- else -%}
-                    I'm Mario Bahunek, a SAP Certified Instructor. I've trained SAP MM &amp; SD for years —
+                    I'm Mario Bahunek, a SAP-certified consultant (MM/SD) &amp; trainer. I've trained SAP MM &amp; SD for years —
                     300+ participants, a 98%+ pass rate, and an instructor rating of 1.07. This academy is the
                     open part of that work: the same explanations that make things click in class, free to read.
                 {%- endif -%}

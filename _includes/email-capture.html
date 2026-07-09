@@ -97,6 +97,14 @@
         });
     }
 
-    document.querySelectorAll('.js-lead-form').forEach(bind);
+    // Bind AFTER the full DOM is parsed, so every .js-lead-form on the page is
+    // caught even when includes are separated by other markup (e.g. blog-outro +
+    // academy-cta). Running at parse time would only bind forms above this script.
+    function bindAll() { document.querySelectorAll('.js-lead-form').forEach(bind); }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bindAll);
+    } else {
+        bindAll();
+    }
 })();
 </script>

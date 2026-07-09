@@ -58,6 +58,22 @@
         </div>
     </div>
 </section>
+
+<section class="blog-outro">
+    <div class="blog-outro__inner">
+        <h2 class="blog-outro__title">
+            {% if page.lang == 'de' %}Kein neuer Artikel verpasst{% else %}Never miss a new article{% endif %}
+        </h2>
+        <p class="blog-outro__body">
+            {%- if page.lang == 'de' -%}
+                Neue SAP-Erklärartikel erscheinen laufend. Trag dich ein und bekomm jeden neuen Beitrag per E-Mail — verständlich, praxisnah, kein Spam.
+            {%- else -%}
+                New SAP explainer articles go live regularly. Subscribe and get every new post by email — clear, practical, no spam.
+            {%- endif -%}
+        </p>
+        {% include email-capture.html id="blog" %}
+    </div>
+</section>
 {%- else -%}
 <section class="blog-empty">
     <div class="blog-empty__inner">
