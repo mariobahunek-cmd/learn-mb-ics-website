@@ -33,8 +33,8 @@
     </label>
     <p class="lead-form__error" role="alert" hidden></p>
     <div class="lead-form__thanks" role="status" hidden>
-        <strong>{% if page.lang == 'de' %}Fast geschafft — bitte E-Mail bestätigen.{% else %}Almost there — please confirm your email.{% endif %}</strong>
-        <span>{% if page.lang == 'de' %}Danke! Neue Artikel landen ab jetzt in deinem Postfach.{% else %}Thanks! New articles will land in your inbox from now on.{% endif %}</span>
+        <strong>{% if page.lang == 'de' %}Danke! Du bist vorgemerkt.{% else %}Thanks! You're on the list.{% endif %}</strong>
+        <span>{% if page.lang == 'de' %}Die Anmeldung wird per E-Mail bestätigt.{% else %}We'll confirm your signup by email.{% endif %}</span>
     </div>
 </form>
 
@@ -90,7 +90,7 @@
             } catch (err) {
                 // Sauberer Fallback: E-Mail-Programm öffnen, damit der Lead nie verloren geht.
                 var subject = encodeURIComponent('MB-ICS Academy Newsletter — ' + first);
-                var body = encodeURIComponent('Bitte für den SAP-Academy-Newsletter eintragen.\n\nVorname: ' + first + '\nE-Mail: ' + email);
+                var body = encodeURIComponent('Bitte für den MB-ICS-Academy-Newsletter eintragen.\n\nVorname: ' + first + '\nE-Mail: ' + email);
                 window.location.href = 'mailto:mario@mb-ics.com?subject=' + subject + '&body=' + body;
                 btn.disabled = false;
             }
