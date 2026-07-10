@@ -18,7 +18,7 @@ sources:
 
 When a company needs to buy something — material, spare parts, a service — the journey in SAP almost always starts in the same place: with a **purchase requisition**. It's one of those terms every SAP user in a procurement context hears sooner or later. This article explains, in plain language, what's behind it.
 
-## In short: an internal request to buy something
+## What is a purchase requisition, in short?
 
 A purchase requisition is an **internal document**. With it, a department is essentially saying: "We need this material or service — please take care of procuring it." So it points **inward**, to the purchasing team, and not yet outward to a supplier.
 
@@ -29,7 +29,7 @@ That's the most important distinction, and the one people mix up at the start:
 
 The purchase requisition is therefore the first step in the procurement chain, and not yet a contract with anyone.
 
-## How a purchase requisition is created
+## How is a purchase requisition created?
 
 There are two typical ways a purchase requisition comes into being in SAP.
 
@@ -39,7 +39,7 @@ There are two typical ways a purchase requisition comes into being in SAP.
 
 In both cases the result is the same: an internal document telling purchasing that something is needed.
 
-## From demand to purchase order
+## How does a purchase requisition become a purchase order?
 
 Once the purchase requisition exists, purchasing takes over. Simplified, it goes like this:
 

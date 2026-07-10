@@ -18,7 +18,7 @@ sources:
 
 Wenn in einem Unternehmen etwas beschafft werden soll — Material, Ersatzteile, eine Dienstleistung — beginnt der Weg in SAP fast immer an derselben Stelle: mit einer **Bestellanforderung**, kurz BANF. Sie ist einer der Begriffe, die jeder SAP-Anwender im Einkaufsumfeld früher oder später hört. Dieser Artikel erklärt in klarer Sprache, was dahintersteckt.
 
-## Kurz gesagt: eine interne Bitte, etwas zu beschaffen
+## Was ist eine Bestellanforderung, kurz gesagt?
 
 Eine Bestellanforderung ist ein **internes Dokument**. Mit ihr sagt eine Abteilung im Grunde: „Wir brauchen dieses Material oder diese Leistung — bitte kümmert euch um die Beschaffung." Sie richtet sich also **nach innen**, an den Einkauf, und noch nicht nach außen an einen Lieferanten.
 
@@ -29,7 +29,7 @@ Genau das ist der wichtigste Unterschied, den man am Anfang oft verwechselt:
 
 Die Bestellanforderung ist damit der erste Schritt in der Beschaffungskette und noch kein Vertrag mit irgendjemandem.
 
-## Wie eine Bestellanforderung entsteht
+## Wie entsteht eine Bestellanforderung?
 
 Es gibt zwei typische Wege, auf denen eine Bestellanforderung in SAP entsteht.
 
@@ -39,7 +39,7 @@ Es gibt zwei typische Wege, auf denen eine Bestellanforderung in SAP entsteht.
 
 In beiden Fällen ist das Ergebnis dasselbe: ein internes Dokument, das dem Einkauf sagt, dass etwas gebraucht wird.
 
-## Vom Bedarf zur Bestellung
+## Wie wird aus einer Bestellanforderung eine Bestellung?
 
 Sobald die Bestellanforderung da ist, übernimmt der Einkauf. Vereinfacht läuft es so:
 
