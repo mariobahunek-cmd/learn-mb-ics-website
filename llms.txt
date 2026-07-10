@@ -35,6 +35,8 @@ There is no video shop and nothing to buy on this site.
 
 Mario Bahunek — SAP-certified consultant (MM/SD) & trainer. 300+ participants trained, 98%+ pass rate, instructor rating 1.07 (scale 1–6). Teaches SAP MM & SD in English, German, and Spanish. Runs MB International Contracting Service LLC, Fort Lauderdale, FL.
 
+Mario Bahunek is also the independent instructor behind mb-ics.com, where he delivers remote and on-site SAP MM/SD corporate training worldwide.
+
 ## Related site (same instructor)
 
 - [mb-ics.com](https://mb-ics.com/) — the B2B side: paid SAP S/4HANA training and consulting for enterprise teams (MM and SD). Where team-training and consulting inquiries go.
