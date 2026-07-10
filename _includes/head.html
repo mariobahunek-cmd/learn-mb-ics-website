@@ -136,6 +136,53 @@
 </script>
 {%- endif -%}
 
+{%- comment -%} ── JSON-LD: BreadcrumbList (nur Posts) — Home › Articles › Titel ── {%- endcomment -%}
+{%- if page.layout == 'post' -%}
+  {%- assign crumb_home = '/' -%}{%- assign crumb_home_label = 'Home' -%}{%- assign crumb_blog_label = 'Articles' -%}
+  {%- if page.lang == 'de' -%}{%- assign crumb_home = '/de/' -%}{%- assign crumb_home_label = 'Start' -%}{%- assign crumb_blog_label = 'Artikel' -%}{%- endif -%}
+  {%- assign crumb_blog = '/blog/' | append: page.lang | append: '/' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "{{ crumb_home_label }}", "item": "{{ crumb_home | absolute_url }}" },
+    { "@type": "ListItem", "position": 2, "name": "{{ crumb_blog_label }}", "item": "{{ crumb_blog | absolute_url }}" },
+    { "@type": "ListItem", "position": 3, "name": {{ page.title | jsonify }}, "item": "{{ page.url | absolute_url }}" }
+  ]
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} ── JSON-LD: Blog + BreadcrumbList (nur Blog-Hubs /blog/de|en/) ── {%- endcomment -%}
+{%- if page.layout == 'blog' -%}
+  {%- assign crumb_home = '/' -%}{%- assign crumb_home_label = 'Home' -%}{%- assign crumb_blog_label = 'Articles' -%}
+  {%- if page.lang == 'de' -%}{%- assign crumb_home = '/de/' -%}{%- assign crumb_home_label = 'Start' -%}{%- assign crumb_blog_label = 'Artikel' -%}{%- endif -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "@id": "{{ page.url | absolute_url }}#blog",
+  "name": {{ page.title | jsonify }},
+  "description": {{ page.description | default: site.description | jsonify }},
+  "url": "{{ page.url | absolute_url }}",
+  "inLanguage": "{{ page.lang }}",
+  "isPartOf": { "@id": "{{ '/#website' | absolute_url }}" },
+  "publisher": { "@id": "{{ '/#organization' | absolute_url }}" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "{{ crumb_home_label }}", "item": "{{ crumb_home | absolute_url }}" },
+    { "@type": "ListItem", "position": 2, "name": "{{ crumb_blog_label }}", "item": "{{ page.url | absolute_url }}" }
+  ]
+}
+</script>
+{%- endif -%}
+
 {%- comment -%} ── JSON-LD: FAQPage (wenn page.faq gesetzt) — für AI-Suche ── {%- endcomment -%}
 {%- if page.faq -%}
 <script type="application/ld+json">
