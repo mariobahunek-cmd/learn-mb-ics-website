@@ -16,7 +16,7 @@ lang: "en"
 
 # ── Site-eigene Variablen ─────────────────────────────────────────────
 # Kontakt-/Trainings-Anfragen laufen bewusst auf mb-ics.com (B2B-Schaufenster).
-mbics_contact: "https://mb-ics.com/#contact"
+mbics_contact: "https://mb-ics.com/sap-mm-corporate-training/"
 mbics_home: "https://mb-ics.com/"
 linkedin: "https://www.linkedin.com/in/mariobahunek/"
 # E-Mail-Capture: Aktuell die bestehende Formspree-Form (leads landen in Marios
