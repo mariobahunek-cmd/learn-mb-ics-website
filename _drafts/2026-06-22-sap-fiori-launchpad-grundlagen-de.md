@@ -27,17 +27,17 @@ faq:
     a: "Für die meiste Arbeit nicht mehr. Die zentrale Suche findet Apps und Geschäftsobjekte über Klartext, etwa „Bestellung anlegen“. Klassische Transaktionen lassen sich in S/4HANA aber weiterhin aufrufen und öffnen sich dann in einem eingebetteten GUI-Fenster."
 ---
 
-Wer heute mit SAP S/4HANA arbeitet, landet nach der Anmeldung fast immer an derselben Stelle: im SAP Fiori Launchpad. Es ist die moderne Startseite jedes Anwenders und ersetzt Schritt für Schritt die klassische, graue SAP GUI. Dieser Artikel erklärt in klarer Sprache, was dich dort erwartet — von der Kachel bis zur Personalisierung.
+Melde dich an einem SAP-S/4HANA-System an, und du landest fast immer an derselben Stelle: im SAP Fiori Launchpad. Es ist die moderne Startseite jedes Anwenders und ersetzt Schritt für Schritt die klassische, graue SAP GUI. Wenn ich das im Kurs zum ersten Mal zeige, kommt fast reflexhaft die Frage, ob Fiori denn „ein neues Programm“ sei. Ist es nicht: Fiori ist die Oberfläche, durch die dasselbe S/4HANA hindurchscheint, das früher grau und kantig aussah.
 
-## Kurz gesagt: die persönliche Startseite in S/4HANA
+## Das Launchpad in einem Satz
 
-Das Fiori Launchpad ist der zentrale Einstiegspunkt in SAP S/4HANA. Stell es dir vor wie den Homescreen deines Smartphones: Du siehst **Kacheln**, klickst eine an, und die zugehörige App öffnet sich. Im Hintergrund läuft dabei das komplette S/4HANA mit seinen Geschäftsprozessen.
+Das Fiori Launchpad ist der zentrale Einstiegspunkt in SAP S/4HANA. Stell es dir vor wie den Homescreen deines Smartphones: Du siehst Kacheln, klickst eine an, und die zugehörige App öffnet sich. Im Hintergrund läuft dabei das komplette S/4HANA mit seinen Geschäftsprozessen.
 
-Der wichtigste Gedanke dahinter: Das Launchpad ist **rollenbasiert**. Es zeigt dir nur die Apps, die zu deiner Aufgabe gehören — nicht das gesamte System. Deshalb sieht deine Startseite anders aus als die einer Kollegin aus dem Einkauf oder der Buchhaltung.
+Der wichtigste Gedanke dahinter: Das Launchpad ist **rollenbasiert**. Es zeigt dir nur die Apps, die zu deiner Aufgabe gehören, nicht das gesamte System. Deshalb sieht deine Startseite anders aus als die einer Kollegin aus dem Einkauf oder der Buchhaltung.
 
 ## Was ist SAP Fiori überhaupt?
 
-SAP Fiori ist die Benutzeroberfläche — die User Experience — von SAP S/4HANA. Während die alte SAP GUI mit grauen Menüs, Transaktionscodes und dicht gepackten Eingabefeldern arbeitete, sieht Fiori aus wie eine moderne Web-Anwendung: Kacheln auf hellem Hintergrund, klare Schrift, verständliche Symbole und eine durchgängige Suche.
+SAP Fiori ist die Benutzeroberfläche, die User Experience, von SAP S/4HANA. Während die alte SAP GUI mit grauen Menüs, Transaktionscodes und dicht gepackten Eingabefeldern arbeitete, sieht Fiori aus wie eine moderne Web-Anwendung: Kacheln auf hellem Hintergrund, klare Schrift, verständliche Symbole und eine durchgängige Suche.
 
 SAP hat Fiori nach fünf Designprinzipien aufgebaut:
 
@@ -49,11 +49,7 @@ SAP hat Fiori nach fünf Designprinzipien aufgebaut:
 
 ## Die festen Bereiche des Launchpads
 
-Wenn du das Launchpad geöffnet hast, findest du dich schnell zurecht, sobald du die festen Zonen kennst:
-
-- **Kopfzeile (Shell Bar)** ganz oben mit Logo, Suche, Benachrichtigungen und Benutzermenü
-- **Hauptbereich** in der Mitte mit den Apps, organisiert in **Bereichen und Seiten** (englisch: Spaces and Pages)
-- **Navigation** über Menü oder Suche
+Wenn du das Launchpad geöffnet hast, findest du dich schnell zurecht, sobald du die festen Zonen kennst. Ganz oben sitzt die Kopfzeile, die Shell Bar, mit Logo, Suche, Benachrichtigungen und dem Benutzermenü. Darunter liegt der Hauptbereich mit den eigentlichen Apps, organisiert in Bereichen und Seiten (englisch: Spaces and Pages). Navigiert wird über das Menü oder die Suche.
 
 ### Apps und Kacheln
 
@@ -72,9 +68,9 @@ Das ist ein großer Vorteil gegenüber der klassischen GUI: Du musst keine Trans
 
 ### Benachrichtigungen und Benutzermenü
 
-Rechts oben in der Kopfzeile findest du ein Glockensymbol — das **Notification Center**. Hier laufen Genehmigungsanfragen, Aufgaben, Erinnerungen und Workflow-Schritte ein. Mit einem Klick springst du aus der Benachrichtigung direkt in die passende App.
+Rechts oben in der Kopfzeile findest du ein Glockensymbol, das Notification Center. Hier laufen Genehmigungsanfragen, Aufgaben, Erinnerungen und Workflow-Schritte ein. Mit einem Klick springst du aus der Benachrichtigung direkt in die passende App.
 
-Daneben liegt dein **Benutzermenü**, erkennbar am Profilbild oder an deinen Initialen. Dort findest du persönliche Einstellungen (Sprache, Zeitzone, Theme), Personalisierungsoptionen, Favoriten sowie das Abmelden.
+Daneben liegt dein Benutzermenü, erkennbar am Profilbild oder an deinen Initialen. Dort findest du persönliche Einstellungen (Sprache, Zeitzone, Theme), Personalisierungsoptionen, Favoriten sowie das Abmelden.
 
 ## Welche Kachel-Arten gibt es?
 
@@ -92,7 +88,7 @@ In früheren Fiori-Versionen waren Apps in **Gruppen** (Groups) organisiert. Im 
 
 ### Bereiche
 
-Ein Bereich ist ein eigener Abschnitt im Launchpad, der einer Rolle oder einem Aufgabengebiet zugeordnet ist. Du kannst dir Bereiche wie Reiter (Tabs) im oberen Teil vorstellen — etwa „Einkauf“, „Lager“ oder „Mein Arbeitsplatz“. Wer im Einkauf arbeitet, klickt auf den Einkauf-Bereich und sieht nur die dort relevanten Apps.
+Ein Bereich ist ein eigener Abschnitt im Launchpad, der einer Rolle oder einem Aufgabengebiet zugeordnet ist. Du kannst dir Bereiche wie Reiter (Tabs) im oberen Teil vorstellen: etwa „Einkauf“, „Lager“ oder „Mein Arbeitsplatz“. Wer im Einkauf arbeitet, klickt auf den Einkauf-Bereich und sieht nur die dort relevanten Apps.
 
 ### Seiten
 
@@ -100,7 +96,7 @@ Innerhalb eines Bereichs gibt es eine oder mehrere Seiten. Eine Seite ist eine i
 
 ### Meine Startseite
 
-Mit dem Theme **SAP Fiori Horizon** ist auch **Meine Startseite** dazugekommen — eine persönliche Startseite, die du selbst gestalten kannst. Sie bündelt typischerweise mehrere Abschnitte:
+Mit dem Theme **SAP Fiori Horizon** ist auch **Meine Startseite** dazugekommen, eine persönliche Startseite, die du selbst gestalten kannst. Sie bündelt typischerweise mehrere Abschnitte:
 
 - **To-Dos** — Aufgaben und Situationen an einem Ort
 - **Seiten** — direkt anspringbar, ohne den Umweg über die Bereiche
@@ -154,13 +150,15 @@ Aus dem Fiori Launchpad heraus kannst du in S/4HANA übrigens auch klassische GU
 
 ## Häufige Stolpersteine
 
+Fast immer sind es dieselben Stellen, an denen es hakt: Launchpad, Kachel und App geraten durcheinander, und wer lange mit der alten SAP GUI gearbeitet hat, sucht die vertrauten Menüs dort, wo jetzt Kacheln liegen.
+
 - **Begriffe verwechseln.** Bereich, Seite, Abschnitt, Kachel, App — wer diese durcheinanderbringt, findet sich in Gesprächen schwerer zurecht. Ordne jedem Begriff seine Funktion zu, dann wird das Launchpad schnell klar.
 - **Personalisierung mit Berechtigung verwechseln.** Wenn dir eine App fehlt, hilft kein Anheften — sie gehört schlicht nicht zu deiner Rolle. Personalisierung ordnet nur an, was du ohnehin sehen darfst.
 - **Nach Transaktionscodes suchen, statt die Suche zu nutzen.** Die zentrale Suche findet Apps und Geschäftsobjekte über Klartext. Wer trotzdem Codes tippt, macht sich die Arbeit unnötig schwer.
 
-## Kurz zusammengefasst
+## Worauf es ankommt
 
-Das SAP Fiori Launchpad ist die **rollenbasierte Startseite** von S/4HANA: eine Sammlung von Kacheln, die dir genau die Apps zeigt, die zu deiner Aufgabe passen. Du navigierst über Bereiche und Seiten, findest alles über die zentrale Suche und richtest dir mit Personalisierung und Themes deinen eigenen Arbeitsplatz ein. Wer die Bausteine — Kachel, Bereich, Seite, App-Typ — einmal auseinanderhält, bewegt sich in S/4HANA schnell sicher.
+Das SAP Fiori Launchpad ist die **rollenbasierte Startseite** von S/4HANA: eine Sammlung von Kacheln, die dir genau die Apps zeigt, die zu deiner Aufgabe passen. Du navigierst über Bereiche und Seiten, findest alles über die zentrale Suche und richtest dir mit Personalisierung und Themes deinen eigenen Arbeitsplatz ein. Wer die Bausteine Kachel, Bereich, Seite und App-Typ einmal auseinanderhält, bewegt sich in S/4HANA schnell sicher.
 
 ## Häufige Fragen
 

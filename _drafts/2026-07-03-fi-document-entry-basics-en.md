@@ -25,16 +25,16 @@ faq:
     a: "The document type controls things like which number range the document number comes from and which account types are allowed in the document. It classifies the transaction — for example as a G/L posting, a vendor invoice or a customer invoice."
 ---
 
-Whether it's a bank posting, an incoming invoice or a credit memo — in SAP Financial Accounting (FI), every business transaction ends up in the same form: as a **document**. Once you understand how a document is built and how you enter it, you understand the heart of working in SAP FI. This article explains, in plain language, what's behind it.
+In SAP Financial Accounting, no business transaction gets around one thing: in the end, everything becomes a **document**. Whether cash moves from the bank into petty cash, a supplier invoice arrives or a customer receives a credit memo: technically the same data structure is created every time. Once you've understood how it's built, you'll find your way around the whole FI module quickly.
 
-## In short: the document is the central unit of every posting
+## The document as the basic unit
 
 An **FI document** is the unit in which SAP stores each individual business transaction in financial accounting. It always consists of two parts:
 
 - The **document header** — general data such as the posting date, document type, company code and currency.
 - The **line items** — the actual posting lines, each with an account, a debit or credit amount, and further assignments such as cost centre or profit centre.
 
-One rule always holds: every document must be balanced, **total debits = total credits**. That's the basic principle of double-entry bookkeeping, and SAP enforces it technically when you post. A document that isn't balanced can't be posted at all.
+One rule always holds: every document must be balanced, total debits = total credits. That's the basic principle of double-entry bookkeeping, and SAP enforces it technically when you post. A document that isn't balanced can't be posted at all.
 
 ## Which postings do you enter in SAP FI?
 
@@ -46,7 +46,7 @@ In SAP S/4HANA financial accounting you typically enter these kinds of postings:
 - **Vendor invoices** — incoming invoices from suppliers.
 - **Vendor credit memos** — credit memos from suppliers.
 
-A simple example makes the principle tangible: if 5,000 EUR is withdrawn from the bank account and put into petty cash, that becomes a G/L posting with two lines — petty cash 5,000 EUR on the debit side, bank 5,000 EUR on the credit side. Debits and credits match, so the document is balanced.
+A simple example makes the principle tangible: if 5,000 EUR is withdrawn from the bank account and put into petty cash, that becomes a G/L posting with two lines: petty cash 5,000 EUR on the debit side, bank 5,000 EUR on the credit side. Debits and credits match, so the document is balanced.
 
 ## What is the document type for?
 
@@ -55,9 +55,9 @@ The **document type** is a central control element in every document. It determi
 - Which **number range** the document number is drawn from.
 - Which **account types** (G/L, customer, vendor, asset, material) are allowed in the document.
 - Whether **document splitting** takes place.
-- Which **fields** are visible or mandatory during entry.
+- Whether individual header fields such as reference or header text are mandatory.
 
-In practice you rarely have to hunt for the document type by hand: depending on the transaction, SAP proposes a suitable default type, which you can override if needed. For a vendor invoice that's an invoice document type, for a pure G/L posting a G/L document type. So the document type classifies the transaction correctly from the start.
+Whether an individual field in the line items is visible or mandatory, by contrast, isn't decided by the document type but mainly by the field status group on the G/L account together with the posting key. In practice you rarely have to hunt for the document type by hand: depending on the transaction, SAP proposes a suitable default type, which you can override if needed. For a vendor invoice that's an invoice document type, for a pure G/L posting a G/L document type. So the document type classifies the transaction correctly from the start.
 
 ## Posting, parking, holding — three ways to save a document
 
@@ -67,7 +67,7 @@ This is one of the most important concepts in day-to-day work. When you enter a 
 - **Park** — the document is saved and has a preliminary number, but does *not yet* flow into the balance sheet and P&L. A typical use: a clerk enters it, and a second person approves the final posting (four-eyes principle).
 - **Hold** — the document is set aside as a *held document*, often still incomplete. You use this when data is still missing and you want to continue later.
 
-The practical core: only the **posted** document affects the financials. Parked and held documents are saved, but they don't show up in the balance sheet or P&L. A document is only final once you click "Post" — until then you can change or discard anything.
+The practical core: only the posted document affects the financials. Parked and held documents are saved, but they don't show up in the balance sheet or P&L. A document is only final once you click "Post"; until then you can change or discard anything.
 
 ## What's in the document header?
 
@@ -108,9 +108,7 @@ An example: if the limit per document is 500,000 EUR and you try to post 600,000
 
 ## Who works with document entry day to day
 
-- **Accounting clerks** enter ongoing documents — invoices, bank postings, reclassifications.
-- **Accounting managers or reviewers** release parked documents and work with higher tolerance limits.
-- **Specialist departments** supply the basis, such as incoming invoices that are then entered.
+Most of the work falls to the accounting clerks: they enter the ongoing documents, meaning invoices, bank postings and reclassifications. Accounting managers or reviewers come in wherever parked documents need to be released, and they work with higher tolerance limits. The underlying basis, in turn, often comes from the specialist departments, for instance as incoming invoices that are then posted.
 
 For you as a user, document entry is the point where business transactions get translated into figures. Once you've internalised how a document is built and the difference between posting, parking and holding, you'll find your way around SAP FI quickly.
 
@@ -121,7 +119,7 @@ For you as a user, document entry is the point where business transactions get t
 - **Overlooking a tolerance limit.** If a posting is rejected for no obvious reason, check your own tolerance group before suspecting a system fault.
 - **Not simulating.** If you don't simulate before posting, you only see automatically generated items like the tax line afterwards — and may have to reverse.
 
-## In a nutshell
+## What matters most
 
 The document is the central unit of every posting in SAP FI: a **header** with the general data and **line items** with the individual posting lines, which must always balance in debit and credit. The document type classifies the transaction, and when you save you choose between posting, parking and holding — only posting makes the document final and part of the financials. Once you've grasped this structure and these three options, you've got the basics of document entry down.
 

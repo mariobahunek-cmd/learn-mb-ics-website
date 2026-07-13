@@ -25,16 +25,16 @@ faq:
     a: "Die Belegart steuert unter anderem, aus welchem Nummernkreis die Belegnummer stammt und welche Kontotypen im Beleg erlaubt sind. Sie ordnet den Geschäftsvorfall ein — etwa als Sachkontenbuchung, Kreditoren- oder Debitorenrechnung."
 ---
 
-Egal ob Bankbuchung, Eingangsrechnung oder Gutschrift — in der SAP-Finanzbuchhaltung (FI) landet jeder Geschäftsvorfall am Ende in derselben Form: als **Beleg**. Wer versteht, wie ein Beleg aufgebaut ist und wie man ihn erfasst, versteht den Kern der Arbeit in SAP FI. Dieser Artikel erklärt in klarer Sprache, was dahintersteckt.
+In der SAP-Finanzbuchhaltung führt kein Geschäftsvorfall an einem Punkt vorbei: Am Ende wird alles zu einem **Beleg**. Ob Geld von der Bank in die Kasse wandert, eine Lieferantenrechnung eintrifft oder ein Kunde eine Gutschrift bekommt: Technisch entsteht jedes Mal dieselbe Datenstruktur. Wer ihren Aufbau einmal verstanden hat, findet sich im gesamten FI-Modul schnell zurecht.
 
-## Kurz gesagt: der Beleg ist die zentrale Einheit jeder Buchung
+## Der Beleg als Grundeinheit
 
 Ein **FI-Beleg** ist die Einheit, in der SAP jeden einzelnen Geschäftsvorfall in der Finanzbuchhaltung speichert. Er besteht immer aus zwei Teilen:
 
 - Dem **Belegkopf** — mit allgemeinen Daten wie Buchungsdatum, Belegart, Buchungskreis und Währung.
 - Den **Belegpositionen** — den eigentlichen Buchungszeilen mit Konto, Soll- oder Habenbetrag und weiteren Zuordnungen wie Kostenstelle oder Profitcenter.
 
-Eine Regel gilt dabei immer: Jeder Beleg muss ausgeglichen sein, **Soll-Summe = Haben-Summe**. Das ist das Grundprinzip der doppelten Buchführung, und SAP erzwingt es technisch beim Buchen. Ein Beleg, der nicht ausgeglichen ist, lässt sich gar nicht erst buchen.
+Eine Regel gilt dabei immer: Jeder Beleg muss ausgeglichen sein, Soll-Summe = Haben-Summe. Das ist das Grundprinzip der doppelten Buchführung, und SAP erzwingt es technisch beim Buchen. Ein Beleg, der nicht ausgeglichen ist, lässt sich gar nicht erst buchen.
 
 ## Welche Buchungen erfasst man in SAP FI?
 
@@ -46,7 +46,7 @@ In der Finanzbuchhaltung von SAP S/4HANA erfasst man typischerweise diese Arten 
 - **Kreditorenrechnungen** — Eingangsrechnungen von Lieferanten.
 - **Kreditorengutschriften** — Gutschriften von Lieferanten.
 
-Ein einfaches Beispiel macht das Prinzip greifbar: Werden 5.000 € vom Bankkonto abgehoben und in die Kasse gelegt, entsteht eine Sachkontenbuchung mit zwei Zeilen — Kasse 5.000 € im Soll, Bank 5.000 € im Haben. Soll und Haben sind gleich, der Beleg ist ausgeglichen.
+Ein einfaches Beispiel macht das Prinzip greifbar: Werden 5.000 € vom Bankkonto abgehoben und in die Kasse gelegt, entsteht eine Sachkontenbuchung mit zwei Zeilen: Kasse 5.000 € im Soll, Bank 5.000 € im Haben. Soll und Haben sind gleich, der Beleg ist ausgeglichen.
 
 ## Wozu dient die Belegart?
 
@@ -55,9 +55,9 @@ Die **Belegart** ist ein zentrales Steuerelement in jedem Beleg. Sie legt fest:
 - Aus welchem **Nummernkreis** die Belegnummer gezogen wird.
 - Welche **Kontotypen** (Sachkonto, Debitor, Kreditor, Anlage, Material) im Beleg zugelassen sind.
 - Ob eine **Belegaufteilung** stattfindet.
-- Welche **Felder** in der Erfassung sichtbar oder Pflicht sind.
+- Ob einzelne Kopf-Felder wie Referenz oder Belegkopftext Pflicht sind.
 
-In der Praxis muss man die Belegart selten von Hand suchen: SAP schlägt je nach Vorgang eine passende Standard-Belegart vor, die man bei Bedarf überschreiben kann. Bei einer Kreditorenrechnung ist das zum Beispiel eine Rechnungs-Belegart, bei einer reinen Hauptbuchbuchung eine Sachkonten-Belegart. Die Belegart ordnet den Vorfall also von Anfang an richtig ein.
+Ob dagegen ein einzelnes Feld in den Positionen sichtbar oder Pflicht ist, entscheidet nicht die Belegart, sondern vor allem die Feldstatusgruppe am Sachkonto zusammen mit dem Buchungsschlüssel. In der Praxis muss man die Belegart selten von Hand suchen: SAP schlägt je nach Vorgang eine passende Standard-Belegart vor, die man bei Bedarf überschreiben kann. Bei einer Kreditorenrechnung ist das zum Beispiel eine Rechnungs-Belegart, bei einer reinen Hauptbuchbuchung eine Sachkonten-Belegart. Die Belegart ordnet den Vorfall also von Anfang an richtig ein.
 
 ## Buchen, Vorerfassen, Merken — drei Wege, einen Beleg zu speichern
 
@@ -67,7 +67,7 @@ Das ist eines der wichtigsten Konzepte im Alltag. Beim Erfassen eines Belegs has
 - **Vorerfassen** — der Beleg ist gespeichert und hat eine vorläufige Nummer, fließt aber *noch nicht* in Bilanz und GuV ein. Typischer Einsatz: Ein Sachbearbeiter erfasst, die endgültige Buchung gibt eine zweite Person frei (Vier-Augen-Prinzip).
 - **Merken** — der Beleg wird als *gemerkter Beleg* zwischengespeichert, oft noch unvollständig. Das nutzt man, wenn noch Daten fehlen und man später weiterarbeiten will.
 
-Der praktische Kern dahinter: Nur der **gebuchte** Beleg ist bilanzwirksam. Vorerfasste und gemerkte Belege sind zwar gespeichert, tauchen aber nicht in Bilanz oder GuV auf. Erst nach dem Klick auf „Buchen" ist ein Beleg endgültig — bis dahin kannst du alles ändern oder verwerfen.
+Der praktische Kern dahinter: Nur der gebuchte Beleg ist bilanzwirksam. Vorerfasste und gemerkte Belege sind zwar gespeichert, tauchen aber nicht in Bilanz oder GuV auf. Erst nach dem Klick auf „Buchen“ ist ein Beleg endgültig; bis dahin kannst du alles ändern oder verwerfen.
 
 ## Was steht im Belegkopf?
 
@@ -108,9 +108,7 @@ Ein Beispiel: Liegt die Grenze pro Beleg bei 500.000 € und versuchst du eine B
 
 ## Wer im Alltag mit der Belegerfassung arbeitet
 
-- **Sachbearbeiter in der Buchhaltung** erfassen laufende Belege — Rechnungen, Bankbuchungen, Umbuchungen.
-- **Buchhaltungsleiter oder Prüfende** geben vorerfasste Belege frei und arbeiten mit höheren Toleranzgrenzen.
-- **Fachabteilungen** liefern die Grundlagen, etwa Eingangsrechnungen, die dann erfasst werden.
+Die meiste Arbeit machen die Sachbearbeiter in der Buchhaltung: Sie erfassen die laufenden Belege, also Rechnungen, Bankbuchungen und Umbuchungen. Buchhaltungsleiter oder Prüfende kommen dort ins Spiel, wo vorerfasste Belege freigegeben werden müssen, und sie arbeiten mit höheren Toleranzgrenzen. Die Grundlagen wiederum liefern oft die Fachabteilungen, etwa in Form von Eingangsrechnungen, die anschließend gebucht werden.
 
 Für dich als Anwender ist die Belegerfassung der Punkt, an dem Geschäftsvorfälle in Zahlen übersetzt werden. Wer den Aufbau eines Belegs und den Unterschied zwischen Buchen, Vorerfassen und Merken verinnerlicht hat, findet sich in SAP FI schnell zurecht.
 
@@ -121,7 +119,7 @@ Für dich als Anwender ist die Belegerfassung der Punkt, an dem Geschäftsvorfä
 - **Toleranzgrenze übersehen.** Wird eine Buchung ohne klaren Grund abgelehnt, lohnt ein Blick auf die eigene Toleranzgruppe, bevor man einen Systemfehler vermutet.
 - **Nicht simulieren.** Wer vor dem Buchen nicht simuliert, sieht automatisch erzeugte Positionen wie die Steuerzeile erst hinterher — und muss im Zweifel stornieren.
 
-## Kurz zusammengefasst
+## Das Wichtigste
 
 Der Beleg ist die zentrale Einheit jeder Buchung in SAP FI: ein **Belegkopf** mit den allgemeinen Daten und **Belegpositionen** mit den einzelnen Buchungszeilen, die in Soll und Haben immer ausgeglichen sein müssen. Die Belegart ordnet den Vorgang ein, und beim Speichern entscheidest du zwischen Buchen, Vorerfassen und Merken — nur das Buchen macht den Beleg endgültig und bilanzwirksam. Wer diesen Aufbau und diese drei Optionen verstanden hat, beherrscht die Grundlagen der Belegerfassung.
 

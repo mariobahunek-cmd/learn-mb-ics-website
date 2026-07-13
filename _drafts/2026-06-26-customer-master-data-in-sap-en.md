@@ -25,11 +25,11 @@ faq:
     a: "Without the required partner functions — sold-to party, ship-to party, bill-to party and payer — you often cannot create a sales document at all. The process then stalls until the functions are added to the customer master record."
 ---
 
-Whether it's a quotation, a sales order or an invoice — almost every step in SAP sales draws on the same record: the **customer master data**. It's the foundation from which documents pull their addresses, payment terms and shipping rules. This article explains, in plain language, how customer master data is structured in SAP S/4HANA and why the business partner concept behind it matters so much.
+A sales order is created in seconds: the address, payment terms and shipping rules are already there, without anyone typing them in. Where do those details come from? From the **customer master data** — the record that almost every step in SAP sales draws on, from the quotation through the sales order to the invoice. What most people in my courses get hung up on is not maintaining the fields, but the structure behind them: the business partner concept and the three data levels that are so easy to mix up.
 
-## In short: the central data source for sales
+## The central data source for sales
 
-Customer master data is a **master record** that bundles everything important about a customer: who they are, where goods are delivered, how they pay and how they are treated for tax. When you create a sales order, the system pulls most of the details from this record automatically — you don't have to re-enter them every time.
+Customer master data is a master record that bundles everything important about a customer: who they are, where goods are delivered, how they pay and how they are treated for tax. When you create a sales order, the system pulls most of the details from this record automatically. You don't need to re-enter them every time.
 
 What's special in SAP S/4HANA is that customers are managed through the **business partner concept**. A business partner is the overarching object, and “customer” is one of the roles it can take on.
 
@@ -44,7 +44,7 @@ When you create a sales document, SAP pre-fills many fields automatically from s
 - **Output master data** — sending order confirmations by email, EDI or fax
 - **Control tables** — maintained in Customizing, they govern which data is proposed
 
-Most of the values carried over are **default values** that you can overwrite when needed. A **preceding document** can also serve as a template — for example a quotation from which the sales order is created. For how these pieces fit together in sales, see the overview of the [order-to-cash process](/blog/en/order-to-cash-process-sales/).
+Most of the values carried over are **default values** that you can overwrite when needed. A preceding document can also serve as a template, for example a quotation from which the sales order is created. For how these pieces fit together in sales, see the overview of the [order-to-cash process](/blog/en/order-to-cash-process-sales/).
 
 ## The business partner concept in SAP S/4HANA
 
@@ -54,11 +54,7 @@ In practice this means: one and the same business partner can be a customer, an 
 
 ### What business partner categories are there?
 
-When creating a business partner, you must choose a **business partner category**:
-
-- **Person** — a natural person
-- **Organization** — a company, a department, an association
-- **Group** — for example a shared household, a married couple, a board
+When you create a business partner, you must set the **business partner category**. The options are the person for a natural person, the organization for a company, department or association, and the group for something like a shared household, a married couple or a board.
 
 ### How does the role concept work?
 
@@ -85,11 +81,7 @@ General data is relevant for both sales *and* accounting. It applies to all orga
 
 ### Level 2 — sales area data (role “customer”)
 
-Sales area data is relevant only for sales. It applies to a specific **sales area**, which is made up of three components:
-
-- **Sales organization** — the selling unit
-- **Distribution channel** — for example direct sales or wholesale
-- **Division** — the product division
+Sales area data is relevant only for sales. It applies to a specific **sales area**, which is made up of three components: the sales organization as the selling unit, the distribution channel (direct sales or wholesale, for example) and the division, meaning the product division.
 
 Important: if you want to use a customer in several sales areas, you have to maintain the sales area data *separately for each area*. To keep things manageable, the fields are spread across tabs, among them:
 
@@ -104,7 +96,7 @@ Company code data is relevant for accounting and applies to a specific company c
 
 ## The four standard partner functions in sales
 
-Every customer master record needs four mandatory partner functions in sales. In most cases these are all the same party — but for corporate customers the roles can be split:
+Every customer master record needs four mandatory partner functions in sales. In most cases these are all the same party, but for corporate customers the roles can be split:
 
 - **Sold-to party** — who places the sales order
 - **Ship-to party** — who physically receives the goods (can be a different address, e.g. a branch)
@@ -115,28 +107,30 @@ An example from the corporate world: the sold-to party is the subsidiary, the sh
 
 ## Why master data is organized into views
 
-SAP master data is organized into **views**, each assigned to an organizational unit — plant, sales organization, company code and so on. This segmented structure provides flexibility and **data integrity**: when all relevant details converge in a single data object, there are no redundant copies. Sales, purchasing, inventory management, invoice verification and finance all access the same data — a core advantage over older systems with separate customer and vendor worlds.
+SAP master data is organized into **views**, each assigned to an organizational unit — plant, sales organization, company code and so on. This segmented structure provides flexibility and **data integrity**: when all relevant details converge in a single data object, there are no redundant copies to keep in sync. Sales, purchasing, inventory management, invoice verification and finance all access the same data — a core advantage over older systems with separate customer and vendor worlds.
 
 ## What users actually do with it
 
-Maintaining customer master data is **not a daily task** — it usually happens when onboarding a new customer or during larger data maintenance campaigns, often by master data clerks or accounting. Even so, everyone in sales benefits from clean master data, because mistakes show up directly in the process:
+Maintaining customer master data is not a daily task. It usually happens when onboarding a new customer or during larger data maintenance campaigns, often by master data clerks or accounting. Even so, everyone in sales benefits from clean master data, because mistakes show up directly in the process:
 
 - **Wrong address** → the delivery comes back, costs arise
 - **Wrong payment term** → an overly generous cash discount, margin loss
 - **Wrong tax classification** → incorrect tax reporting, a compliance risk
 - **Missing partner functions** → the document can't be created, the process stalls
 
-Anyone working in sales with SAP should therefore at least understand the concept of the three data levels — even if they rarely maintain master data themselves.
+Anyone working in sales with SAP should therefore at least understand the concept of the three data levels, even if they rarely maintain master data themselves.
 
 ## Common pitfalls
+
+Two things in particular almost always cause confusion: the three views (general data, company code and sales area data) and the four partner functions, which are easy to mix up. The most common pitfalls circle around exactly those:
 
 - **Confusing the three data levels.** General data applies across the whole client, sales area data only per sales area, company code data only per company code. Mix them up and you'll look for fields in the wrong place.
 - **Creating sales area data only once.** A customer active in several sales areas needs its own sales area data everywhere — otherwise it can't be used there.
 - **Forgetting roles.** Without the “customer” role there is no sales view, without “FI customer” no accounting view. Miss a role and you miss half the process.
 
-## In a nutshell
+## What it comes down to
 
-Customer master data is the **central data source** for every sales process in SAP. In S/4HANA it runs through the business partner concept, where “customer” is just one of several roles a business partner can hold. The data is organized into three levels — general data, sales area data and company code data — and linked to the individual processes through partner functions. Once you've internalized this structure, you understand why a well-maintained customer master is half the battle for smooth orders, deliveries and invoices.
+Customer master data is the central data source for every sales process in SAP. In S/4HANA it runs through the business partner concept, where “customer” is just one of several roles a business partner can hold. The data is organized into three levels: general data, sales area data and company code data. Partner functions link it to the individual processes. Once you've internalized this structure, you understand why a well-maintained customer master is half the battle for smooth orders, deliveries and invoices.
 
 ## Frequently asked questions
 

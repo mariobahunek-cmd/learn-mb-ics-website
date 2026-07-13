@@ -25,11 +25,11 @@ faq:
     a: "Die Lagerauftragserstellungsregeln legen im Customizing fest, welche und wie viele Lageraufgaben zu einem Lagerauftrag zusammengefasst werden. Über Filter, Grenzwerte, Sortier- und Konsolidierungsregeln steuern sie so die Arbeitslast und den Weg der Mitarbeiter durch das Lager."
 ---
 
-Wer sich in SAP Extended Warehouse Management (EWM) einarbeitet, stolpert früh über zwei Begriffe, die sich zum Verwechseln ähneln: **Lageraufgabe** und **Lagerauftrag**. Beide klingen fast gleich, sind aber zwei verschiedene Belege mit klar getrennten Aufgaben. Wer den Unterschied einmal sauber verstanden hat, durchschaut fast jeden EWM-Lagerprozess. Dieser Artikel geht die Hierarchie *Lageranforderung → Lageraufgabe → Lagerauftrag* Schritt für Schritt durch.
+Zwei Belege im SAP Extended Warehouse Management (EWM) sorgen bei Einsteigern zuverlässig für Verwechslung: die Lageraufgabe und der Lagerauftrag. Ein Buchstabe Unterschied im Wort, ein großer Unterschied in der Sache. Die Lageraufgabe ist ein einzelner Bewegungsbefehl, der Lagerauftrag ein ganzes Bündel davon. Wer das einmal sauber trennt, durchschaut fast jeden EWM-Lagerprozess. Dahinter steht eine Hierarchie aus drei Stufen: Lageranforderung, Lageraufgabe, Lagerauftrag.
 
-## Kurz gesagt: drei Belege steuern jede Bewegung im Lager
+## Worum es geht
 
-In SAP EWM wird jede physische Bewegung — Einlagern, Kommissionieren, Umlagern — von drei Belegen getragen, die aufeinander aufbauen. Die **Lageranforderung** ist der Auslöser (etwa eine Anlieferung). Die **Lageraufgabe** ist der konkrete Befehl an den Lagerarbeiter, was er tun soll. Der **Lagerauftrag** bündelt mehrere Lageraufgaben zu einem Arbeitspaket. Wer diese drei Ebenen auseinanderhält, versteht den Materialfluss im Lager.
+In SAP EWM wird jede physische Bewegung (Einlagern, Kommissionieren, Umlagern) von drei Belegen getragen, die aufeinander aufbauen. Die **Lageranforderung** ist der Auslöser (etwa eine Anlieferung). Die **Lageraufgabe** ist der konkrete Befehl an den Lagerarbeiter, was er tun soll. Der **Lagerauftrag** bündelt mehrere Lageraufgaben zu einem Arbeitspaket. Wer diese drei Ebenen auseinanderhält, versteht den Materialfluss im Lager.
 
 ## Das große Bild: die Drei-Stufen-Hierarchie
 
@@ -45,11 +45,11 @@ Eine Lageranforderung ermöglicht die Verarbeitung von Lageraktivitäten. Diese 
 
 Eine Lageranforderung ist der Ausgangsbeleg für eine Lageraktivität. Typische Aktivitäten, die auf ihr basieren, sind:
 
-- **Kommissionierung**
-- **Einlagerung**
-- **Umbuchungen**
-- **lagerinterne Umlagerungen**
-- **Verschrottung**
+- Kommissionierung
+- Einlagerung
+- Umbuchungen
+- lagerinterne Umlagerungen
+- Verschrottung
 
 Im Wareneingangsprozess ist die Lageranforderung der **Anlieferbeleg**. Man spricht hier synonym von der Lageranforderung — alle Folgeaktionen im Lager beziehen sich auf diesen einen Beleg.
 
@@ -70,28 +70,24 @@ Mithilfe von Lageraufgaben werden **Warenbewegungen im Lager ausgeführt**. Das 
 
 Lageraufgaben werden unter anderem benötigt für:
 
-- **Kommissionierung**
-- **Einlagerung**
-- **interne Bewegungen**
-- **Umbuchungen**
-- **Wareneingangsbuchungen**
-- **Warenausgangsbuchungen**
+- Kommissionierung
+- Einlagerung
+- interne Bewegungen
+- Umbuchungen
+- Wareneingangsbuchungen
+- Warenausgangsbuchungen
 
 ### Was ist eine Lageraufgabe konkret?
 
 Die Lageraufgabe ist ein **Beleg, der den Lagerarbeiter über eine konkrete Aufgabe informiert** — zum Beispiel: „Bewege drei Paletten von Produkt Y zu Lagerplatz ABC.“ Sie ist der eigentliche Arbeitsauftrag auf der untersten, ausführbaren Ebene.
 
-Wichtige Eigenschaften:
-
-- In einem Einlagerungs- oder Kommissionierprozess sowie bei Umbuchungen ist die **Grundlage für die Lageraufgabe die Lageranforderung**.
-- Die Lageraufgabe wird pro Lageranforderungsposition **manuell oder automatisch** angelegt — die automatische Erzeugung übernimmt das Post Processing Framework (PPF), ein Steuerungsrahmen für nachgelagerte Aktionen.
-- Für spontane Bewegungen im Lager (etwa eine Palette von einem Platz zum anderen) lässt sich eine Lageraufgabe **auch ohne Referenzbeleg** anlegen.
+In einem Einlagerungs- oder Kommissionierprozess sowie bei Umbuchungen ist die Grundlage für die Lageraufgabe die Lageranforderung. Angelegt wird sie pro Lageranforderungsposition, entweder manuell oder automatisch; die automatische Erzeugung übernimmt das Post Processing Framework (PPF), ein Steuerungsrahmen für nachgelagerte Aktionen. Für spontane Bewegungen im Lager, etwa eine Palette von einem Platz zum anderen, lässt sich eine Lageraufgabe auch ganz ohne Referenzbeleg anlegen.
 
 ### Quittierung — der zweite Schritt
 
 Ist die Lageraufgabe ausgeführt, muss sie **quittiert** werden. Quittieren heißt bestätigen: Der Lagerarbeiter meldet zurück, dass das richtige Produkt in der korrekten Menge am richtigen Nachlagerplatz eingegangen ist. Erst damit ist die Bewegung abgeschlossen.
 
-Ob eine Quittierung nötig ist, steuern Einstellungen im Von- und Nachlagertyp. In der Lagerprozessart lässt sich zudem festlegen, dass die Quittierung **automatisch schon mit dem Anlegen der Lageraufgabe** erfolgt — sinnvoll bei einfachen, fehlerresistenten Bewegungen, bei denen keine zusätzliche Bestätigung durch einen Menschen nötig ist.
+Ob eine Quittierung nötig ist, steuern Einstellungen im Von- und Nachlagertyp. In der Lagerprozessart lässt sich zudem festlegen, dass die Quittierung automatisch schon mit dem Anlegen der Lageraufgabe erfolgt. Sinnvoll ist das bei einfachen, fehlerresistenten Bewegungen, bei denen keine zusätzliche Bestätigung durch einen Menschen nötig ist.
 
 ### Produkt- und HU-Lageraufgabe
 
@@ -106,17 +102,17 @@ Jetzt kommt der Begriff, der so oft mit der Lageraufgabe verwechselt wird.
 
 Mehrere Lageraufgaben werden **zu einem Lagerauftrag zusammengefasst**. Der Lagerauftrag ist ein **Arbeitspaket**, das ein Mitarbeiter innerhalb eines bestimmten Zeitraums bearbeitet. Er enthält eine oder mehrere Lageraufgaben oder Inventurpositionen.
 
-Anders gesagt: Die **Lageraufgabe** ist EINE konkrete Bewegung („bewege Palette X von Lagerplatz A nach Lagerplatz B“). Der **Lagerauftrag** bündelt MEHRERE Lageraufgaben zu einer sinnvollen Arbeitsabfolge für einen Mitarbeiter (etwa „bewege diese fünf Paletten in einem Rutsch“). Die Bündelung dient dazu, die **Arbeitslast der Lagerressourcen zu steuern**.
+Anders gesagt: Die **Lageraufgabe** ist EINE konkrete Bewegung („bewege Palette X von Lagerplatz A nach Lagerplatz B“). Der **Lagerauftrag** bündelt MEHRERE Lageraufgaben zu einer sinnvollen Arbeitsabfolge für einen Mitarbeiter (etwa „bewege diese fünf Paletten in einem Rutsch“). Die Bündelung dient dazu, die Arbeitslast der Lagerressourcen zu steuern.
 
 ### Warum ist die Bündelung wichtig?
 
-Lageraufgaben entstehen laufend — immer wenn Produkte ein- oder ausgehen, bewegt oder gezählt werden. Ohne Bündelung müsste ein Mitarbeiter sie einzeln und in beliebiger Reihenfolge abarbeiten. SAP EWM fasst deshalb mehrere Lageraufgaben zu Lageraufträgen zusammen — nach festgelegten Regeln.
+Lageraufgaben entstehen laufend — immer wenn Produkte ein- oder ausgehen, bewegt oder gezählt werden. Ohne Bündelung müsste ein Mitarbeiter sie einzeln und in beliebiger Reihenfolge abarbeiten. SAP EWM fasst deshalb mehrere Lageraufgaben zu Lageraufträgen zusammen, nach festgelegten Regeln.
 
-Ein anschauliches Beispiel: Bei einer großen Anlieferung mit 50 Paletten würde ein einzelner Lagerarbeiter sonst 50 lose Lageraufgaben vor sich haben. Mit dem Lagerauftrag bündelt SAP EWM etwa **zehn Paletten in einem Lagerauftrag**, sodass der Mitarbeiter eine sinnvolle, überschaubare Arbeitseinheit erhält und effizient durch das Lager läuft.
+Ein anschauliches Beispiel: Bei einer großen Anlieferung mit 50 Paletten würde ein einzelner Lagerarbeiter sonst 50 lose Lageraufgaben vor sich haben. Mit dem Lagerauftrag bündelt SAP EWM etwa zehn Paletten zu einer Einheit, sodass der Mitarbeiter eine sinnvolle, überschaubare Arbeitsmenge erhält und effizient durch das Lager läuft.
 
 ## Lagerauftragserstellungsregeln (LAER)
 
-Wie SAP EWM entscheidet, welche Lageraufgaben gebündelt werden, regeln die **Lagerauftragserstellungsregeln** (kurz LAER). Sie werden im Customizing definiert — also in der Systemkonfiguration, die ein Berater einrichtet.
+Wie SAP EWM entscheidet, welche Lageraufgaben gebündelt werden, regeln die **Lagerauftragserstellungsregeln** (kurz LAER). Sie werden im Customizing definiert, also in der Systemkonfiguration, die ein Berater einrichtet.
 
 Lageraufträge werden in vier Schritten erstellt:
 
@@ -156,13 +152,13 @@ Der Hintergrund der zwei Bereiche: Solange sich der Bestand im Einlagerungsproze
 
 ## Warum ein Lieferavis den Wareneingang erzwingen kann
 
-Beim Anlegen der Bestellung wird festgelegt, ob vom Lieferanten ein **Lieferavis** — eine Lieferankündigung — erwartet wird. Dazu dient ein **Bestätigungssteuerschlüssel** auf Positionsebene. Er kann auch im Versand-Customizing, im Einkaufsinfosatz oder in den Lieferantenstammdaten vordefiniert sein.
+Beim Anlegen der Bestellung wird festgelegt, ob vom Lieferanten ein Lieferavis (eine Lieferankündigung) erwartet wird. Dazu dient ein **Bestätigungssteuerschlüssel** auf Positionsebene. Er kann auch im Versand-Customizing, im Einkaufsinfosatz oder in den Lieferantenstammdaten vordefiniert sein.
 
-Die praktische Konsequenz: **Ist dieser Schlüssel gesetzt, muss zuerst eine Anlieferung angelegt werden, bevor der Wareneingang gebucht werden kann.** Ohne Anlieferung lässt das System keinen Wareneingang zu — eine häufige Fehlerquelle in der Praxis, wenn ein Wareneingang scheinbar grundlos blockiert.
+Die praktische Konsequenz: Ist dieser Schlüssel gesetzt, muss zuerst eine Anlieferung angelegt werden, bevor der Wareneingang gebucht werden kann. Ohne Anlieferung lässt das System keinen Wareneingang zu — eine häufige Fehlerquelle in der Praxis, wenn ein Wareneingang scheinbar grundlos blockiert.
 
 ## Was Anwender im Alltag konkret tun
 
-Als Lagerist arbeitest du im Tagesgeschäft vor allem mit dem **Lagerauftrag** — deinem Arbeitspaket für die nächste Stunde. Der typische Ablauf am mobilen Scanner:
+Als Lagerist arbeitest du im Tagesgeschäft vor allem mit dem **Lagerauftrag**, deinem Arbeitspaket für die nächste Stunde. Der typische Ablauf am mobilen Scanner:
 
 - **Am Gerät anmelden** — ein Lagerauftrag wird dir zugewiesen.
 - **Erste Lageraufgabe** erscheint: „Hole Palette X aus dem Quellbereich, bring sie zum Zielbereich.“
@@ -171,7 +167,7 @@ Als Lagerist arbeitest du im Tagesgeschäft vor allem mit dem **Lagerauftrag** �
 
 Als Disponent oder Lagerleiter arbeitest du eher mit den **Lagerauftragserstellungsregeln** — das ist Konfigurationsarbeit, kein Tagesgeschäft. Aber das Verständnis der LAER-Logik hilft, ungleichmäßige Auslastung oder Engpässe im Lager zu erkennen und gezielt gegenzusteuern.
 
-## Kurz zusammengefasst
+## Zum Mitnehmen
 
 Drei Belege tragen jede Bewegung in SAP EWM: Die **Lageranforderung** löst eine Aktivität aus, die **Lageraufgabe** ist der einzelne, ausführbare Befehl, und der **Lagerauftrag** bündelt mehrere Lageraufgaben zu einem Arbeitspaket. Die Quittierung schließt jede Bewegung ab, und die Lagerauftragserstellungsregeln steuern, wie klug die Arbeit gebündelt wird. Wer Anforderung, Aufgabe und Auftrag sauber auseinanderhält, versteht den Materialfluss im Lager — vom Tor bis zum Regal.
 

@@ -25,11 +25,11 @@ faq:
     a: "The document flow shows how the documents of a process connect: sales order, delivery, goods issue, invoice and payment all reference each other. One click lets you trace any transaction back to the original order."
 ---
 
-When a customer orders something and, at the end, the money lands in the bank, there is a continuous chain in between — and in SAP it has a fixed name: **order-to-cash**, often also called order processing or simply the sales process. It is the core process in SAP Sales. This article walks through the whole path step by step — in plain language, from a user's point of view.
+Order in, goods out, money in the bank. Between those points sits a continuous chain that SAP gives a fixed name: **order-to-cash**, often also called order processing or simply the sales process. It is the core process in SAP Sales. After plenty of SD courses I see the same picture: people can operate each document confidently, but they start to hesitate the moment someone asks why the steps run in exactly this order. So let's walk the whole path once as a single chain, from a user's point of view.
 
-## In short: from order to cash in the bank
+## The big picture
 
-Order-to-cash (**O2C** for short) describes the **complete sales process** in SAP S/4HANA — from the customer's first order to the actual receipt of money in the bank. The term means, roughly, *“from order to cash”*, and that's exactly how to think about it: as a continuous chain in which each step triggers the next and each document references the one before it.
+Order-to-cash (**O2C** for short) describes the complete sales process in SAP S/4HANA: from the customer's first order to the actual receipt of money in the bank. The term means, roughly, *“from order to cash”*, and that's exactly how to think about it: as a continuous chain in which each step triggers the next and each document references the one before it.
 
 In sales, O2C is the guiding process. Everything else — master data, pricing, availability checks, reporting — ultimately serves the same purpose: running this chain cleanly from start to finish.
 
@@ -44,7 +44,7 @@ Before we dive into each step, here is the fixed sequence:
 5. **Create the billing document** (invoice)
 6. **Post the incoming payment**
 
-One point matters especially: **goods issue comes before billing**, not after. Why that is, we'll see in step 4.
+One point matters especially: goods issue comes before billing, not after. Why that is, we'll see in step 4.
 
 ## Step 1: Create the sales order
 
@@ -73,7 +73,7 @@ The delivery is **not just a copy** of the sales order. It is a separate logisti
 - to which **shipping point** the order is assigned
 - the planned **goods-issue date**
 
-The delivery can be created **individually** for a single sales order or in a **collective run** for many orders at once. In day-to-day sales, the collective run is the norm. Remember: with the delivery, the process moves from sales into logistics — from here on, SAP no longer thinks in terms of “order” but of “shipment”.
+The delivery can be created **individually** for a single sales order or in a **collective run** for many orders at once. In day-to-day sales, the collective run is the norm. Remember: with the delivery, the process moves from sales into logistics. From here on, SAP no longer thinks in terms of “order” but of “shipment”.
 
 ## Step 3: Picking
 
@@ -97,7 +97,7 @@ Now comes one of the most important steps: the **goods issue** (GI). With goods 
 
 This same double posting — one material document, one accounting document — is familiar from goods receipt in materials management. In sales it happens as a mirror image, just in the other direction: stock *out* instead of *in*.
 
-And here's the central point: **goods issue must be posted before billing.** The reason is simple — the invoice should only bill what was actually shipped. If the invoice ran before goods issue, a customer could be billed for goods still sitting in the warehouse, or the accounting documents would be inconsistent. That's why SAP enforces this sequence.
+And here's the central point: goods issue must be posted before billing. The reason is simple: the invoice should only bill what was actually shipped. If the invoice ran before goods issue, a customer could be billed for goods still sitting in the warehouse, or the accounting documents would be inconsistent. That's why SAP enforces this sequence.
 
 ## Step 5: Create the billing document
 
@@ -112,11 +112,7 @@ The billing document can be **order-related** or **delivery-related**. In classi
 
 ## Step 6: Post the incoming payment
 
-The final step is the **incoming payment**. The customer pays the invoice, and the open receivable is cleared. This step no longer happens in sales but in **Finance (FI)** — yet it still belongs to the O2C process. Typically, at this point:
-
-- the incoming money is posted to the bank account
-- the **open item** on the customer's account is **cleared**
-- any cash discount, rounding difference or partial payment is handled
+The final step is the **incoming payment**. The customer pays the invoice, and the open receivable is cleared. This step no longer happens in sales but in **Finance (FI)**, yet it still belongs to the O2C process. Typically the incoming money is posted to the bank account and the open item on the customer's account is cleared; if a cash discount, a rounding difference or a partial payment comes into play, it is handled at this point.
 
 You don't need to go deep into the FI postings for this. The takeaway is enough: sales and Finance are linked through the integrated posting of the billing document, and only the incoming payment fully closes the order-to-cash loop.
 
@@ -133,16 +129,20 @@ In every one of these documents you can display the document flow with a single 
 - whether goods issue has already been posted
 - whether a payment has already come in
 
-The document flow guarantees **traceability and audit reliability**: every cent that comes in from a customer can be traced back to the original order. In everyday sales, that is worth its weight in gold.
+The document flow guarantees traceability and audit reliability: every cent that comes in from a customer can be traced back to the original order. In everyday sales, that is worth its weight in gold.
 
 ## Common pitfalls
+
+At exactly these points the same misconceptions surface:
 
 - **Swapping the order of goods issue and billing.** Goods issue first, then billing — not the other way around. Only what has left the warehouse may be invoiced.
 - **Treating the sales order and delivery as the same thing.** The delivery is not a clone of the order but a separate logistics document with shipping point, storage location and goods-issue date.
 - **Confusing picking with goods issue.** Picking is the physical assembling; goods issue is the posting of the goods leaving — two distinct steps.
 - **Mixing up order-related and delivery-related billing.** For physical goods the invoice is delivery-related; for pure services it is order-related.
 
-## In a nutshell
+There's also a classic that is strictly speaking a control issue rather than a sequencing one: when no billing document appears at the end, the cause is often a billing block set via the order type or the customer, not a fault in the document flow.
+
+## The takeaway
 
 Order-to-cash is the continuous chain from the sales order to the incoming payment. A customer orders (sales order), the warehouse prepares the shipment (delivery), the goods are assembled (picking), the shipment is posted (goods issue with a material and an accounting document), the customer is billed (billing document), and finally the money arrives (incoming payment in Finance). Once you've internalized that story and the **document flow** as a picture, you already understand a large part of SAP sales — because then you don't just recognize the terms, you also see how they fit together.
 

@@ -27,17 +27,17 @@ faq:
     a: "Because the access sequence is sorted from specific to general and the system stops searching at the first hit. A condition record for “customer and material” is checked before the general record for “material” and therefore overrides it automatically — without you switching anything off."
 ---
 
-When you create a sales order in SAP, a unit price suddenly appears, a discount is deducted automatically, and finally tax is added to the item. What looks like magic is in fact a clearly defined rule set: the condition technique. This article breaks it down into its building blocks and shows, step by step, how the system arrives at a price.
+When you create a sales order in SAP, a unit price suddenly appears, a discount is deducted automatically, and finally tax is added to the item. What looks like magic is in fact a clearly defined rule set: the condition technique. Honestly, with the condition technique most people pause first and ask where the system actually gets the price from. The answer lies in five objects that mesh together.
 
-## In short: the rule set behind every price
+## What it comes down to
 
-The condition technique is the mechanism SAP S/4HANA uses in sales to automatically determine which price, which discount, which surcharge and which tax are copied into a sales document. It is made up of five objects that work together. The big advantage: you can make prices and discounts depend on almost any field in the document — the customer, the material group, the sales organization, or a combination of them.
+The condition technique is the mechanism SAP S/4HANA uses in sales to automatically determine which price, which discount, which surcharge and which tax are copied into a sales document. It is made up of five objects that work together. The big advantage: you can make prices and discounts depend on almost any field in the document: the customer, the material group, the sales organization, or a combination of them.
 
 The same logic sits behind more than just pricing. Output (message) determination, revenue account determination and other automatic mechanisms in the system build on it too. Once you understand the condition technique, you understand a whole family of determination mechanisms at once.
 
 ## What is the condition technique in SAP SD?
 
-When you create a sales order, SAP does not simply look at a single “price” field in the material master. Instead, a defined search-and-calculation process runs in the background. This process is set up entirely in **Customizing** — the system settings a consultant usually configures — and consists of several interlocking objects.
+When you create a sales order, SAP does not simply look at a single “price” field in the material master. Instead, a defined search-and-calculation process runs in the background. This process is set up entirely in Customizing, the system settings a consultant usually configures, and consists of several interlocking objects.
 
 That flexibility is exactly why the condition technique is so powerful, and why it feels so confusing to newcomers at first. As soon as you know the five building blocks and how they interact, the confusion disappears.
 
@@ -51,7 +51,7 @@ Before we work through an example, it pays to keep the central objects cleanly a
 - **Condition record** — the actual data record with the real value, such as “for this sales organization, this customer and this material, the unit price is 74 EUR”.
 - **Pricing procedure** — the ordered list of all condition types a document runs through, including subtotals, calculation formulas and requirements.
 
-In German the pricing procedure is called “Kalkulationsschema”. Both terms mean the same thing.
+In German the pricing procedure is called “Kalkulationsschema”. Both terms mean the same thing. You will sometimes also come across the term “condition schema”; that refers to the same object.
 
 ## How is a pricing procedure structured?
 
@@ -67,13 +67,13 @@ A pricing procedure is essentially a table of rows. Each row is a condition type
 | 400 | Value-added tax | output tax | + tax on net |
 | 900 | Final amount | gross item | = amount payable |
 
-The system processes the procedure **strictly top to bottom**. For each row it checks: “Is there a valid condition record for this condition type for this item?” If yes, it copies the value into the document. If no, the row is skipped — unless the condition type is flagged as mandatory, in which case the document would be incomplete.
+The system processes the procedure strictly top to bottom. For each row it checks: “Is there a valid condition record for this condition type for this item?” If yes, it copies the value into the document. If no, the row is skipped, unless the condition type is flagged as mandatory, in which case the document would be incomplete.
 
 Which pricing procedure is used at all is decided by SAP through two keys: the **document pricing procedure** (comes from the sales document type) and the **customer pricing procedure** (comes from the sales-area view of the customer master). From the combination of both keys plus the sales organization, the system determines the right procedure. This step is called procedure determination.
 
 ## How do you create a condition record?
 
-To turn the empty pricing procedure into real prices, you need **condition records**. They are master data and are maintained in day-to-day work — classically through a maintenance transaction, and in S/4HANA also through a corresponding Fiori app such as “Set Prices”. The logic behind it: creating, changing and displaying are separate functions.
+To turn the empty pricing procedure into real prices, you need condition records. They are master data and are maintained in day-to-day work — classically through a maintenance transaction, and in S/4HANA also through a corresponding Fiori app such as “Set Prices”. The logic behind it: creating, changing and displaying are separate functions.
 
 Imagine you have agreed a quantity-based price scale with a major customer and want to store it so it doesn't have to be entered manually on every order. The path there:
 
@@ -88,7 +88,7 @@ When sales now enters an order for 60 pieces of this material for exactly this c
 
 ## How does the system search during pricing?
 
-This is perhaps the most important concept. A price condition type usually has an access sequence with *several* accesses — from the most specific to the most general. For example:
+This is perhaps the most important concept. A price condition type usually has an access sequence with *several* accesses, from the most specific to the most general. For example:
 
 | Access | Key fields | Specificity |
 | --- | --- | --- |
@@ -96,11 +96,11 @@ This is perhaps the most important concept. A price condition type usually has a
 | 20 | Price list / currency / material | medium |
 | 30 | Material | general |
 
-When processing a condition type, SAP fills the key fields of the first access from the document (customer from the header, material from the item), searches the associated condition table for a valid condition record and — crucially — **stops searching as soon as a hit is found**. Only when an access comes up empty does the system move on to the next access.
+When processing a condition type, SAP fills the key fields of the first access from the document (customer from the header, material from the item) and searches the associated condition table for a valid condition record. As soon as a hit is found, the search stops. That is the crucial point. Only when an access comes up empty does the system move on to the next access.
 
 This has two practical consequences:
 
-- A specific condition record “customer and material” automatically *overrides* a general record “material only”. You don't have to switch anything off — the order does it.
+- A specific condition record “customer and material” automatically *overrides* a general record “material only”. You don't have to switch anything off, the order does it.
 - The *order of the accesses* within the access sequence is just as critical as the order of the condition types in the pricing procedure. A wrongly sorted access sequence can mean customer discounts or promotional prices never take effect.
 
 ## What kinds of conditions are there?
@@ -112,11 +112,7 @@ SAP ships numerous condition types as standard. For understanding, it is enough 
 - **Surcharge** — increases the price, for example a freight surcharge depending on the item weight.
 - **Tax** — the output tax, determined automatically from country plus the tax classification of customer and material.
 
-Three points are important to grasp here:
-
-- The **condition class** (price, discount, surcharge, tax) decides the sign and the posting.
-- The **calculation rule** determines whether it is a fixed amount, a percentage, a quantity-based rate or a scale.
-- Some condition types may be **overridden manually** — for instance when sales grants a special discount — while others are locked in Customizing. This is set per condition type.
+Three things are worth keeping apart here. The condition class (price, discount, surcharge, tax) decides the sign and the posting. The calculation rule determines whether it is a fixed amount, a percentage, a quantity-based rate or a scale. And whether a condition type can be overridden manually, for instance when sales grants a special discount, or is locked in Customizing, is set per condition type.
 
 ## Master data or Customizing — what goes where?
 
@@ -125,15 +121,17 @@ A common stumbling block is mixing up master data and Customizing. The rule of t
 - **Customizing** (set up once by the consultant): condition type, access sequence, condition table and pricing procedure. This is the rule set.
 - **Master data** (maintainable in day-to-day work): the condition record. This is the concrete value inside the rule set.
 
-Put differently: the consultant builds the road (Customizing), and the user places the concrete prices on it (master data). Keep those two layers cleanly apart and you immediately see why a new price needs no Customizing — and why a new discount logic very much does.
+Put differently: the consultant builds the road (Customizing), and the user places the concrete prices on it (master data). Keep those two layers cleanly apart and you immediately see why a new price needs no Customizing, while a new discount logic very much does.
 
 ## Common pitfalls
+
+People regularly mix up manually entered and automatically found conditions. Three spots in particular tend to trip newcomers up:
 
 - **Mixing up the terms.** Condition type, condition record, condition table, access sequence, pricing procedure — these words sound alike. Match each to its “what does it do?” and the confusion clears.
 - **Sorting the access sequence wrong.** If the general access comes before the specific one, the specific price never applies. Always sort from specific to general.
 - **Assuming every row adds up.** Within one condition type only *one* condition record is applied — the first hit. After that, the system moves to the next row in the procedure.
 
-## In a nutshell
+## What matters most
 
 The condition technique looks like a storm of terms at first, but it follows a simple core principle: a pricing procedure is an ordered list of condition types. For each condition type, an access sequence searches one condition table after another for a matching condition record. The first hit wins, then it moves to the next row. Once you internalize this logic, you understand not just pricing in sales, but a whole family of determination mechanisms in SAP.
 

@@ -27,11 +27,11 @@ faq:
     a: "Aus Sicht des Einkaufs endet er mit der geprüften Rechnung. Die tatsächliche Zahlung an den Lieferanten findet in der Finanzbuchhaltung (FI) statt, meist über den automatischen Zahllauf. Damit ist der Procure-to-Pay-Kreis geschlossen."
 ---
 
-Wenn ein Unternehmen etwas beschafft — Rohstoffe für die Produktion, Verbrauchsmaterial fürs Büro oder eine Dienstleistung — durchläuft dieser Vorgang in SAP fast immer denselben Ablauf: **Procure-to-Pay**, kurz **P2P**, oder auf Deutsch der Beschaffungsprozess. Dieser Artikel geht den Weg vom ersten Bedarf bis zur Zahlung Schritt für Schritt durch — mit den Begriffen, die dir im SAP-Einkauf immer wieder begegnen.
+„Warum ist meine Bestellung noch nicht beim Lieferanten?“ — das fragen mich Teilnehmer in fast jeder Schulung, und fast genauso oft steckt dahinter gar keine Bestellung, sondern nur eine Bestellanforderung. Genau hier beginnt der Beschaffungsprozess: bei einem Bedarf, der zuerst intern gemeldet wird und erst später als verbindliche Bestellung nach außen geht. In SAP heißt dieser komplette Weg vom Bedarf bis zur Zahlung **Procure-to-Pay**, kurz **P2P**. Gehen wir ihn von vorne durch, mit den Begriffen, die dir im SAP-Einkauf ständig begegnen.
 
-## Kurz gesagt: der komplette Weg vom Bedarf zur Zahlung
+## Das große Ganze: vom Bedarf zur Zahlung
 
-Procure-to-Pay beschreibt den **kompletten Beschaffungsprozess** in SAP — vom ersten Bedarf im Unternehmen bis zur finalen Zahlung an den Lieferanten. Im Modul **SAP MM (Materials Management)** ist das der Kernprozess: Alles, was du sonst im Einkauf machst, baut auf diesem Ablauf auf.
+Procure-to-Pay beschreibt den kompletten Beschaffungsprozess in SAP, vom ersten Bedarf im Unternehmen bis zur finalen Zahlung an den Lieferanten. Im Modul **SAP MM (Materials Management)** ist das der Kernprozess: Alles, was du sonst im Einkauf machst, baut auf diesem Ablauf auf.
 
 In der Praxis lässt sich der Beschaffungszyklus als Kette von acht Phasen beschreiben:
 
@@ -57,7 +57,7 @@ Die Bedarfsplanung (Material Requirements Planning, kurz MRP) erzeugt bei erkann
 
 ## Bestellanforderung (BANF) anlegen
 
-Nach der Bedarfsermittlung entsteht eine **Bestellanforderung** (kurz **BANF**). Wichtig zu verstehen: Die BANF ist ein **rein internes Dokument**. Sie geht nicht an den Lieferanten, sondern ist eine Bitte der Fachabteilung an den Einkauf: „Bitte beschafft uns Folgendes."
+Nach der Bedarfsermittlung entsteht eine **Bestellanforderung** (kurz **BANF**). Wichtig zu verstehen: Die BANF ist ein rein internes Dokument. Sie geht nicht an den Lieferanten, sondern ist eine Bitte der Fachabteilung an den Einkauf: „Bitte beschafft uns Folgendes.“
 
 Eine Bestellanforderung enthält typischerweise:
 
@@ -83,7 +83,7 @@ Bei den Rahmenverträgen unterscheidet SAP zwei Formen — den Kontrakt und den 
 
 ## Schritt 3: Lieferantenauswahl und Konditionen vergleichen
 
-Sind mögliche Bezugsquellen ermittelt, geht es um die **finale Lieferantenauswahl**. Hier vergleicht der Einkauf:
+Sind mögliche Bezugsquellen ermittelt, geht es um die finale Lieferantenauswahl. Hier vergleicht der Einkauf:
 
 - Preise verschiedener Bezugsquellen oder Anfragen
 - Lieferzeiten
@@ -94,7 +94,7 @@ Optional greift an dieser Stelle ein **Freigabeverfahren**: Gerade bei größere
 
 ## Schritt 4: Bestellung erstellen
 
-Jetzt kommt der zentrale Schritt: die **Bestellung** (englisch *Purchase Order*, kurz **PO**). Im Gegensatz zur Bestellanforderung ist die Bestellung ein **externer Beleg**. Sie geht nach außen an den Lieferanten und ist rechtlich verbindlich.
+Jetzt kommt der zentrale Schritt: die **Bestellung** (englisch *Purchase Order*, kurz **PO**). Im Gegensatz zur Bestellanforderung ist die Bestellung ein externer Beleg. Sie geht nach außen an den Lieferanten und ist rechtlich verbindlich.
 
 Die Bestellung enthält unter anderem:
 
@@ -109,25 +109,15 @@ Eine Bestellung kann direkt aus einer Bestellanforderung erzeugt werden, aus ein
 
 ## Schritt 5: Bestellüberwachung
 
-Nach dem Versand der Bestellung läuft die **Bestellüberwachung**. Der Einkauf verfolgt:
-
-- ob für eine Bestellposition bereits eine Lieferung eingetroffen ist
-- ob bereits eine Rechnung erfasst wurde
-- ob ausstehende Lieferungen beim Lieferanten gemahnt werden müssen
+Nach dem Versand der Bestellung läuft die **Bestellüberwachung**. Der Einkauf behält im Blick, ob für eine Bestellposition bereits eine Lieferung eingetroffen ist und ob schon eine Rechnung erfasst wurde. Bleibt eine Lieferung aus, muss sie beim Lieferanten gemahnt werden.
 
 Idealerweise schickt der Lieferant zwischendurch eine **Bestellbestätigung** zurück, sodass der Einkauf den vereinbarten Liefertermin im System hinterlegen kann. Bestellbestätigungen sind aber nicht zwingend.
 
 ## Schritt 6: Wareneingang
 
-Sobald die Ware physisch im Lager ankommt, kommt der aus Anwendersicht spannendste Schritt: der **Wareneingang**. Die Ware wird in SAP **vereinnahmt** — das heißt, sie wird mengen- und wertmäßig ins System gebucht.
+Sobald die Ware physisch im Lager ankommt, kommt der aus Anwendersicht spannendste Schritt: der **Wareneingang**. Die Ware wird in SAP vereinnahmt, das heißt mengen- und wertmäßig ins System gebucht.
 
-Was passiert beim Buchen?
-
-- Der Bestand des Materials erhöht sich.
-- Es wird automatisch ein **Materialbeleg** erzeugt — er dokumentiert die mengenmäßige Bewegung.
-- Es wird gleichzeitig ein **Buchhaltungsbeleg** erzeugt — er dokumentiert die wertmäßige Buchung.
-
-Diese Doppelbuchung — einmal Menge (Materialbeleg), einmal Wert (Buchhaltungsbeleg) — ist der Grund, warum ein Wareneingang in SAP in aller Regel nicht „nur" den Lagerbestand verändert, sondern zugleich die Finanzbuchhaltung berührt.
+Was passiert dabei? Der Bestand des Materials erhöht sich, und SAP erzeugt zwei Belege auf einmal: einen **Materialbeleg**, der die mengenmäßige Bewegung dokumentiert, und einen **Buchhaltungsbeleg** für die wertmäßige Buchung. Diese Doppelbuchung ist der Grund, warum ein Wareneingang in SAP in aller Regel nicht „nur“ den Lagerbestand verändert, sondern zugleich die Finanzbuchhaltung berührt.
 
 ## Schritt 7: Rechnungsprüfung und der dreiseitige Abgleich
 
@@ -149,7 +139,7 @@ Ein Beispiel: Bestellt waren 100 Stück zu 5 Euro, geliefert wurden ebenfalls 10
 
 Ist die Rechnung erfolgreich durch die Prüfung gelaufen, ist die Beschaffung aus MM-Sicht abgeschlossen. Der letzte Schritt findet im Modul **SAP FI (Finance)** statt: die tatsächliche **Zahlung an den Lieferanten**.
 
-In FI wird die offene Verbindlichkeit reguliert — typischerweise über den automatischen Zahllauf oder eine manuelle Zahlung. Damit ist der Procure-to-Pay-Kreis geschlossen. Für das Verständnis reicht es zu wissen:
+In FI wird die offene Verbindlichkeit reguliert, typischerweise über den automatischen Zahllauf oder eine manuelle Zahlung. Damit ist der Procure-to-Pay-Kreis geschlossen. Für das Verständnis reicht es zu wissen:
 
 - Die Zahlung passiert in **FI**, nicht in MM.
 - MM und FI sind über die **integrierte Buchung** verknüpft.
@@ -167,14 +157,16 @@ Welcher Prozess für eine Bestellposition gilt, steuert SAP über den **Position
 
 ## Häufige Stolpersteine
 
-- **Bestellanforderung und Bestellung verwechseln.** Die Anforderung ist intern, die Bestellung geht nach außen. Wer beim Lieferanten nachfragt, warum „die Bestellung" nicht angekommen ist, sollte zuerst prüfen, ob überhaupt schon eine Bestellung existiert.
+Viele Teilnehmer vertauschen Wareneingang und Rechnungsprüfung gedanklich — dabei kommt in aller Regel erst die Ware und dann die Rechnung, und genau in dieser Reihenfolge greift der dreiseitige Abgleich. Die folgenden Verwechslungen begegnen mir am häufigsten:
+
+- **Bestellanforderung und Bestellung verwechseln.** Die Anforderung ist intern, die Bestellung geht nach außen. Wer beim Lieferanten nachfragt, warum „die Bestellung“ nicht angekommen ist, sollte zuerst prüfen, ob überhaupt schon eine Bestellung existiert.
 - **Fehlende Freigabe übersehen.** Eine nicht freigegebene Anforderung oder Bestellung wird nicht weiterverarbeitet. Ein Blick auf den Freigabestatus spart viel Sucherei.
 - **Materialbeleg und Buchhaltungsbeleg vermischen.** Beim Wareneingang entstehen zwei Belege: einer für die Menge, einer für den Wert. Sie hängen zusammen, sind aber nicht dasselbe.
 - **Gesperrte Rechnung nicht erkennen.** Weicht die Rechnung in Menge oder Preis über die Toleranz hinaus ab, sperrt SAP sie automatisch. Die Rechnung ist dann erfasst, aber noch nicht zahlungsreif — sie muss erst geklärt werden.
 
-## Kurz zusammengefasst
+## Worauf es ankommt
 
-Procure-to-Pay ist der rote Faden des SAP-Einkaufs: Jemand braucht etwas (Bedarf), meldet das intern (Bestellanforderung), der Einkauf sucht einen Lieferanten (Bezugsquellenfindung), holt bei Bedarf eine Freigabe, schickt eine Bestellung raus, bekommt die Ware (Wareneingang mit Material- und Buchhaltungsbeleg), bekommt die Rechnung, gleicht alles ab (dreiseitiger Abgleich) und bezahlt in FI. Wer diesen Ablauf als zusammenhängende Geschichte versteht, kann fast jede Detailfrage im Einkauf selbst herleiten — statt einzelne Begriffe isoliert auswendig zu lernen.
+Procure-to-Pay ist der rote Faden des SAP-Einkaufs: Jemand braucht etwas (Bedarf), meldet das intern (Bestellanforderung), der Einkauf sucht einen Lieferanten (Bezugsquellenfindung), holt bei Bedarf eine Freigabe, schickt eine Bestellung raus, bekommt die Ware (Wareneingang mit Material- und Buchhaltungsbeleg), bekommt die Rechnung, gleicht alles ab (dreiseitiger Abgleich) und bezahlt in FI. Wer diesen Ablauf als zusammenhängende Geschichte versteht, kann fast jede Detailfrage im Einkauf selbst herleiten, statt einzelne Begriffe isoliert auswendig zu lernen.
 
 ## Häufige Fragen
 

@@ -27,17 +27,17 @@ faq:
     a: "Grün heißt buchbar, gelb heißt buchbar mit anschließender Zahlungssperre, rot heißt nicht buchbar. Eine gelbe Ampel bei einem Saldo von null bedeutet: rechnerisch stimmt alles, das System sperrt die Rechnung aber wegen einer Abweichung zur Zahlung."
 ---
 
-Auf deinem Schreibtisch landet eine Lieferantenrechnung. Die Buchhaltung möchte wissen, ob sie zur Auszahlung freigegeben werden kann. Wurde die Ware wirklich angeliefert? Deckt sich der Rechnungspreis mit der Bestellung? Und bleibt am Ende ein Restsaldo auf einem Verrechnungskonto hängen? Genau diese Fragen beantwortet die Logistik-Rechnungsprüfung in SAP MM — mit der Transaktion MIRO und dem 3-Way-Match.
+Auf deinem Schreibtisch landet eine Lieferantenrechnung. Die Buchhaltung möchte wissen, ob sie zur Auszahlung freigegeben werden kann. Wurde die Ware wirklich angeliefert? Deckt sich der Rechnungspreis mit der Bestellung, und bleibt am Ende ein Restsaldo auf einem Verrechnungskonto hängen? Genau an dieser Stelle setzt die Logistik-Rechnungsprüfung in SAP MM an, mit der Transaktion MIRO und dem 3-Way-Match. Ein Muster, das sich durch fast jede Rechnungsprüfungs-Schulung zieht: Die Rechnungsprüfung wird für reine Buchhaltung gehalten. Tatsächlich entscheidet sich hier, ob ein Unternehmen am Ende nur das bezahlt, was bestellt und geliefert wurde.
 
-## Kurz gesagt: was der 3-Way-Match leistet
+## Der Kern in einem Satz
 
-Der 3-Way-Match ist das Grundprinzip der Rechnungsprüfung: Drei Belege — **Bestellung**, **Wareneingang** und **Lieferantenrechnung** — werden miteinander abgeglichen. Nur wenn Preis und Menge in allen dreien zusammenpassen, läuft die Rechnung sauber durch. Das System zieht die Vorschlagswerte automatisch aus Bestellung und Wareneingang; du vergleichst sie nur noch mit der Rechnung deines Lieferanten und buchst.
+Der 3-Way-Match ist das Grundprinzip der Rechnungsprüfung: Drei Belege werden miteinander abgeglichen, nämlich Bestellung, Wareneingang und Lieferantenrechnung. Nur wenn Preis und Menge in allen dreien zusammenpassen, läuft die Rechnung sauber durch. Das System zieht die Vorschlagswerte automatisch aus Bestellung und Wareneingang; du vergleichst sie nur noch mit der Rechnung deines Lieferanten und buchst.
 
 ## Was ist die Logistik-Rechnungsprüfung in SAP MM?
 
-Die Logistik-Rechnungsprüfung ist der dritte und letzte große Schritt im operativen Beschaffungsprozess. Nach dem Anlegen der Bestellung und dem Buchen des Wareneingangs erfasst du hier die eingegangene Lieferantenrechnung, prüfst sie auf *sachliche*, *preisliche* und *rechnerische* Richtigkeit und buchst sie ins System. Dabei entstehen gleichzeitig ein **Rechnungsbeleg** (MM-Beleg) und ein **Buchhaltungsbeleg** (FI-Beleg) — beide eigenständig, aber miteinander verknüpft.
+Die Logistik-Rechnungsprüfung ist der dritte und letzte große Schritt im operativen Beschaffungsprozess. Nach dem Anlegen der Bestellung und dem Buchen des Wareneingangs erfasst du hier die eingegangene Lieferantenrechnung, prüfst sie auf *sachliche*, *preisliche* und *rechnerische* Richtigkeit und buchst sie ins System. Dabei entstehen gleichzeitig ein **Rechnungsbeleg** (MM-Beleg) und ein **Buchhaltungsbeleg** (FI-Beleg), beide eigenständig, aber miteinander verknüpft.
 
-Wichtig ist die saubere Aufgabenteilung: Die Logistik-Rechnungsprüfung kümmert sich ausschließlich um das Prüfen und Buchen. Für die tatsächliche Zahlung und die Verwaltung offener Verbindlichkeiten ist sie **nicht** zuständig — das übernimmt die Finanzbuchhaltung (FI).
+Wichtig ist die saubere Aufgabenteilung: Die Logistik-Rechnungsprüfung kümmert sich ausschließlich um das Prüfen und Buchen. Für die tatsächliche Zahlung und die Verwaltung offener Verbindlichkeiten ist sie nicht zuständig: Das übernimmt die Finanzbuchhaltung (FI).
 
 In S/4HANA gibt es zwei Wege, eine Rechnung zu erfassen:
 
@@ -62,8 +62,8 @@ Sind Bestellpreis, Wareneingangswert und Rechnungspreis identisch und stimmen au
 
 Um zu verstehen, was MIRO bucht, musst du zuerst verstehen, was der Wareneingang bucht. Beim bewerteten Wareneingang zu einer Bestellposition für Lagermaterial passiert Folgendes:
 
-- Eine **Sollbuchung** auf dem *Bestandskonto* mit dem Betrag „Wareneingangsmenge × Bewertungspreis“
-- Eine **Habenbuchung** auf dem **WE/RE-Verrechnungskonto** mit dem Betrag „Wareneingangsmenge × Bestellpreis“
+- Eine Sollbuchung auf dem *Bestandskonto* mit dem Betrag „Wareneingangsmenge × Bewertungspreis“
+- Eine Habenbuchung auf dem **WE/RE-Verrechnungskonto** mit dem Betrag „Wareneingangsmenge × Bestellpreis“
 
 Das WE/RE-Verrechnungskonto (Wareneingangs-/Rechnungseingangs-Verrechnungskonto) ist das zentrale Bindeglied zwischen Materialwirtschaft und Finanzbuchhaltung. Es ist ein *Übergangskonto*: Ist die Ware angekommen, aber die Rechnung fehlt noch, steht auf diesem Konto ein offener Betrag (Ware erhalten, noch nicht berechnet). Sobald die Rechnung mit MIRO gebucht wird, gleicht das System das WE/RE-Konto wieder aus.
 
@@ -90,11 +90,7 @@ Die Einbildtransaktion MIRO ist in mehrere Bildbereiche unterteilt:
 - **Lieferantendaten** — Detaildaten zum Rechnungssteller aus dem Kreditorenstammsatz (in S/4HANA über den Geschäftspartner gepflegt).
 - **Saldo mit Ampel** — grün heißt buchbar, gelb heißt buchbar mit Zahlungssperre, rot heißt nicht buchbar.
 
-Beim Buchen passieren drei Dinge gleichzeitig:
-
-1. Das **WE/RE-Verrechnungskonto** wird zum Bestellpreis wieder ausgeglichen (Sollbuchung).
-2. Das **Kreditorenkonto** wird zum Rechnungsbetrag brutto im Haben fortgeschrieben.
-3. Eventuelle Differenzen zwischen Bestell- und Rechnungspreis werden — je nach Preissteuerung des Materials — auf das Bestandskonto oder auf ein Preisdifferenzenkonto gebucht.
+Beim Buchen passieren drei Dinge gleichzeitig: Das WE/RE-Verrechnungskonto wird zum Bestellpreis wieder ausgeglichen (Sollbuchung), das Kreditorenkonto wird zum Rechnungsbetrag brutto im Haben fortgeschrieben, und eventuelle Differenzen zwischen Bestell- und Rechnungspreis wandern je nach Preissteuerung des Materials auf das Bestandskonto oder auf ein Preisdifferenzenkonto.
 
 Ein einfaches Buchungsbeispiel für eine Rechnung über 2.618 EUR brutto (25 Stück Material zu je 88 EUR, dazu 180 EUR ungeplante Frachtkosten und 238 EUR Vorsteuer):
 
@@ -109,7 +105,7 @@ Ein einfaches Buchungsbeispiel für eine Rechnung über 2.618 EUR brutto (25 St�
 
 ## Toleranzen und Sperrgründe: wann sperrt das System eine Rechnung?
 
-In der Praxis weicht der Rechnungsbetrag fast immer minimal von Bestellung oder Wareneingang ab — durch Rundungsdifferenzen, Frachtkosten oder Preisänderungen. SAP arbeitet deshalb mit **Toleranzen**, die im Customizing der Logistik-Rechnungsprüfung definiert werden. Liegt eine Abweichung innerhalb der Toleranz, wird die Rechnung normal gebucht. Liegt sie *außerhalb*, bucht das System die Rechnung trotzdem — setzt aber automatisch eine **Rechnungssperre** (die gelbe Ampel im Saldo-Bereich).
+In der Praxis weicht der Rechnungsbetrag fast immer minimal von Bestellung oder Wareneingang ab — durch Rundungsdifferenzen, Frachtkosten oder Preisänderungen. SAP arbeitet deshalb mit **Toleranzen**, die im Customizing der Logistik-Rechnungsprüfung definiert werden. Liegt eine Abweichung innerhalb der Toleranz, wird die Rechnung normal gebucht. Liegt sie *außerhalb*, bucht das System die Rechnung trotzdem, setzt aber automatisch eine **Rechnungssperre** (die gelbe Ampel im Saldo-Bereich).
 
 Die wichtigsten Prüfungen im Überblick:
 
@@ -126,18 +122,18 @@ Zusätzlich gibt es **manuelle Sperrgründe**, die ein Sachbearbeiter direkt in 
 
 ## Typische Abweichungen und ihre Lösung
 
-Im Tagesgeschäft begegnen dir immer wieder dieselben Konstellationen. Hier ein Überblick, wie SAP damit umgeht und was du als Anwender tun musst:
+Im Tagesgeschäft begegnen dir immer wieder dieselben Konstellationen. Am häufigsten ist die Frage, ob eine Rechnung wegen einer Preis- oder wegen einer Mengenabweichung gesperrt wurde: Das eine klärst du mit dem Einkauf, das andere mit dem Wareneingang. Und fast genauso oft wird beim Buchen schlicht der Bestellbezug vergessen, sodass MIRO nichts vorschlägt und der Saldo nicht aufgeht. Hier ein Überblick, wie SAP mit den typischen Fällen umgeht und was du als Anwender tun musst:
 
-- **Rechnungspreis höher als Bestellpreis, innerhalb der Toleranz:** Die Rechnung wird gebucht. Bei Standardpreis-Material landet die Differenz auf einem Preisdifferenzenkonto. Bei gleitendem Durchschnittspreis wird der Materialstamm neu bewertet — der Bestand wird teurer.
-- **Rechnungspreis höher als Bestellpreis, außerhalb der Toleranz:** Die Rechnung wird gebucht, aber zur Zahlung gesperrt. Nach Klärung mit dem Lieferanten folgt die Freigabe über MRBR.
-- **Rechnungsmenge größer als gelieferte Menge:** eine Mengenabweichung. Entweder ist eine weitere Lieferung unterwegs — oder der Lieferant hat falsch fakturiert. Liegt die Überschreitung über der Toleranz, bleibt die Rechnung gesperrt.
-- **Frachtkosten auf der Rechnung, aber nicht in der Bestellung:** in MIRO als *ungeplante Bezugsnebenkosten* erfassen. Wie sie gebucht werden, steuert das Customizing — entweder verteilt das System sie auf die Rechnungspositionen (und damit auf Bestand oder Preisdifferenz) oder es bucht sie auf ein separates Sachkonto, so wie im Buchungsbeispiel oben auf Konto 5050.
-- **Rechnung kommt vor dem Wareneingang an:** möglich, aber heikel — der Saldo bleibt offen auf dem WE/RE-Konto. Üblich ist die Reihenfolge erst Wareneingang, dann Rechnung.
-- **Nachträgliche Belastung oder Entlastung:** Macht der Lieferant nachträglich eine reine Preisänderung geltend, erfasst du in MIRO eine „nachträgliche Belastung“ oder „nachträgliche Entlastung“. Davon zu trennen ist die *Gutschrift* (eine eigene Vorgangsart in MIRO): Sie bildet eine echte Lieferantengutschrift ab — etwa für eine Rücklieferung — und mindert Menge und Wert. Das reine *Stornieren* eines bereits gebuchten Rechnungsbelegs ist wiederum ein anderer Vorgang (Belegstorno, Transaktion MR8M) und keine Gutschrift, die du selbst erfasst.
+- Rechnungspreis höher als Bestellpreis, innerhalb der Toleranz: Die Rechnung wird gebucht. Bei Standardpreis-Material landet die Differenz auf einem Preisdifferenzenkonto. Bei gleitendem Durchschnittspreis wird der Materialstamm neu bewertet, der Bestand wird also teurer.
+- Rechnungspreis höher als Bestellpreis, außerhalb der Toleranz: Die Rechnung wird gebucht, aber zur Zahlung gesperrt. Nach Klärung mit dem Lieferanten folgt die Freigabe über MRBR.
+- Rechnungsmenge größer als gelieferte Menge: eine Mengenabweichung. Entweder ist eine weitere Lieferung unterwegs, oder der Lieferant hat falsch fakturiert. Liegt die Überschreitung über der Toleranz, bleibt die Rechnung gesperrt.
+- Frachtkosten auf der Rechnung, aber nicht in der Bestellung: in MIRO als *ungeplante Bezugsnebenkosten* erfassen. Wie sie gebucht werden, steuert das Customizing: Entweder verteilt das System sie auf die Rechnungspositionen (und damit auf Bestand oder Preisdifferenz) oder es bucht sie auf ein separates Sachkonto, so wie im Buchungsbeispiel oben auf Konto 5050.
+- Rechnung kommt vor dem Wareneingang an: möglich, aber heikel, denn der Saldo bleibt offen auf dem WE/RE-Konto. Üblich ist die Reihenfolge erst Wareneingang, dann Rechnung.
+- Nachträgliche Belastung oder Entlastung: Macht der Lieferant nachträglich eine reine Preisänderung geltend, erfasst du in MIRO eine „nachträgliche Belastung“ oder „nachträgliche Entlastung“. Davon zu trennen ist die *Gutschrift* (eine eigene Vorgangsart in MIRO): Sie bildet eine echte Lieferantengutschrift ab, etwa für eine Rücklieferung, und mindert Menge und Wert. Das reine *Stornieren* eines bereits gebuchten Rechnungsbelegs ist wiederum ein anderer Vorgang (Belegstorno, Transaktion MR8M) und keine Gutschrift, die du selbst erfasst.
 
 Hilfreich ist außerdem die Bestellentwicklung: In jedem Bestellbeleg kannst du sehen, wie viel bereits geliefert und wie viel bereits berechnet wurde. Das ist die schnellste Methode, um die Konsistenz von Wareneingang und Rechnung zu prüfen.
 
-## Kurz zusammengefasst
+## Worauf es ankommt
 
 Die Logistik-Rechnungsprüfung mit MIRO ist das Bindeglied zwischen Einkauf, Lager und Buchhaltung. Sie sorgt dafür, dass ein Unternehmen nur das bezahlt, was tatsächlich bestellt und geliefert wurde — und dass das WE/RE-Verrechnungskonto am Ende wieder auf null steht. Der 3-Way-Match aus Bestellung, Wareneingang und Rechnung ist das Grundprinzip; Toleranzen und Sperrgründe sorgen dafür, dass nur saubere Rechnungen automatisch zur Zahlung gehen. Wer die Aufgabenteilung zwischen MM (prüfen und buchen) und FI (zahlen) sauber trennt und die Buchungslogik rund um das WE/RE-Konto versteht, hat das Thema im Griff.
 

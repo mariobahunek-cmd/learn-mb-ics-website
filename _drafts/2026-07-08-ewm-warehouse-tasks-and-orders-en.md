@@ -25,11 +25,11 @@ faq:
     a: "Warehouse order creation rules are defined in Customizing and decide which and how many warehouse tasks are combined into a warehouse order. Through filters, limits, sorting and consolidation, they control the workload and the path each worker takes through the warehouse."
 ---
 
-Anyone getting to grips with SAP Extended Warehouse Management (EWM) trips over two terms early on that look confusingly alike: **warehouse task** and **warehouse order**. They sound almost identical, yet they are two different documents with clearly separated jobs. Once you understand the difference cleanly, most EWM warehouse processes fall into place. This article walks through the hierarchy *warehouse request → warehouse task → warehouse order* step by step.
+Two documents in SAP Extended Warehouse Management (EWM) reliably trip up newcomers: the warehouse task and the warehouse order. One letter apart in the word, worlds apart in meaning. The warehouse task is a single movement instruction, the warehouse order a whole bundle of them. Get that distinction straight and most EWM warehouse processes fall into place. Behind it sits a three-level hierarchy: warehouse request, warehouse task, warehouse order.
 
-## In short: three documents drive every movement in the warehouse
+## What it's about
 
-In SAP EWM, every physical movement — putaway, picking, internal transfer — is carried by three documents that build on each other. The **warehouse request** is the trigger (an inbound delivery, for example). The **warehouse task** is the concrete instruction to the worker telling them what to do. The **warehouse order** bundles several warehouse tasks into one work package. Keep these three layers apart and the flow of goods through the warehouse becomes clear.
+In SAP EWM, every physical movement (putaway, picking, internal transfer) is carried by three documents that build on each other. The **warehouse request** is the trigger (an inbound delivery, for example). The **warehouse task** is the concrete instruction to the worker telling them what to do. The **warehouse order** bundles several warehouse tasks into one work package. Keep these three layers apart and the flow of goods through the warehouse becomes clear.
 
 ## The big picture: the three-level hierarchy
 
@@ -45,11 +45,11 @@ A warehouse request enables warehouse activities to be processed. Those activiti
 
 A warehouse request is the source document for a warehouse activity. Typical activities that build on it include:
 
-- **Picking**
-- **Putaway**
-- **Posting changes**
-- **Internal transfers within the warehouse**
-- **Scrapping**
+- Picking
+- Putaway
+- Posting changes
+- Internal transfers within the warehouse
+- Scrapping
 
 In the goods receipt process, the warehouse request is the **inbound delivery document**. The two terms are used interchangeably here — every follow-on action in the warehouse refers back to this one document.
 
@@ -70,28 +70,24 @@ Warehouse tasks are used to **carry out goods movements in the warehouse**. A mo
 
 Warehouse tasks are needed, among other things, for:
 
-- **Picking**
-- **Putaway**
-- **Internal movements**
-- **Posting changes**
-- **Goods receipt postings**
-- **Goods issue postings**
+- Picking
+- Putaway
+- Internal movements
+- Posting changes
+- Goods receipt postings
+- Goods issue postings
 
 ### What is a warehouse task, concretely?
 
 A warehouse task is a **document that tells the worker about one concrete task** — for example: “move three pallets of product Y to bin ABC.” It is the actual work instruction at the lowest, executable level.
 
-Key characteristics:
-
-- In a putaway or picking process, and for posting changes, the **basis for the warehouse task is the warehouse request**.
-- A warehouse task is created per warehouse request item, **manually or automatically** — the automatic creation is handled by the Post Processing Framework (PPF), a control framework for follow-on actions.
-- For spontaneous movements in the warehouse (say, one pallet from one bin to another), a warehouse task can be created **even without a reference document**.
+In a putaway or picking process, and for posting changes, the basis for the warehouse task is the warehouse request. It is created per warehouse request item, either manually or automatically; the automatic creation is handled by the Post Processing Framework (PPF), a control framework for follow-on actions. For spontaneous movements in the warehouse, say one pallet from one bin to another, a warehouse task can be created even without a reference document at all.
 
 ### Confirmation — the second step
 
 Once the warehouse task has been carried out, it must be **confirmed**. Confirming means acknowledging: the worker reports back that the correct product, in the correct quantity, has arrived at the correct destination bin. Only then is the movement complete.
 
-Whether a confirmation is required is controlled by settings on the source and destination storage type. In the warehouse process type you can also specify that confirmation happens **automatically the moment the warehouse task is created** — sensible for simple, low-risk movements where no extra human check is needed.
+Whether a confirmation is required is controlled by settings on the source and destination storage type. In the warehouse process type you can also specify that confirmation happens automatically the moment the warehouse task is created. That makes sense for simple, low-risk movements where no extra human check is needed.
 
 ### Product and HU warehouse tasks
 
@@ -106,17 +102,17 @@ Now comes the term that is so often confused with the warehouse task.
 
 Several warehouse tasks are **combined into one warehouse order**. The warehouse order is a **work package** that a worker processes within a certain period. It contains one or more warehouse tasks or physical inventory items.
 
-Put differently: the **warehouse task** is ONE concrete movement (“move pallet X from bin A to bin B”). The **warehouse order** bundles SEVERAL warehouse tasks into a sensible sequence of work for one worker (“move these five pallets in one go”). The bundling exists to **manage the workload of the warehouse resources**.
+Put differently: the **warehouse task** is ONE concrete movement (“move pallet X from bin A to bin B”). The **warehouse order** bundles SEVERAL warehouse tasks into a sensible sequence of work for one worker (“move these five pallets in one go”). The bundling exists to manage the workload of the warehouse resources.
 
 ### Why does the bundling matter?
 
 Warehouse tasks are created continuously — whenever products come in or go out, are moved or counted. Without bundling, a worker would have to process them one by one, in no particular order. So SAP EWM combines several warehouse tasks into warehouse orders, following defined rules.
 
-A vivid example: with a large inbound delivery of 50 pallets, a single worker would otherwise face 50 loose warehouse tasks. With the warehouse order, SAP EWM bundles, say, **ten pallets into one warehouse order**, so the worker gets a sensible, manageable unit of work and moves efficiently through the warehouse.
+A vivid example: with a large inbound delivery of 50 pallets, a single worker would otherwise face 50 loose warehouse tasks. With the warehouse order, SAP EWM bundles, say, ten pallets into a single unit, so the worker gets a sensible, manageable amount of work and moves efficiently through the warehouse.
 
 ## Warehouse order creation rules
 
-How SAP EWM decides which warehouse tasks get bundled is governed by the **warehouse order creation rules**. They are defined in Customizing — the system configuration a consultant sets up.
+How SAP EWM decides which warehouse tasks get bundled is governed by the **warehouse order creation rules**. They are defined in Customizing, the system configuration a consultant sets up.
 
 Warehouse orders are created in four steps:
 
@@ -156,13 +152,13 @@ The reason for the two areas: while stock is still in the putaway process, it co
 
 ## Why a shipping notification can force the goods receipt
 
-When the purchase order is created, you specify whether a **shipping notification** — a delivery announcement — is expected from the supplier. This is done with a **confirmation control key** at item level. It can also be predefined in shipping Customizing, in the purchasing info record or in the supplier master data.
+When the purchase order is created, you specify whether a shipping notification (a delivery announcement) is expected from the supplier. This is done with a **confirmation control key** at item level. It can also be predefined in shipping Customizing, in the purchasing info record or in the supplier master data.
 
-The practical consequence: **if this key is set, an inbound delivery must be created first before the goods receipt can be posted.** Without an inbound delivery, the system will not allow a goods receipt — a common source of error in practice, when a goods receipt seems to be blocked for no reason.
+The practical consequence: if this key is set, an inbound delivery must be created first before the goods receipt can be posted. Without an inbound delivery, the system will not allow a goods receipt — a common source of error in practice, when a goods receipt seems to be blocked for no reason.
 
 ## What users actually do day to day
 
-As a warehouse worker, your day-to-day revolves mostly around the **warehouse order** — your work package for the next hour. The typical flow at a mobile scanner:
+As a warehouse worker, your day-to-day revolves mostly around the **warehouse order**, your work package for the next hour. The typical flow at a mobile scanner:
 
 - **Log on to the device** — a warehouse order is assigned to you.
 - **The first warehouse task** appears: “fetch pallet X from the source area, take it to the destination area.”
@@ -171,7 +167,7 @@ As a warehouse worker, your day-to-day revolves mostly around the **warehouse or
 
 As a planner or warehouse manager, you work more with the **warehouse order creation rules** — that's configuration work, not day-to-day operations. But understanding the logic behind the rules helps you spot uneven workload or bottlenecks in the warehouse and steer against them deliberately.
 
-## In a nutshell
+## The takeaway
 
 Three documents carry every movement in SAP EWM: the **warehouse request** triggers an activity, the **warehouse task** is the individual, executable instruction, and the **warehouse order** bundles several warehouse tasks into one work package. Confirmation closes out each movement, and the warehouse order creation rules control how cleverly the work is bundled. Keep request, task and order cleanly apart, and the flow of goods through the warehouse makes sense — from the door to the shelf.
 

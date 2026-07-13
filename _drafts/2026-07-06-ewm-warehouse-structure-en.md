@@ -27,11 +27,11 @@ faq:
     a: "No. The warehouse structure is set up once when the warehouse is built, or when it is extended, through Customizing. In day-to-day work, though, every user moves within that structure: for a goods receipt, a warehouse task, a scan or a physical inventory, you always work along the hierarchy of warehouse number, storage type, storage section and storage bin."
 ---
 
-From the outside, a warehouse looks like one big room full of shelves. For a system like SAP Extended Warehouse Management to manage every product down to the exact spot, that room has to be broken into clear levels. That is what the warehouse structure does: warehouse number, storage type, storage section and storage bin — a hierarchy that runs from “the whole warehouse” all the way to a single slot. This article explains those levels in plain language, with practical examples.
+From the outside, a warehouse looks like one big room full of shelves. For a system like SAP Extended Warehouse Management to manage every product down to the exact spot, that room has to be broken into clear levels. That is what the warehouse structure does: warehouse number, storage type, storage section and storage bin, a hierarchy that runs from “the whole warehouse” all the way to a single slot. Know these four levels, and any warehouse task in the system turns into a simple set of directions.
 
-## In short: the map of your warehouse
+## The map of your warehouse
 
-The warehouse structure in SAP EWM is the hierarchical representation of a real warehouse inside the system. It runs from the top down: the **warehouse number** stands for the whole warehouse, the **storage type** for an area within it, the **storage section** for a group of similar bins, and the **storage bin** for the individual slot. That way the system always knows where a product physically sits — and can tell you where it should go on putaway and where to fetch it on picking.
+The warehouse structure in SAP EWM is the hierarchical representation of a real warehouse inside the system. It runs from the top down: the **warehouse number** stands for the whole warehouse, the **storage type** for an area within it, the **storage section** for a group of similar bins, and the **storage bin** for the individual slot. That way the system always knows where a product physically sits, and can tell you where it should go on putaway and where to fetch it on picking.
 
 SAP EWM stands for **Extended Warehouse Management**. It is the software many companies use to run their large, complex warehouses — from the arrival at the door to the shipment out.
 
@@ -56,23 +56,17 @@ A storage location on its own holds no physical substructures. Those come into p
 
 ## Level 1 — the warehouse number: the whole warehouse
 
-The **warehouse number** is the top level of warehouse organization. Underneath it, Customizing stores the organizational and physical properties of the warehouse building. These include, for example:
-
-- **Weight unit** — the unit in which weights are managed
-- **Volume unit** — the unit in which volumes are managed
-- **Time unit** — the base unit for time figures
-
-Determination schemas for palletization data and packaging specifications also hang off the warehouse number. In practice, a warehouse number usually corresponds to **one building or one distribution center**. If your storage sites are far apart in different cities, it makes sense to give each complex its own warehouse number.
+The **warehouse number** is the top level of warehouse organization. Underneath it sit the organizational and physical properties of the warehouse building: the weight unit and the volume unit in which the system manages weights and volumes, and the time unit as the base for all time figures. Determination schemas for palletization data and packaging specifications also hang off the warehouse number. In practice, a warehouse number usually corresponds to one building or one distribution center. If your storage sites are far apart in different cities, it makes sense to give each complex its own warehouse number.
 
 ### The supply chain unit (SCU)
 
-Every warehouse number has a unique **supply chain unit (SCU)** — a physical or organizational unit that carries business attributes in the logistics process. The SCU holds important framing information such as **country, region and time zone**. To display all date and time fields, the system falls back on the time zone of this SCU. In practice, the SCU ensures that times in the warehouse are always shown correctly and in relation to the location.
+Every warehouse number has a unique **supply chain unit (SCU)**, a physical or organizational unit that carries business attributes in the logistics process. The SCU holds important framing information such as country, region and time zone. To display all date and time fields, the system falls back on the time zone of this SCU. In practice, the SCU ensures that times in the warehouse are always shown correctly and in relation to the location.
 
 ## Level 2 — the storage type: an area within the warehouse
 
-A **storage type** is a physical or logical subdivision of the warehouse complex. It is characterized by its **storage technique, space requirements, organizational form or function** — in short, by what happens in that area. Technically, the storage type is a **four-character code** defined in Customizing.
+A **storage type** is a physical or logical subdivision of the warehouse complex. It is characterized by its storage technique, space requirements, organizational form or function, in short, by what happens in that area. Technically, the storage type is a four-character code defined in Customizing.
 
-Every storage type has a **storage type role** that determines what it is for. A regular storage type stores goods; other roles cover the intermediate stops that goods pass through on their way through the warehouse. The main roles at a glance:
+Every storage type has a **storage type role** that determines what it is for. A regular storage type stores goods; other roles cover the intermediate stops that goods pass through on their way through the warehouse. Setting up these roles is a project job; as a user, it is enough to place the terms when you meet them in the system:
 
 - **Regular storage type** — a physical area where products are actually stored
 - **Identification point** — where goods are labeled, identified or checked during putaway
@@ -86,7 +80,7 @@ Every storage type has a **storage type role** that determines what it is for. A
 - **Automated warehouse** — a high-rack warehouse with a storage and retrieval machine
 - **Production supply** — an area where goods are staged close to the production line
 
-The key settings for putaway, removal and goods-movement control are defined in the Customizing of the storage type. The storage type is therefore the level at which you decide how an area behaves.
+The key settings for putaway, removal and goods-movement control live on the storage type. The storage type is therefore the level at which it is defined how an area behaves.
 
 ## Level 3 — the storage section: bins with similar properties
 
@@ -119,14 +113,9 @@ A storage bin holds a set of attributes that together describe what it can do an
 
 Because a bin's position is usually derived from a coordinate system, it is called the **bin coordinate**. It can be up to **18 characters** long. For example, the coordinate `01-02-03` stands for aisle 1, stack 2 and level 3.
 
-One principle matters here: the bin coordinate is **unique within a warehouse**. No bin shares its coordinate with another — otherwise the system would not know where the goods really are.
+One principle matters here: the bin coordinate is unique within a warehouse. No bin shares its coordinate with another, otherwise the system would not know where the goods really are.
 
-Creating the coordinates runs through Customizing in two steps:
-
-1. **Define the coordinate structure** — that is, set the “encoding” of the bin: which characters stand for aisle, stack, level and any further components
-2. **Create templates** — so that storage bin master data can be generated automatically, instead of creating each bin by hand
-
-For the coordinates, you may use any combination of **letters and numbers**.
+How those coordinates come about is pure setup and runs through Customizing. For you it is enough to place the two terms behind it: the *coordinate structure* is the “encoding” of the bin, it sets which characters stand for aisle, stack, level and any further components. *Templates* built on it then generate the storage bin master data automatically, instead of anyone creating each bin by hand. Any combination of letters and numbers is allowed here.
 
 ### Further properties
 
@@ -142,17 +131,11 @@ Every storage bin belongs to exactly one storage type and can be assigned to a s
 
 Alongside the pure spatial hierarchy, there is a second ordering that cuts across it: the **activity area**. Warehouse activities such as putaway, picking and physical inventory are organized in these areas. An activity area consists of one or more assigned storage bins.
 
-What makes it special:
-
-- A storage bin can, depending on the task, be assigned to **several activity areas**
-- For sorting, attributes of the bin such as aisle, stack or level serve as criteria — producing a sensible walking order
-- Activity areas are **optional in general** — with one exception
-
-That exception is **physical inventory**: there, the activity area is mandatory. For every other activity you may use one, but you don't have to.
+What makes it special: one and the same storage bin can, depending on the task, belong to several activity areas. For sorting, attributes such as aisle, stack or level serve as criteria, so that a sensible walking order results. Activity areas are optional in general, with one exception: **physical inventory**. There the activity area is mandatory. For every other activity you may use one, but you don't have to.
 
 ## What does a complete warehouse structure look like?
 
-To illustrate, here is an illustrative example — a warehouse with the number `1010` and several storage types that together map the path of goods through the warehouse:
+To illustrate, here is an example: a warehouse with the number `1010` and several storage types that together map the path of goods through the warehouse:
 
 | Storage type | Function | Example sections |
 | --- | --- | --- |
@@ -164,11 +147,11 @@ To illustrate, here is an illustrative example — a warehouse with the number `
 | `9020` staging outbound | goods-issue zone | outbound 1, outbound 2 |
 | `9050` yard | adjoining yard | inspection, doors |
 
-That is how goods travel from arrival (inbound zone) through storage (high-rack) to shipment (outbound zone) — and every stop is a storage type with its sections and bins.
+That is how goods travel from arrival (inbound zone) through storage (high-rack) to shipment (outbound zone), and every stop is a storage type with its sections and bins.
 
 ## What users deal with day to day
 
-The individual warehouse worker does not create the warehouse structure each day. It is set up once when the warehouse is built, or when it is extended, through Customizing. But in day-to-day work, **every user constantly moves within that structure**. Concretely, for example, when you:
+The individual warehouse worker does not create the warehouse structure each day. It is set up once when the warehouse is built, or when it is extended, through Customizing. But in day-to-day work, every user constantly moves within that structure. Concretely, for example, when you:
 
 - **post a goods receipt** — you choose the target warehouse number, and the system proposes the fitting storage bin based on the storage type and storage section
 - **process a warehouse task** — it tells you “from bin A to bin B”
@@ -177,7 +160,7 @@ The individual warehouse worker does not create the warehouse structure each day
 
 In all these cases you move along the chain **warehouse number → storage type → storage section → storage bin**. Once you can keep these four levels apart, you suddenly understand a large part of what happens in the warehouse.
 
-## In a nutshell
+## The takeaway
 
 The warehouse structure in SAP EWM translates a real warehouse into four clear levels: the **warehouse number** is the whole warehouse, the **storage type** an area within it, the **storage section** a group of similar bins, and the **storage bin** the individual slot with its unique coordinate. Cutting across them, the **activity area** bundles bins for a specific task — mandatory only for physical inventory. Once you know these building blocks, you read every warehouse task, every scan and every putaway like a map.
 

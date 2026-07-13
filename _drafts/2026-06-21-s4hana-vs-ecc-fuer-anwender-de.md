@@ -27,27 +27,27 @@ faq:
     a: "Ja. Buchungskreise, Werke, Kostenstellen und Sachkonten bleiben als Strukturen bestehen. Geändert hat sich vor allem die Architektur darunter: ein vereinfachtes Datenmodell, eine integrierte Plattform und eine moderne Oberfläche."
 ---
 
-Viele Unternehmen stecken mitten in der Umstellung von SAP ECC auf SAP S/4HANA — und plötzlich tauchen Begriffe auf, die vor wenigen Jahren noch niemand kannte: Universal Journal, Geschäftspartner, Embedded Analytics, Fiori Launchpad. Dieser Artikel erklärt in klarer Sprache, was sich beim Sprung von ECC auf S/4HANA für Anwender wirklich ändert — vom Datenmodell über die Stammdaten bis zur Oberfläche.
+„Bleibt eigentlich irgendwas, wie es war?“ Diese Frage kommt in fast jeder Umstellungsrunde. Die ehrliche Antwort: Fachlich buchst du weiter Rechnungen, legst Bestellungen an und bearbeitest Kundenaufträge wie bisher. Was sich ändert, sitzt eine Ebene tiefer, im Datenmodell, in den Stammdaten und an der Oberfläche. „Muss ich jetzt alles komplett neu lernen?“ — so fragen Teilnehmer oft. Die größte Sorge, dass jetzt alles anders wird, trifft den Alltag kaum, sondern die Architektur darunter. Genau die Begriffe, die dabei neu auftauchen, sortieren wir hier ein: Universal Journal, Geschäftspartner, Embedded Analytics, Fiori Launchpad.
 
-## Kurz gesagt: gleiche Prozesse, neue Architektur
+## Gleiche Prozesse, neue Architektur
 
-SAP S/4HANA ist der Nachfolger von SAP ECC (dem alten „SAP ERP“). Fachlich machst du dieselben Dinge — Bestellungen anlegen, Rechnungen buchen, Kundenaufträge bearbeiten. Was sich ändert, ist die Architektur darunter: S/4HANA läuft ausschließlich auf der In-Memory-Datenbank SAP HANA, nutzt ein deutlich **vereinfachtes Datenmodell** und bringt eine moderne, rollenbasierte Oberfläche mit. Für dich als Anwender heißt das: weniger doppelte Datenhaltung, Echtzeit-Auswertungen und ein aufgeräumter Zugang zu deinen Aufgaben.
+SAP S/4HANA ist der Nachfolger von SAP ECC (dem alten „SAP ERP“). Fachlich machst du dieselben Dinge: Bestellungen anlegen, Rechnungen buchen, Kundenaufträge bearbeiten. Was sich ändert, ist die Architektur darunter: S/4HANA läuft ausschließlich auf der In-Memory-Datenbank SAP HANA, nutzt ein deutlich **vereinfachtes Datenmodell** und bringt eine moderne, rollenbasierte Oberfläche mit. Für dich als Anwender heißt das: weniger doppelte Datenhaltung, Echtzeit-Auswertungen und ein aufgeräumter Zugang zu deinen Aufgaben.
 
 ## Warum überhaupt der Schritt von ECC auf S/4HANA?
 
 SAP ECC (ERP Central Component) lief jahrzehntelang auf klassischen relationalen Datenbanken wie Oracle, DB2 oder SQL Server. Daten wurden zeilenorientiert gespeichert, und Auswertungen holte man sich meist aus separaten Reporting-Systemen wie SAP BW — sonst wäre das Tagesgeschäft zu langsam geworden. Doppelte Datenhaltung, Aggregationstabellen und nächtliche Batch-Läufe gehörten zum Alltag.
 
-SAP S/4HANA bricht damit: Die Suite läuft **nur noch auf SAP HANA**, einer In-Memory-Datenbank. Daten liegen spaltenorientiert im Hauptspeicher, und Summen werden zur Laufzeit berechnet, statt redundant gespeichert zu werden. Aus Anwendersicht bedeutet das Echtzeitprozesse, Analyse und Tagesgeschäft aus derselben Datenquelle, weniger Redundanz und schlankere Tabellen.
+SAP S/4HANA bricht damit: Die Suite läuft nur noch auf SAP HANA, einer In-Memory-Datenbank. Daten liegen spaltenorientiert im Hauptspeicher, und Summen werden zur Laufzeit berechnet, statt redundant gespeichert zu werden. Aus Anwendersicht bedeutet das Echtzeitprozesse, Analyse und Tagesgeschäft aus derselben Datenquelle, weniger Redundanz und schlankere Tabellen.
 
 Die wichtigsten Effekte für Anwender im Überblick:
 
-- **Eine Datenquelle für Transaktion und Auswertung** — kein ständiger Wechsel zwischen operativem System und Data Warehouse für Standardberichte
-- **Vereinfachtes Datenmodell** — weniger Tabellen, weniger Belege, kürzere Schreibwege
-- **Moderne Oberfläche** über SAP Fiori — rollenbasiert, browserfähig, mobil nutzbar
-- **Eingebettete Auswertungen** direkt im operativen System
-- **Vorkonfigurierte Best Practices**, die branchenspezifisch mitgeliefert werden
+- Eine Datenquelle für Transaktion und Auswertung: kein ständiger Wechsel zwischen operativem System und Data Warehouse für Standardberichte
+- Vereinfachtes Datenmodell mit weniger Tabellen, weniger Belegen und kürzeren Schreibwegen
+- Moderne Oberfläche über SAP Fiori, rollenbasiert, browserfähig und mobil nutzbar
+- Eingebettete Auswertungen direkt im operativen System
+- Vorkonfigurierte Best Practices, die branchenspezifisch mitgeliefert werden
 
-Diese Vereinfachung — auf Englisch oft „Simplification“ genannt — ist der rote Faden hinter allen Detailänderungen, die wir uns jetzt anschauen.
+Diese Vereinfachung, auf Englisch oft „Simplification“ genannt, ist der rote Faden hinter allen Detailänderungen, die wir uns jetzt anschauen.
 
 ## Universal Journal: das neue Herz des Rechnungswesens
 
@@ -60,7 +60,7 @@ Damit verschwindet die alte, harte Trennung zwischen FI-Konten und CO-Kostenarte
 Was heißt das konkret für den Anwender?
 
 - Ein Buchungsbeleg enthält in einem Schritt FI- und CO-Informationen — kein nachträglicher Abgleich mehr.
-- Aus Bilanz und GuV ist ein **Drill-Down bis zum Originalbeleg** möglich (etwa bis zur Bestellung oder Lieferantenrechnung).
+- Aus Bilanz und GuV ist ein Drill-Down bis zum Originalbeleg möglich (etwa bis zur Bestellung oder Lieferantenrechnung).
 - Berichte auf Profitcenter-, Segment- oder Geschäftsbereichsebene laufen ohne separates Profit-Center-Ledger.
 - Reale Buchungen erfolgen auf die Kostenstelle (oder einen anderen Kontierungsempfänger), statistische Buchungen laufen parallel ans Profitcenter.
 
@@ -68,9 +68,9 @@ Das Universal Journal ist mit Abstand der wichtigste Unterschied im Rechnungswes
 
 ## Geschäftspartner statt getrennter Kunden- und Lieferantenstämme
 
-In SAP ECC musste man für jeden Geschäftspartner zwei Stammsätze pflegen: einen **Kundenstamm** für die Vertriebsseite und einen **Lieferantenstamm** für die Einkaufsseite. War ein Partner gleichzeitig Kunde und Lieferant — im B2B häufig der Fall —, wurde vieles doppelt gepflegt: Adresse, Bankverbindung, Kommunikationsdaten. Inkonsistenzen waren vorprogrammiert.
+In SAP ECC musste man für jeden Geschäftspartner zwei Stammsätze pflegen: einen **Kundenstamm** für die Vertriebsseite und einen **Lieferantenstamm** für die Einkaufsseite. War ein Partner gleichzeitig Kunde und Lieferant (im B2B häufig der Fall), wurde vieles doppelt gepflegt: Adresse, Bankverbindung, Kommunikationsdaten. Inkonsistenzen waren vorprogrammiert.
 
-S/4HANA macht den **Geschäftspartner-Ansatz (Business Partner, BP) verpflichtend**. Der Geschäftspartner ist das zentrale Stammdatenobjekt — Kunden- und Lieferantendaten werden über Rollen abgebildet, nicht mehr über getrennte Stammsätze.
+S/4HANA macht den **Geschäftspartner**-Ansatz (Business Partner, BP) verpflichtend. Der Geschäftspartner ist das zentrale Stammdatenobjekt — Kunden- und Lieferantendaten werden über Rollen abgebildet, nicht mehr über getrennte Stammsätze.
 
 So sieht die Struktur in der Praxis aus:
 
@@ -92,16 +92,16 @@ Die klassische SAP GUI mit ihrem Easy-Access-Menü und Transaktionscodes hat in 
 
 Der Unterschied ist mehr als kosmetisch. Eine GUI-Transaktion zeigt typischerweise viele Felder und Reiter gleichzeitig; eine Fiori-App ist dagegen auf eine konkrete Aufgabe zugeschnitten — eine Bestellung freigeben, einen Kundenauftrag anlegen, offene Posten prüfen. Die typischen Vorteile:
 
-- **Effizienteres Arbeiten**, weil relevante Apps und Informationen ohne Umwege erreichbar sind
-- **Schnellere Entscheidungen** dank Hinweisen, die direkt auf der Startseite einlaufen
-- **Bessere Akzeptanz** im Tagesgeschäft durch ein einheitliches, mobiltaugliches Design
-- **Rollenbasierter Zugriff** — jeder sieht nur die Kacheln, die zu seiner Tätigkeit passen
+- Effizienteres Arbeiten, weil relevante Apps und Informationen ohne Umwege erreichbar sind
+- Schnellere Entscheidungen dank Hinweisen, die direkt auf der Startseite einlaufen
+- Bessere Akzeptanz im Tagesgeschäft durch ein einheitliches, mobiltaugliches Design
+- Rollenbasierter Zugriff, sodass jeder nur die Kacheln sieht, die zu seiner Tätigkeit passen
 
 Dabei gibt es drei wichtige App-Typen:
 
-1. **Transaktionale Apps** — operative Vorgänge wie Anlegen, Ändern, Buchen
-2. **Fact-Sheet-Apps** — kontextbezogene Detailansicht eines Objekts (Bestellung, Material, Geschäftspartner)
-3. **Analytische Apps** — Kennzahl-Kacheln mit Echtzeitdaten und Drill-Down ins Belegdetail
+1. **Transaktionale Apps**: operative Vorgänge wie Anlegen, Ändern, Buchen
+2. **Fact-Sheet-Apps**: kontextbezogene Detailansicht eines Objekts (Bestellung, Material, Geschäftspartner)
+3. **Analytische Apps**: Kennzahl-Kacheln mit Echtzeitdaten und Drill-Down ins Belegdetail
 
 Die alte SAP GUI bleibt für Power-User und administrative Transaktionen verfügbar. Der Standard-Einstieg in S/4HANA ist aber das Fiori Launchpad.
 
@@ -114,21 +114,17 @@ S/4HANA bringt mit **Embedded Analytics** das operative Reporting direkt ins Tra
 - Das **virtuelle Datenmodell (VDM)** — eine semantische Schicht aus sogenannten CDS-Views, die fertig aufbereitete Blickwinkel auf das Universal Journal und weitere Tabellen liefert, ohne die Daten zu kopieren.
 - Die In-Memory-Geschwindigkeit von SAP HANA, die Summenbildung erst zur Laufzeit erlaubt.
 
-Für Endanwender gibt es dabei mehrere zentrale Werkzeuge:
-
-- **Abfrage-Browser (Query Browser)** — eine Liste verfügbarer CDS-Views, mit denen Anwender ohne IT eigene Auswertungen starten
-- **Analytische Fiori-Apps** — vorgefertigte Auswertungs-Kacheln direkt im Launchpad
-- **SAP Smart Business Cockpits** — Kennzahl-Dashboards für Führungskräfte
+Für Endanwender sind dabei vor allem drei Werkzeuge relevant. Der Abfrage-Browser (Query Browser) listet die verfügbaren CDS-Views auf, sodass Anwender ohne IT eigene Auswertungen starten. Analytische Fiori-Apps liefern vorgefertigte Auswertungs-Kacheln direkt im Launchpad. Und die SAP Smart Business Cockpits bündeln Kennzahl-Dashboards für Führungskräfte.
 
 Wichtig fürs Verständnis: Embedded Analytics ersetzt nicht das klassische Data Warehouse für strategisches Reporting über viele Jahre und Quellsysteme hinweg. Für operative Echtzeitauswertungen ist es aber das neue Standardwerkzeug.
 
 ## SAP Activate: die neue Einführungsmethodik
 
-Auch jenseits der Software hat sich etwas Grundlegendes geändert — die Methodik, mit der SAP-Projekte umgesetzt werden. Die früher übliche ASAP-Methodik ist durch **SAP Activate** abgelöst, ein Framework aus drei Säulen:
+Ein kurzer Blick über den Tellerrand, mehr zum Einordnen als für den Alltag: Auch die Methodik, mit der SAP-Projekte umgesetzt werden, hat sich geändert. Als Anwender führst du kein Migrationsprojekt selbst durch, aber die Begriffe tauchen in Projektmeetings auf. Die früher übliche ASAP-Methodik ist durch **SAP Activate** abgelöst, ein Framework aus drei Säulen:
 
-1. **SAP Best Practices** — sofort einsatzfähige, branchenspezifisch optimierte Geschäftsprozesse, die bereits vorkonfiguriert im System liegen
-2. **Methodik** — eine modulare Roadmap mit klar abgegrenzten Phasen
-3. **Geführte Konfiguration** — Werkzeuge, die Best Practices im Kundensystem aktivieren
+1. **SAP Best Practices**: sofort einsatzfähige, branchenspezifisch optimierte Geschäftsprozesse, die bereits vorkonfiguriert im System liegen
+2. **Methodik**: eine modulare Roadmap mit klar abgegrenzten Phasen
+3. **Geführte Konfiguration**: Werkzeuge, die Best Practices im Kundensystem aktivieren
 
 Die Phasen der SAP-Activate-Roadmap:
 
@@ -158,17 +154,17 @@ Neben den großen Themen gibt es einige kleinere, aber praktisch relevante Detai
 | Materialplanung | klassischer MRP-Lauf | MRP Live (auf HANA) |
 | Betriebsmodell | primär On-Premise | Cloud- und On-Premise-Varianten |
 
-Hinzu kommen die Cloud-Angebote **RISE with SAP** (Modernisierung großer Bestandskunden) und **GROW with SAP** (für mittelständische Neukunden) — beides sind Lizenz- und Service-Pakete, die die Cloud-Einführung beschleunigen sollen. Für den Überblick reicht es, beide Begriffe einordnen zu können.
+Hinzu kommen die Cloud-Angebote **RISE with SAP** (Modernisierung großer Bestandskunden) und **GROW with SAP** (für mittelständische Neukunden), beides sind Lizenz- und Service-Pakete, die die Cloud-Einführung beschleunigen sollen. Für den Überblick reicht es, beide Begriffe einordnen zu können.
 
 ## Häufige Stolpersteine
 
 - **ECC-Reflexe mitnehmen.** Wer gewohnt ist, Kunde und Lieferant getrennt zu pflegen oder für jede Auswertung ins Data Warehouse zu wechseln, arbeitet in S/4HANA umständlicher als nötig. Der Geschäftspartner und die eingebetteten Auswertungen sind die neuen Standardwege.
-- **Systemkonvertierung mit Upgrade verwechseln.** Der Brownfield-Umstieg ist ein Produktwechsel von ECC auf S/4HANA, kein reines Release-Upgrade — auch wenn historische Daten und Customizing weitgehend erhalten bleiben.
+- **Systemkonvertierung mit Upgrade verwechseln.** Besonders oft geraten Greenfield und Brownfield durcheinander. Der Brownfield-Umstieg ist ein Produktwechsel von ECC auf S/4HANA, kein reines Release-Upgrade, auch wenn historische Daten und Customizing weitgehend erhalten bleiben.
 - **Fiori für reine Kosmetik halten.** Die neue Oberfläche ändert nicht nur die Optik, sondern den Zuschnitt der Arbeit: aufgabenbezogene Apps statt großer Sammel-Transaktionen.
 
-## Kurz zusammengefasst
+## Worauf es ankommt
 
-SAP S/4HANA ist keine kosmetische Modernisierung von SAP ECC. Die zentralen Konzepte — Universal Journal, Geschäftspartner, Fiori als Standard-Oberfläche, Embedded Analytics und SAP Activate als Einführungsmethodik — verändern die Art, wie Anwender mit dem System arbeiten.
+SAP S/4HANA ist keine kosmetische Modernisierung von SAP ECC. Die zentralen Konzepte, also Universal Journal, Geschäftspartner, Fiori als Standard-Oberfläche, Embedded Analytics und SAP Activate als Einführungsmethodik, verändern die Art, wie Anwender mit dem System arbeiten.
 
 Die gute Nachricht: Vieles, was du aus ECC kennst, wirkt in S/4HANA weiterhin im Hintergrund. Buchungskreise, Werke, Kostenstellen und Sachkonten sind dieselben geblieben. Geändert hat sich vor allem die *Architektur darunter* — ein vereinfachtes Datenmodell, eine integrierte Plattform und eine moderne Oberfläche. Wer diesen Perspektivwechsel einmal verinnerlicht hat, findet sich in S/4HANA schnell zurecht.
 

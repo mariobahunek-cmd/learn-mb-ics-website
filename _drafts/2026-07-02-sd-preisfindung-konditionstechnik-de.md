@@ -27,17 +27,17 @@ faq:
     a: "Weil die Zugriffsfolge vom Spezifischen zum Allgemeinen sortiert ist und das System die Suche beim ersten Treffer abbricht. Ein Konditionssatz für „Kunde und Material“ wird vor dem allgemeinen Satz für „Material“ geprüft und übersteuert ihn deshalb automatisch — ohne dass man etwas abschalten muss."
 ---
 
-Legst du in SAP einen Kundenauftrag an, erscheint plötzlich ein Stückpreis, ein Rabatt wird automatisch abgezogen und am Ende landet noch die Mehrwertsteuer in der Position. Was wie Magie aussieht, ist in Wahrheit ein klar definiertes Regelwerk: die Konditionstechnik. Dieser Artikel zerlegt sie in ihre Bausteine und zeigt Schritt für Schritt, wie das System zu einem Preis kommt.
+Legst du in SAP einen Kundenauftrag an, erscheint plötzlich ein Stückpreis, ein Rabatt wird automatisch abgezogen und am Ende landet noch die Mehrwertsteuer in der Position. Was wie Magie aussieht, ist in Wahrheit ein klar definiertes Regelwerk: die Konditionstechnik. Hand aufs Herz: Bei der Konditionstechnik stutzen die meisten zuerst und fragen, woher das System den Preis eigentlich nimmt. Die Antwort steckt in fünf Objekten, die ineinandergreifen.
 
-## Kurz gesagt: das Regelwerk hinter jedem Preis
+## Worum es im Kern geht
 
-Die Konditionstechnik ist der Mechanismus, mit dem SAP S/4HANA im Vertrieb automatisch ermittelt, welcher Preis, welcher Rabatt, welcher Zuschlag und welche Steuer in einen Verkaufsbeleg übernommen werden. Sie besteht aus fünf Objekten, die ineinandergreifen. Der große Vorteil: Du kannst Preise und Rabatte von fast jedem Belegfeld abhängig machen — vom Kunden, der Materialgruppe, der Verkaufsorganisation oder einer Kombination daraus.
+Die Konditionstechnik ist der Mechanismus, mit dem SAP S/4HANA im Vertrieb automatisch ermittelt, welcher Preis, welcher Rabatt, welcher Zuschlag und welche Steuer in einen Verkaufsbeleg übernommen werden. Sie besteht aus fünf Objekten, die ineinandergreifen. Der große Vorteil: Du kannst Preise und Rabatte von fast jedem Belegfeld abhängig machen: vom Kunden, der Materialgruppe, der Verkaufsorganisation oder einer Kombination daraus.
 
 Dieselbe Logik steckt nicht nur hinter der Preisfindung. Auch die Nachrichtenfindung, die Erlöskontenfindung und weitere Automatismen im System bauen darauf auf. Wer die Konditionstechnik einmal verstanden hat, versteht damit viele Findungsmechanismen auf einen Schlag.
 
 ## Was ist die Konditionstechnik in SAP SD?
 
-Beim Anlegen eines Kundenauftrags schaut SAP nicht einfach in ein Feld „Preis“ im Materialstamm. Stattdessen läuft im Hintergrund ein definierter Such- und Berechnungsprozess ab. Dieser Prozess wird vollständig im **Customizing** eingerichtet — also in den Systemeinstellungen, die normalerweise ein Berater vornimmt — und besteht aus mehreren verzahnten Objekten.
+Beim Anlegen eines Kundenauftrags schaut SAP nicht einfach in ein Feld „Preis“ im Materialstamm. Stattdessen läuft im Hintergrund ein definierter Such- und Berechnungsprozess ab. Dieser Prozess wird vollständig im Customizing eingerichtet, also in den Systemeinstellungen, die normalerweise ein Berater vornimmt, und besteht aus mehreren verzahnten Objekten.
 
 Genau diese Flexibilität ist der Grund, warum die Konditionstechnik so mächtig und für Einsteiger zunächst so verwirrend ist. Sobald du die fünf Bausteine und ihr Zusammenspiel kennst, verschwindet die Verwirrung.
 
@@ -51,7 +51,7 @@ Bevor wir ein Beispiel rechnen, lohnt es sich, die zentralen Objekte einmal saub
 - **Konditionssatz** — der eigentliche Datensatz mit dem tatsächlichen Wert, etwa „Für diese Verkaufsorganisation, diesen Kunden und dieses Material gilt ein Stückpreis von 74 EUR“.
 - **Kalkulationsschema** — die geordnete Liste aller Konditionsarten, die ein Beleg durchläuft, inklusive Zwischensummen, Berechnungsformeln und Bedingungen.
 
-Im Englischen heißt das Kalkulationsschema „pricing procedure“. Beide Begriffe bedeuten dasselbe. Manchmal liest man auch „Konditionsschema“ — auch das meint dasselbe Objekt.
+Im Englischen heißt das Kalkulationsschema „pricing procedure“. Beide Begriffe bedeuten dasselbe. Manchmal liest man auch „Konditionsschema“; auch das meint dasselbe Objekt.
 
 ## Wie ist ein Kalkulationsschema aufgebaut?
 
@@ -67,13 +67,13 @@ Ein Kalkulationsschema ist im Kern eine Tabelle mit Zeilen. Jede Zeile ist eine 
 | 400 | Mehrwertsteuer | Ausgangssteuer | + Steuer auf Netto |
 | 900 | Endbetrag | Brutto-Position | = zu zahlender Betrag |
 
-Das System arbeitet das Schema **strikt von oben nach unten** ab. Für jede Zeile prüft es: „Gibt es zu dieser Konditionsart einen gültigen Konditionssatz für diese Position?“ Wenn ja, übernimmt es den Wert in den Beleg. Wenn nein, wird die Zeile übersprungen — es sei denn, die Konditionsart ist als Mussbedingung markiert; dann bliebe der Beleg unvollständig.
+Das System arbeitet das Schema strikt von oben nach unten ab. Für jede Zeile prüft es: „Gibt es zu dieser Konditionsart einen gültigen Konditionssatz für diese Position?“ Wenn ja, übernimmt es den Wert in den Beleg. Wenn nein, wird die Zeile übersprungen, es sei denn, die Konditionsart ist als Mussbedingung markiert; dann bliebe der Beleg unvollständig.
 
 Welches Kalkulationsschema überhaupt zum Einsatz kommt, entscheidet SAP über zwei Schlüssel: das **Belegschema** (kommt aus der Verkaufsbelegart) und das **Kundenschema** (kommt aus dem Verkaufsbereichsbild des Kundenstamms). Aus der Kombination beider Schlüssel plus der Verkaufsorganisation ermittelt das System das passende Schema. Diesen Schritt nennt man Schemafindung.
 
 ## Wie legt man einen Konditionssatz an?
 
-Damit aus dem leeren Kalkulationsschema echte Preise werden, brauchst du **Konditionssätze**. Sie sind Stammdaten und werden im Tagesgeschäft gepflegt — klassisch über eine Pflegetransaktion, in S/4HANA auch über eine entsprechende Fiori-App wie „Preise festlegen“. Die Logik dahinter: Anlegen, Ändern und Anzeigen sind getrennte Funktionen.
+Damit aus dem leeren Kalkulationsschema echte Preise werden, brauchst du Konditionssätze. Sie sind Stammdaten und werden im Tagesgeschäft gepflegt — klassisch über eine Pflegetransaktion, in S/4HANA auch über eine entsprechende Fiori-App wie „Preise festlegen“. Die Logik dahinter: Anlegen, Ändern und Anzeigen sind getrennte Funktionen.
 
 Stell dir vor, du hast mit einem Großkunden eine mengenabhängige Preisstaffel vereinbart und willst sie so hinterlegen, dass sie nicht bei jedem Auftrag manuell erfasst werden muss. Der Weg dorthin:
 
@@ -88,7 +88,7 @@ Erfasst der Vertrieb jetzt einen Auftrag über 60 Stück dieses Materials für g
 
 ## Wie sucht das System bei der Preisfindung?
 
-Hier steckt das vielleicht wichtigste Konzept. Eine Preis-Konditionsart hat in der Regel eine Zugriffsfolge mit *mehreren* Zugriffen — vom spezifischsten zum allgemeinsten. Zum Beispiel:
+Hier steckt das vielleicht wichtigste Konzept. Eine Preis-Konditionsart hat in der Regel eine Zugriffsfolge mit *mehreren* Zugriffen, vom spezifischsten zum allgemeinsten. Zum Beispiel:
 
 | Zugriff | Schlüsselfelder | Spezifität |
 | --- | --- | --- |
@@ -96,11 +96,11 @@ Hier steckt das vielleicht wichtigste Konzept. Eine Preis-Konditionsart hat in d
 | 20 | Preisliste / Währung / Material | mittel |
 | 30 | Material | allgemein |
 
-Beim Durchlauf einer Konditionsart füllt SAP die Schlüsselfelder des ersten Zugriffs aus dem Beleg (Kunde aus dem Kopf, Material aus der Position), sucht in der zugehörigen Konditionstabelle nach einem gültigen Konditionssatz und — entscheidend — **bricht die Suche ab, sobald ein Treffer gefunden wurde**. Erst wenn ein Zugriff leer ausgeht, wandert das System zum nächsten Zugriff.
+Beim Durchlauf einer Konditionsart füllt SAP die Schlüsselfelder des ersten Zugriffs aus dem Beleg (Kunde aus dem Kopf, Material aus der Position) und sucht in der zugehörigen Konditionstabelle nach einem gültigen Konditionssatz. Sobald ein Treffer gefunden wurde, bricht die Suche ab. Genau das ist der entscheidende Punkt. Erst wenn ein Zugriff leer ausgeht, wandert das System zum nächsten Zugriff.
 
 Das hat zwei praktische Konsequenzen:
 
-- Ein spezifischer Konditionssatz „Kunde und Material“ *übersteuert* automatisch einen allgemeinen Satz „nur Material“. Du musst nichts abschalten — die Reihenfolge erledigt das.
+- Ein spezifischer Konditionssatz „Kunde und Material“ *übersteuert* automatisch einen allgemeinen Satz „nur Material“. Du musst nichts abschalten, die Reihenfolge erledigt das.
 - Die *Reihenfolge der Zugriffe* innerhalb der Zugriffsfolge ist genauso kritisch wie die Reihenfolge der Konditionsarten im Kalkulationsschema. Eine falsch sortierte Zugriffsfolge kann dazu führen, dass Kundenrabatte oder Aktionspreise nie greifen.
 
 ## Welche Arten von Konditionen gibt es?
@@ -112,11 +112,7 @@ SAP liefert im Standard zahlreiche Konditionsarten aus. Für das Verständnis re
 - **Zuschlag** — erhöht den Preis, zum Beispiel ein Frachtzuschlag in Abhängigkeit vom Positionsgewicht.
 - **Steuer** — die Ausgangssteuer, automatisch ermittelt über Land sowie die Steuerklassifikation von Kunde und Material.
 
-Drei Punkte sind dabei wichtig zu verstehen:
-
-- Die **Konditionsklasse** (Preis, Abschlag, Zuschlag, Steuer) entscheidet über Vorzeichen und Verbuchung.
-- Die **Rechenregel** bestimmt, ob es sich um einen festen Betrag, einen Prozentwert, einen Mengensatz oder eine Staffel handelt.
-- Manche Konditionsarten dürfen **manuell überschrieben** werden — etwa wenn der Vertrieb einen Sonderrabatt einräumt —, andere sind im Customizing gesperrt. Das wird pro Konditionsart hinterlegt.
+Dabei lohnt es sich, drei Dinge auseinanderzuhalten. Die Konditionsklasse (Preis, Abschlag, Zuschlag, Steuer) entscheidet über Vorzeichen und Verbuchung. Die Rechenregel bestimmt, ob ein fester Betrag, ein Prozentwert, ein Mengensatz oder eine Staffel dahintersteckt. Und ob sich eine Konditionsart manuell überschreiben lässt, etwa wenn der Vertrieb einen Sonderrabatt einräumt, oder ob sie im Customizing gesperrt ist, wird pro Konditionsart hinterlegt.
 
 ## Stammdaten oder Customizing — was gehört wohin?
 
@@ -125,15 +121,17 @@ Ein häufiger Stolperstein ist die Verwechslung von Stammdaten und Customizing. 
 - **Customizing** (einmal vom Berater eingerichtet): Konditionsart, Zugriffsfolge, Konditionstabelle und Kalkulationsschema. Das ist das Regelwerk.
 - **Stammdaten** (im Tagesgeschäft pflegbar): der Konditionssatz. Das ist der konkrete Wert innerhalb des Regelwerks.
 
-Anders gesagt: Der Berater baut die Straße (Customizing), der Anwender legt die konkreten Preise darauf ab (Stammdaten). Wer diese beiden Ebenen sauber trennt, versteht sofort, warum ein neuer Preis kein Customizing braucht — und warum eine neue Rabattlogik sehr wohl eines braucht.
+Anders gesagt: Der Berater baut die Straße (Customizing), der Anwender legt die konkreten Preise darauf ab (Stammdaten). Wer diese beiden Ebenen sauber trennt, versteht sofort, warum ein neuer Preis kein Customizing braucht, eine neue Rabattlogik aber sehr wohl.
 
 ## Häufige Stolpersteine
+
+Regelmäßig bringen Teilnehmer manuell erfasste und automatisch gefundene Konditionen durcheinander. Drei Stellen führen dabei besonders oft in die Irre:
 
 - **Begriffe verwechseln.** Konditionsart, Konditionssatz, Konditionstabelle, Zugriffsfolge, Kalkulationsschema — diese Wörter klingen ähnlich. Ordne jedem sein „Was macht es?“ zu, dann verschwindet die Verwirrung.
 - **Zugriffsfolge falsch sortieren.** Steht der allgemeine Zugriff vor dem spezifischen, greift der spezifische Preis nie. Immer vom Spezifischen zum Allgemeinen sortieren.
 - **Denken, jede Zeile summiert sich.** Innerhalb einer Konditionsart wird nur *ein* Konditionssatz angezogen — der erste Treffer. Danach geht es zur nächsten Zeile im Schema.
 
-## Kurz zusammengefasst
+## Worauf es ankommt
 
 Die Konditionstechnik wirkt beim ersten Lesen wie ein Begriffsgewitter, folgt aber einem einfachen Grundprinzip: Ein Kalkulationsschema ist eine geordnete Liste von Konditionsarten. Für jede Konditionsart sucht eine Zugriffsfolge nacheinander in mehreren Konditionstabellen nach einem passenden Konditionssatz. Der erste Treffer gewinnt, dann geht es zur nächsten Zeile. Wer diese Logik einmal verinnerlicht hat, versteht nicht nur die Preisfindung im Vertrieb, sondern gleich eine ganze Familie von Findungsmechanismen in SAP.
 

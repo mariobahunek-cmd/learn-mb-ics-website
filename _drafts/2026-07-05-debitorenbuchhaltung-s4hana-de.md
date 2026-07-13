@@ -27,13 +27,13 @@ faq:
     a: "Ein offener Posten ist eine gebuchte Forderung, die noch nicht bezahlt ist. Geht die Zahlung ein, wird der Zahlungseingang gegen die Rechnung ausgeglichen und der Posten gilt als erledigt. Nur unbezahlte offene Posten werden im Mahnlauf berücksichtigt."
 ---
 
-Wer in der Buchhaltung mit SAP S/4HANA arbeitet, hat fast täglich mit Kundenforderungen zu tun: eine Rechnung wird geschrieben, das Geld kommt herein, ein Posten wird ausgeglichen, ein säumiger Kunde bekommt eine Mahnung. Genau diese Vorgänge bündelt die Debitorenbuchhaltung. Dieser Artikel erklärt in klarer Sprache, wie sie aufgebaut ist und wie die einzelnen Bausteine zusammenspielen.
+Eine Rechnung geht raus, ein paar Wochen später kommt das Geld herein, der Posten wird ausgeglichen, und wer zu spät zahlt, bekommt eine Mahnung. Wer in der Buchhaltung mit SAP S/4HANA arbeitet, durchläuft diesen Kreislauf fast täglich. Genau diese Vorgänge bündelt die Debitorenbuchhaltung, und ihr Aufbau ist überraschend geradlinig, sobald man die tragenden Bausteine einmal auseinanderhält.
 
-## Kurz gesagt: das Nebenbuch für Kundenforderungen
+## Das Nebenbuch für Kundenforderungen
 
-Die Debitorenbuchhaltung (englisch Accounts Receivable, kurz **FI-AR**) ist das Nebenbuch in der SAP-Finanzbuchhaltung, das alle **Forderungen gegenüber Kunden** verwaltet. Ein Kunde heißt in SAP **Debitor**. Jeder Geschäftsvorfall mit einem Debitor — Ausgangsrechnung, Gutschrift, Zahlungseingang, Mahnung — wird über die Debitorenbuchhaltung abgebildet und gleichzeitig im Hauptbuch über ein **Abstimmkonto** mitgebucht.
+Die Debitorenbuchhaltung (englisch Accounts Receivable, kurz **FI-AR**) ist das Nebenbuch in der SAP-Finanzbuchhaltung, das alle Forderungen gegenüber Kunden verwaltet. Ein Kunde heißt in SAP **Debitor**. Jeder Geschäftsvorfall mit ihm, ob Ausgangsrechnung, Gutschrift, Zahlungseingang oder Mahnung, wird über die Debitorenbuchhaltung abgebildet und gleichzeitig im Hauptbuch über ein **Abstimmkonto** mitgebucht.
 
-Der wichtigste Gedanke dahinter: Das Nebenbuch führt die Details Kunde für Kunde, das Hauptbuch führt die Summe. Beide bleiben durch das Abstimmkonto automatisch im Gleichschritt — daher ist die Bilanz jederzeit konsistent, ohne dass jemand von Hand abstimmen muss.
+Der wichtigste Gedanke dahinter: Das Nebenbuch führt die Details Kunde für Kunde, das Hauptbuch führt die Summe. Beide bleiben durch das Abstimmkonto automatisch im Gleichschritt, und die Bilanz ist damit jederzeit konsistent, ohne dass jemand von Hand abstimmen muss.
 
 ## Was macht ein Buchhalter in der Debitorenbuchhaltung?
 
@@ -50,7 +50,7 @@ So verschieden diese Aufgaben klingen, im Kern kehren drei Bausteine immer wiede
 
 ## Der Debitor im Geschäftspartner-Konzept
 
-In SAP S/4HANA wird ein Debitor nicht mehr als eigenes Objekt angelegt, sondern als **Geschäftspartner mit der Rolle „FI Debitor“**. Diese Vereinheitlichung kam mit S/4HANA: Früher gab es getrennte Welten für Debitor, Kreditor (Lieferant) und Geschäftspartner. Heute ist der Geschäftspartner das zentrale Objekt, und eine Person oder Firma kann mehrere Rollen tragen — zum Beispiel Kunde und Lieferant zugleich.
+In SAP S/4HANA wird ein Debitor nicht mehr als eigenes Objekt angelegt, sondern als **Geschäftspartner** mit der Rolle „FI Debitor“. Diese Vereinheitlichung kam mit S/4HANA: Früher gab es getrennte Welten für Debitor, Kreditor (Lieferant) und Geschäftspartner. Heute ist der Geschäftspartner das zentrale Objekt, und eine Person oder Firma kann mehrere Rollen tragen, etwa Kunde und Lieferant zugleich.
 
 Die Felder eines Debitorenstammsatzes verteilen sich auf zwei Ebenen:
 
@@ -65,11 +65,7 @@ Auf **Mandantenebene** stehen die Angaben, die für das gesamte Unternehmen gelt
 
 ### Buchungskreisebene — die firmenspezifischen Daten
 
-Ein **Buchungskreis** ist die kleinste rechtlich selbstständige Einheit in SAP, für die eine vollständige Buchhaltung geführt wird — praktisch eine bilanzierende Gesellschaft. Auf **Buchungskreisebene** stehen die Angaben, die nur für diese eine Gesellschaft gelten:
-
-- **Kontoverwaltung** — hier liegt unter anderem das Abstimmkonto
-- **Zahlungsverkehr**
-- **Korrespondenz** — hier liegen die Mahndaten
+Ein **Buchungskreis** ist die kleinste rechtlich selbstständige Einheit in SAP, für die eine vollständige Buchhaltung geführt wird, praktisch eine bilanzierende Gesellschaft. Auf Buchungskreisebene stehen die Angaben, die nur für diese eine Gesellschaft gelten. Dazu gehört die Kontoverwaltung, unter der unter anderem das Abstimmkonto liegt, der gesellschaftsspezifische Zahlungsverkehr und die Korrespondenz, in der die Mahndaten stehen.
 
 **Praxisregel:** Der Eintrag auf Buchungskreisebene hat Vorrang vor dem Eintrag auf Mandantenebene. Ist eine Bankverbindung auf beiden Ebenen gepflegt, gilt die buchungskreisspezifische. Bankstammsätze selbst werden übrigens auf Mandantenebene angelegt und lassen sich anschließend jedem Debitor und Kreditor zuweisen — das erspart Doppelpflege.
 
@@ -89,13 +85,13 @@ Die Forderung gegenüber dem Kunden steht im **Soll** (er schuldet dir Geld), Er
 
 ## Wie werden Zahlungseingänge und offene Posten behandelt?
 
-Sobald eine Rechnung gebucht ist, gilt die Forderung als **offener Posten** — eine gebuchte Forderung, die noch nicht bezahlt ist. Kommt das Geld herein, wird der **Zahlungseingang** gegen die passende Rechnung ausgeglichen. Der offene Posten ist damit erledigt und taucht in keiner Mahnung mehr auf.
+Sobald eine Rechnung gebucht ist, gilt die Forderung als **offener Posten**, also als gebuchte Forderung, die noch nicht bezahlt ist. Kommt das Geld herein, wird der Zahlungseingang gegen die passende Rechnung ausgeglichen. Der offene Posten ist damit erledigt und taucht in keiner Mahnung mehr auf.
 
-Diese **Offene-Posten-Verwaltung** ist das Herzstück der Debitorenbuchhaltung: Zu jedem Kunden siehst du auf einen Blick, welche Rechnungen noch offen und welche bereits ausgeglichen sind. Zahlungen lassen sich manuell zuordnen oder — bei großen Mengen — über den automatischen **Zahllauf** verarbeiten. Beim Zahllauf bucht das System, gleicht offene Posten aus und versorgt die Druckprogramme mit den nötigen Daten. Für eingehende Zahlungen kann es zum Beispiel per **SEPA-Lastschrift** einziehen, sofern ein gültiges Lastschriftmandat des Kunden vorliegt.
+Diese **Offene-Posten-Verwaltung** ist das Herzstück der Debitorenbuchhaltung: Zu jedem Kunden siehst du auf einen Blick, welche Rechnungen noch offen und welche bereits ausgeglichen sind. Zahlungen lassen sich manuell zuordnen oder, bei großen Mengen, über den automatischen **Zahllauf** verarbeiten. Beim Zahllauf bucht das System, gleicht offene Posten aus und versorgt die Druckprogramme mit den nötigen Daten. Für eingehende Zahlungen kann es zum Beispiel per SEPA-Lastschrift einziehen, sofern ein gültiges Lastschriftmandat des Kunden vorliegt.
 
 ## Debitor und Kreditor in einer Person
 
-In der Praxis ist ein Geschäftspartner manchmal beides zugleich: dein **Kunde** (Debitor) und dein **Lieferant** (Kreditor). Ist die Verknüpfung in beiden Stammsätzen gepflegt, kann der Zahllauf die offenen Posten der beiden Konten **verrechnen**.
+In der Praxis ist ein Geschäftspartner manchmal beides zugleich: dein Kunde (Debitor) und dein Lieferant (Kreditor). Ist die Verknüpfung in beiden Stammsätzen gepflegt, kann der Zahllauf die offenen Posten der beiden Konten **verrechnen**.
 
 Ein illustratives Beispiel: Du schuldest dem Partner 5.000 € (als Lieferant) und er schuldet dir 8.000 € (als Kunde). Statt beide Beträge getrennt zu bewegen, saldiert der Zahllauf — du überweist nur die Differenz von 3.000 €. Das spart Zahlungsverkehr und macht die Beziehung übersichtlicher.
 
@@ -110,7 +106,7 @@ Der Ablauf hat vier Schritte:
 3. **Mahnvorschlag bearbeiten** — du kannst den Vorschlag ändern, löschen oder neu erstellen, bis das Ergebnis passt.
 4. **Mahndruck starten** — die Mahnungen werden gedruckt oder per E-Mail versendet; die Mahndaten in Stammsätzen und Belegen werden in einem Schritt aktualisiert.
 
-Eine Besonderheit: Auch ein **Kreditor** kann gemahnt werden — nämlich dann, wenn er wegen einer Gutschrift ausnahmsweise etwas schuldet.
+Eine Besonderheit: Auch ein Kreditor kann gemahnt werden, nämlich dann, wenn er wegen einer Gutschrift ausnahmsweise etwas schuldet.
 
 ### Die Mahn-Felder im Stammsatz
 
@@ -145,9 +141,9 @@ Nicht jeder Vorgang mit einem Kunden ist eine normale Forderung. **Sonderhauptbu
 
 Sie laufen über separate **Sonderhauptbuchkonten** und werden im Reporting getrennt gezeigt — damit eine erhaltene Anzahlung nicht mit einer offenen Forderung verwechselt wird. So bleibt klar sichtbar, was echtes Guthaben und was noch offene Forderung ist.
 
-## Kurz zusammengefasst
+## Zum Mitnehmen
 
-Die Debitorenbuchhaltung ist das Nebenbuch für alle **Kundenforderungen**. Sie steht auf drei Bausteinen: dem **Stammsatz** (der Debitor als Geschäftspartner), dem **Beleg** (Rechnung, Gutschrift, Zahlungseingang) und der **Mahnung** (das automatische Eintreiben Überfälliger). Der Zahllauf gleicht offene Posten aus, das Mahnprogramm kümmert sich um Säumige, und das **Abstimmkonto** hält Nebenbuch und Hauptbuch jederzeit im Gleichschritt. Wer diese Bausteine auseinanderhält, versteht die Forderungsseite eines S/4HANA-Systems schnell und sicher.
+Die Debitorenbuchhaltung ist das Nebenbuch für alle Kundenforderungen. Sie steht auf drei Bausteinen: dem **Stammsatz** (der Debitor als Geschäftspartner), dem **Beleg** (Rechnung, Gutschrift, Zahlungseingang) und der **Mahnung** (das automatische Eintreiben Überfälliger). Der Zahllauf gleicht offene Posten aus, das Mahnprogramm kümmert sich um Säumige, und das **Abstimmkonto** hält Nebenbuch und Hauptbuch jederzeit im Gleichschritt. Wer diese Bausteine auseinanderhält, versteht die Forderungsseite eines S/4HANA-Systems schnell und sicher.
 
 ## Häufige Fragen
 

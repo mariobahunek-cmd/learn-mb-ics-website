@@ -27,17 +27,17 @@ faq:
     a: "Green means the invoice can be posted, yellow means it can be posted but with a payment block, and red means it cannot be posted. A yellow light with a balance of zero means the figures add up, but the system will block the invoice for payment because of a variance."
 ---
 
-A supplier invoice lands on your desk. Accounting wants to know whether it can be released for payment. Were the goods actually delivered? Does the invoice price match the purchase order? And will a balance be left sitting on a clearing account at the end? These are exactly the questions logistics invoice verification answers in SAP MM — using the MIRO transaction and the 3-way match.
+A supplier invoice lands on your desk. Accounting wants to know whether it can be released for payment. Were the goods actually delivered? Does the invoice price match the purchase order, and will a balance be left sitting on a clearing account at the end? This is exactly where logistics invoice verification in SAP MM comes in, through the MIRO transaction and the 3-way match. A pattern that runs through nearly every invoice-verification session: invoice verification gets written off as pure accounting. In reality, this is where it is decided whether a company only pays for what was actually ordered and delivered.
 
-## In short: what the 3-way match does
+## The core in one sentence
 
-The 3-way match is the core principle of invoice verification: three documents — the **purchase order**, the **goods receipt** and the **supplier invoice** — are compared against one another. Only when price and quantity line up across all three does the invoice go through cleanly. The system pulls the proposed values automatically from the purchase order and the goods receipt; you simply compare them with your supplier's invoice and post.
+The 3-way match is the core principle of invoice verification: three documents are compared against one another, namely the purchase order, the goods receipt and the supplier invoice. Only when price and quantity line up across all three does the invoice go through cleanly. The system pulls the proposed values automatically from the purchase order and the goods receipt; you simply compare them with your supplier's invoice and post.
 
 ## What is logistics invoice verification in SAP MM?
 
-Logistics invoice verification is the third and final major step in the operational procurement process. After creating the purchase order and posting the goods receipt, this is where you record the incoming supplier invoice, check it for *content*, *price* and *arithmetic* accuracy, and post it to the system. Doing so creates an **invoice document** (an MM document) and an **accounting document** (an FI document) at the same time — both independent, yet linked to each other.
+Logistics invoice verification is the third and final major step in the operational procurement process. After creating the purchase order and posting the goods receipt, this is where you record the incoming supplier invoice, check it for *content*, *price* and *arithmetic* accuracy, and post it to the system. Doing so creates an invoice document (an MM document) and an accounting document (an FI document) at the same time, both independent yet linked to each other.
 
-The clean division of labor matters here: logistics invoice verification only checks and posts. It is **not** responsible for the actual payment or for managing open payables — that falls to financial accounting (FI).
+The clean division of labor matters here: logistics invoice verification only checks and posts. It is not responsible for the actual payment or for managing open payables: that falls to financial accounting (FI).
 
 In S/4HANA there are two ways to record an invoice:
 
@@ -62,8 +62,8 @@ When the order price, the goods receipt value and the invoice price are identica
 
 To understand what MIRO posts, you first have to understand what the goods receipt posts. For a valuated goods receipt against a purchase order item for stock material, the following happens:
 
-- A **debit** to the *stock account* for the amount “goods receipt quantity × valuation price”
-- A **credit** to the **GR/IR clearing account** for the amount “goods receipt quantity × order price”
+- A debit to the *stock account* for the amount “goods receipt quantity × valuation price”
+- A credit to the **GR/IR clearing account** for the amount “goods receipt quantity × order price”
 
 The GR/IR clearing account (goods-receipt / invoice-receipt clearing account) is the central link between materials management and financial accounting. It is a *transit account*: when the goods have arrived but the invoice is still missing, this account carries an open amount (goods received, not yet invoiced). As soon as the invoice is posted with MIRO, the system clears the GR/IR account again.
 
@@ -90,11 +90,7 @@ The single-screen MIRO transaction is divided into several areas:
 - **Supplier data** — details about the invoicing party from the supplier master record (maintained via the business partner in S/4HANA).
 - **Balance with traffic light** — green means it can be posted, yellow means it can be posted with a payment block, red means it cannot be posted.
 
-Three things happen at once when you post:
-
-1. The **GR/IR clearing account** is cleared again at the order price (a debit).
-2. The **supplier account** is credited with the gross invoice amount.
-3. Any differences between the order price and the invoice price are posted — depending on the material's price control — either to the stock account or to a price-difference account.
+Three things happen at once when you post: the GR/IR clearing account is cleared again at the order price (a debit), the supplier account is credited with the gross invoice amount, and any differences between the order price and the invoice price are posted, depending on the material's price control, either to the stock account or to a price-difference account.
 
 A simple posting example for an invoice of 2,618 EUR gross (25 units of material at 88 EUR each, plus 180 EUR of unplanned freight and 238 EUR of input tax):
 
@@ -109,7 +105,7 @@ A simple posting example for an invoice of 2,618 EUR gross (25 units of material
 
 ## Tolerances and blocking reasons: when does the system block an invoice?
 
-In practice, the invoice amount almost always differs a little from the purchase order or the goods receipt — through rounding differences, freight costs or price changes. SAP therefore works with **tolerances**, defined in the Customizing for logistics invoice verification. If a variance stays within tolerance, the invoice posts normally. If it lands *outside*, the system posts the invoice anyway — but automatically sets an **invoice block** (the yellow traffic light in the balance area).
+In practice, the invoice amount almost always differs a little from the purchase order or the goods receipt — through rounding differences, freight costs or price changes. SAP therefore works with **tolerances**, defined in the Customizing for logistics invoice verification. If a variance stays within tolerance, the invoice posts normally. If it lands *outside*, the system posts the invoice anyway but automatically sets an **invoice block** (the yellow traffic light in the balance area).
 
 The most important checks at a glance:
 
@@ -126,18 +122,18 @@ On top of that, there are **manual blocking reasons** that a clerk can set direc
 
 ## Common variances and how to resolve them
 
-Day to day, the same situations keep coming up. Here is an overview of how SAP handles them and what you, as a user, need to do:
+Day to day, the same situations keep coming up. The most frequent one is whether an invoice was blocked because of a price variance or a quantity variance: the first you sort out with purchasing, the second with the goods receipt. And almost as often, people simply forget the purchase order reference when posting, so MIRO proposes nothing and the balance won't clear. Here is an overview of how SAP handles the typical cases and what you, as a user, need to do:
 
-- **Invoice price higher than the order price, within tolerance:** The invoice is posted. For standard-price material, the difference lands on a price-difference account. For moving average price, the material master is revalued — the stock becomes more expensive.
-- **Invoice price higher than the order price, outside tolerance:** The invoice is posted but blocked for payment. After clarifying with the supplier, it is released via MRBR.
-- **Invoiced quantity greater than the delivered quantity:** a quantity variance. Either another delivery is on its way — or the supplier billed incorrectly. If the overage exceeds tolerance, the invoice stays blocked.
-- **Freight costs on the invoice, but not in the purchase order:** record them in MIRO as *unplanned delivery costs*. How they are posted depends on Customizing — the system either distributes them across the invoice items (and thus to stock or price differences) or posts them to a separate G/L account, as in the posting example above on account 5050.
-- **Invoice arrives before the goods receipt:** possible, but risky — the balance stays open on the GR/IR account. The usual order is goods receipt first, invoice second.
-- **Subsequent debit or credit:** If the supplier later claims a pure price change, you record a “subsequent debit” or “subsequent credit” in MIRO. Distinct from that is the *credit memo* (a separate transaction type in MIRO): it represents an actual supplier credit — for example for a returned delivery — and reduces both quantity and value. Cancelling an already posted invoice document, in turn, is a different operation (invoice reversal, transaction MR8M) and not a credit memo you enter yourself.
+- Invoice price higher than the order price, within tolerance: The invoice is posted. For standard-price material, the difference lands on a price-difference account. For moving average price, the material master is revalued, so the stock becomes more expensive.
+- Invoice price higher than the order price, outside tolerance: The invoice is posted but blocked for payment. After clarifying with the supplier, it is released via MRBR.
+- Invoiced quantity greater than the delivered quantity: a quantity variance. Either another delivery is on its way, or the supplier billed incorrectly. If the overage exceeds tolerance, the invoice stays blocked.
+- Freight costs on the invoice, but not in the purchase order: record them in MIRO as *unplanned delivery costs*. How they are posted depends on Customizing: the system either distributes them across the invoice items (and thus to stock or price differences) or posts them to a separate G/L account, as in the posting example above on account 5050.
+- Invoice arrives before the goods receipt: possible, but risky, since the balance stays open on the GR/IR account. The usual order is goods receipt first, invoice second.
+- Subsequent debit or credit: If the supplier later claims a pure price change, you record a “subsequent debit” or “subsequent credit” in MIRO. Distinct from that is the *credit memo* (a separate transaction type in MIRO): it represents an actual supplier credit, for example for a returned delivery, and reduces both quantity and value. Cancelling an already posted invoice document, in turn, is a different operation (invoice reversal, transaction MR8M) and not a credit memo you enter yourself.
 
 The purchase order history is also useful: in every purchase order you can see how much has already been delivered and how much has already been invoiced. It's the quickest way to check the consistency of goods receipt and invoice.
 
-## In a nutshell
+## What it comes down to
 
 Logistics invoice verification with MIRO is the link between purchasing, the warehouse and accounting. It makes sure a company only pays for what was actually ordered and delivered — and that the GR/IR clearing account ends up back at zero. The 3-way match of purchase order, goods receipt and invoice is the core principle; tolerances and blocking reasons ensure that only clean invoices go through to payment automatically. Once you keep the division of labor between MM (checking and posting) and FI (paying) clear, and understand the posting logic around the GR/IR account, you have the topic under control.
 

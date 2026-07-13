@@ -27,9 +27,11 @@ faq:
     a: "Not necessarily. Embedded Analytics covers operational evaluations directly in S/4HANA. SAP Analytics Cloud is an optional cloud platform for more advanced tasks such as enterprise-wide dashboards, planning and predictive analytics across several data sources."
 ---
 
-In SAP S/4HANA, working and analyzing are no longer two separate worlds. Whoever creates a purchase order, posts an invoice or processes a sales order can evaluate the same data in the same system straight away — in real time, without a detour through a separate reporting tool. That is exactly what the term Embedded Analytics stands for. This article explains, in plain language, what sits behind it and how the individual building blocks fit together.
+In SAP S/4HANA, working and analyzing are no longer two separate worlds. Whoever creates a purchase order, posts an invoice or processes a sales order can evaluate the same data in the same system straight away, in real time and without a detour through a separate reporting tool. That is exactly what the term Embedded Analytics stands for.
 
-## In short: reporting inside the running system
+Whenever we reach this point in a course, the same question comes up: “Don't I have to switch to another tool or over to BW for that?“ The moment it clicks is always the same: the evaluation is already right there, inside the workflow.
+
+## What it's about: reporting inside the running system
 
 Embedded Analytics means that analytical functions are built directly into SAP S/4HANA. You no longer need a separate business intelligence system to produce evaluations. The operational system and the analysis are one and the same: you work on the same live data, in real time, without having to copy the data somewhere first.
 
@@ -42,13 +44,13 @@ In the past you had two separate systems:
 - The **ERP system** for the operational processes: purchase orders, sales orders, postings.
 - A dedicated **BI system** such as SAP BW (Business Warehouse) for the evaluations.
 
-The data first had to travel between the two. It was **extracted, transformed and loaded into BW** — often overnight. Only then could you build reports on it. That meant your evaluation showed yesterday's state, not the state right now.
+The data first had to travel between the two. It was extracted, transformed and loaded into BW, often overnight. Only then could you build reports on it. That meant your evaluation showed yesterday's state, not the state right now.
 
-In SAP S/4HANA this detour disappears. **The analysis and the operational system are the same system.** The purchase order you just posted shows up immediately in the matching evaluation.
+In SAP S/4HANA this detour disappears. The analysis and the operational system are the same system. The purchase order you just posted shows up immediately in the matching evaluation.
 
 ## Why does this work? The HANA factor
 
-What made this possible is the **SAP HANA in-memory database**. The name already says the essential part: it keeps the data in main memory (*in memory*) rather than mainly on disk. Calculations therefore run extremely fast — even on large data volumes, and even when you trigger them live on the operational data.
+What made this possible is the **SAP HANA in-memory database**. The name already says the essential part: it keeps the data in main memory (*in memory*) rather than mainly on disk. Calculations therefore run extremely fast, even on large data volumes, and even when you trigger them live on the operational data.
 
 In practice that means:
 
@@ -63,7 +65,7 @@ This real-time character is the heart of the idea. Whenever you read about “ev
 
 For evaluations to run directly on the operational data, you need a layer that prepares that data for analysis. This layer is called **CDS views**, short for *Core Data Services*.
 
-Picture CDS views as a **data-model layer**. They build on classic database views and describe which data from which tables is combined for which evaluation — including relationships, calculations and meaningful field names. That makes them the technical foundation for almost all analytical apps and reports in S/4HANA.
+Picture CDS views as a **data-model layer**. They build on classic database views and describe which data from which tables is combined for which evaluation, including relationships, calculations and meaningful field names. That makes them the technical foundation for almost all analytical apps and reports in S/4HANA.
 
 For you as a user, the key points are:
 
@@ -79,11 +81,7 @@ The Fiori Launchpad is the home screen in S/4HANA — a set of tiles from which 
 
 **Analytical apps** are pure evaluation apps. They give you lists, key figures and visual summaries without your having to open a separate tool. A typical example is an app that shows you at a glance which sales orders are in which state and where things are stuck.
 
-Worth knowing:
-
-- Analytical apps are **not operational apps** — you don't post anything with them, you evaluate.
-- They access **live data** directly, without a detour through a BI system.
-- They sit in the **Fiori Launchpad** like every other app.
+To place them correctly: analytical apps are not operational apps, you don't post anything with them, you evaluate. They access live data directly, without a detour through a BI system, and they sit in the Fiori Launchpad like every other app.
 
 ### KPI tiles (dynamic tiles)
 
@@ -98,13 +96,13 @@ The value updates automatically and always shows the current state. That way you
 
 ### Overview pages and cards
 
-A central data-driven app type is the **overview page**. It brings together all the information you need for a task on a single page — matched to your area of work or your role. It's built from several **cards**, each showing something different:
+A central data-driven app type is the **overview page**. It brings together all the information you need for a task on a single page, matched to your area of work or your role. It's built from several **cards**, each showing something different:
 
 - **Analytical card** — visualizes a key figure graphically, for example the total purchase order value as a chart.
 - **List card** — shows a list of relevant records, for example urgent requisitions.
 - **Table card** — presents tabular data in columns, for example expenses by period and value.
 
-Alongside it there is the **object page**. It shows all the details for a specific business object — such as a purchase order, a material or a customer — on one page, organized into a header, sections and blocks.
+Alongside it there is the **object page**. It shows all the details for a specific business object, such as a purchase order, a material or a customer, on one page, organized into a header, sections and blocks.
 
 ## From the number to the detail: drill-down
 
@@ -120,7 +118,7 @@ Here's an example of the path from top to bottom:
 
 That's how you find out where a deviation comes from, without opening five different reports. A single key figure turns into a whole analytical story.
 
-When you want to look at several angles at once, **multidimensional reports** help. With them you can see, for example, revenue by product, by region and by quarter in a single evaluation — and change filters and views whenever you like. This, too, runs directly in the S/4HANA system, in real time, without external tools.
+When you want to look at several angles at once, **multidimensional reports** help. With them you can see, for example, revenue by product, by region and by quarter in a single evaluation, and you can change filters and views whenever you like. This, too, runs directly in the S/4HANA system, in real time, without external tools.
 
 ## How do you find the right evaluation?
 
@@ -141,7 +139,7 @@ Worth placing clearly: SAP Analytics Cloud is **not a mandatory component**. Emb
 
 ## Embedded Analytics compared with a data warehouse
 
-A common point of confusion is the difference between Embedded Analytics and a classic **data warehouse** such as SAP BW (Business Warehouse). Both have their place — they solve different jobs.
+This is exactly where the most common mix-up happens: Embedded Analytics and a classic **data warehouse** such as SAP BW (Business Warehouse) quickly get thrown into the same pot. Both have their place, but they solve different jobs.
 
 | Aspect | Embedded Analytics | Data warehouse (e.g. SAP BW) |
 | --- | --- | --- |
@@ -178,7 +176,7 @@ Once you understand how these building blocks fit together, you can quickly plac
 - **Query Browser** — app for browsing the available evaluations
 - **SAP Analytics Cloud (SAC)** — optional cloud platform for more advanced BI tasks
 
-## In a nutshell
+## The bottom line
 
 Embedded Analytics is not a technical buzzword but a central concept in SAP S/4HANA: evaluations run directly inside the operational system, in real time, without the detour through a classic data warehouse. This is made possible by the HANA in-memory database together with CDS views as the data foundation. In the Fiori Launchpad you meet it as analytical apps, KPI tiles, overview pages and drill-down. Once you can keep these building blocks apart, it quickly becomes clear why analyzing and working belong together in S/4HANA.
 

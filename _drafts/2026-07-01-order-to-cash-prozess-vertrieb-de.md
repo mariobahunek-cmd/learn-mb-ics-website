@@ -25,11 +25,11 @@ faq:
     a: "Der Belegfluss zeigt, wie die Belege eines Vorgangs zusammenhängen: Kundenauftrag, Auslieferung, Warenausgang, Faktura und Zahlung verweisen aufeinander. Per Klick lässt sich jeder Vorgang bis zum Ursprungsauftrag zurückverfolgen."
 ---
 
-Wenn ein Kunde etwas bestellt und am Ende das Geld auf dem Konto eingeht, liegt dazwischen ein durchgängiger Ablauf, der in SAP einen festen Namen hat: **Order-to-Cash**, oft auch Auftragsabwicklung oder schlicht Vertriebsprozess genannt. Er ist der Kernprozess im SAP-Vertrieb (Sales). Dieser Artikel geht den kompletten Weg Schritt für Schritt durch — verständlich und aus Anwender-Sicht.
+Bestellung rein, Ware raus, Geld drauf. Dazwischen liegt in SAP ein durchgängiger Ablauf mit einem festen Namen: **Order-to-Cash**, oft auch Auftragsabwicklung oder schlicht Vertriebsprozess genannt. Er ist der Kernprozess im SAP-Vertrieb (Sales). Nach etlichen SD-Kursen sehe ich das gleiche Bild: Anwender bedienen die einzelnen Belege sicher, kommen aber ins Grübeln, sobald jemand fragt, warum die Schritte eigentlich in genau dieser Reihenfolge laufen. Deshalb gehen wir den kompletten Weg hier einmal als Kette durch, aus Anwender-Sicht.
 
-## Kurz gesagt: vom Auftrag bis zum Zahlungseingang
+## Das große Bild
 
-Order-to-Cash (kurz **O2C**) beschreibt den **kompletten Vertriebsprozess** in SAP S/4HANA — von der ersten Bestellung des Kunden bis zum tatsächlichen Geldeingang auf dem Konto. Der Begriff heißt sinngemäß *„vom Auftrag bis zum Zahlungseingang“*, und genau so sollte man ihn denken: als durchgängige Kette, in der jeder Schritt den nächsten anstößt und jeder Beleg auf den vorherigen verweist.
+Order-to-Cash (kurz **O2C**) beschreibt den kompletten Vertriebsprozess in SAP S/4HANA: von der ersten Bestellung des Kunden bis zum tatsächlichen Geldeingang auf dem Konto. Der Begriff heißt sinngemäß *„vom Auftrag bis zum Zahlungseingang“*, und genau so sollte man ihn denken: als durchgängige Kette, in der jeder Schritt den nächsten anstößt und jeder Beleg auf den vorherigen verweist.
 
 Im Vertrieb ist O2C der Leitprozess schlechthin. Alles andere — Stammdatenpflege, Preisfindung, Verfügbarkeitsprüfung, Reporting — dient am Ende demselben Zweck: diese Kette sauber durchlaufen zu lassen.
 
@@ -44,7 +44,7 @@ Bevor wir in jeden Schritt eintauchen, hier die feste Reihenfolge:
 5. **Faktura erstellen** (Rechnung / Billing Document)
 6. **Zahlungseingang buchen** (Incoming Payment)
 
-Ein Punkt ist dabei besonders wichtig: Der **Warenausgang kommt vor der Fakturierung**, nicht danach. Warum das so ist, sehen wir gleich in Schritt 4.
+Ein Punkt ist dabei besonders wichtig: Der Warenausgang kommt vor der Fakturierung, nicht danach. Warum das so ist, sehen wir gleich in Schritt 4.
 
 ## Schritt 1: Kundenauftrag anlegen
 
@@ -73,7 +73,7 @@ Die Auslieferung ist **keine bloße Kopie** des Kundenauftrags. Sie ist ein eige
 - an welche **Versandstelle** der Auftrag gegeben wird
 - das geplante **Warenausgangsdatum**
 
-Die Auslieferung kann **einzeln** zu einem Kundenauftrag angelegt werden oder in einem **Sammelvorgang** für viele Aufträge gleichzeitig. Im operativen Vertrieb ist der Sammelvorgang der Regelfall. Merke: Mit der Auslieferung wechselt der Prozess vom Vertrieb in die Logistik — ab hier denkt SAP nicht mehr in „Auftrag“, sondern in „Sendung“.
+Die Auslieferung kann **einzeln** zu einem Kundenauftrag angelegt werden oder in einem **Sammelvorgang** für viele Aufträge gleichzeitig. Im operativen Vertrieb ist der Sammelvorgang der Regelfall. Merke: Mit der Auslieferung wechselt der Prozess vom Vertrieb in die Logistik. Ab hier denkt SAP nicht mehr in „Auftrag“, sondern in „Sendung“.
 
 ## Schritt 3: Kommissionierung
 
@@ -84,7 +84,7 @@ Bevor irgendetwas das Lager verlässt, muss die Ware **physisch zusammengestellt
 - die **kommissionierte Menge** wird in der Auslieferung erfasst und gegen die **angeforderte Menge** abgeglichen
 - bei Bedarf wird die Ware verpackt und auf einen Versandträger (zum Beispiel eine Palette) gesetzt
 
-Nutzt das Unternehmen ein angeschlossenes **Lagerverwaltungssystem (EWM)**, läuft die Kommissionierung dort als eigener Prozess mit Lageraufträgen. Wichtig ist das Grundverständnis: Kommissionierung ist der physische Schritt zwischen Auslieferung und Warenausgang — und sie ist etwas anderes als der Warenausgang. Erst wird kommissioniert, danach gebucht.
+Nutzt das Unternehmen ein angeschlossenes **Lagerverwaltungssystem (EWM)**, läuft die Kommissionierung dort als eigener Prozess mit Lageraufgaben. Wichtig ist das Grundverständnis: Kommissionierung ist der physische Schritt zwischen Auslieferung und Warenausgang — und sie ist etwas anderes als der Warenausgang. Erst wird kommissioniert, danach gebucht.
 
 ## Schritt 4: Warenausgang buchen
 
@@ -97,7 +97,7 @@ Jetzt kommt einer der wichtigsten Schritte: der **Warenausgang** (englisch *Good
 
 Genau diese Doppelbuchung — einmal Materialbeleg, einmal Buchhaltungsbeleg — kennt man aus der Materialwirtschaft schon vom Wareneingang. Im Vertrieb passiert das spiegelbildlich, nur in die andere Richtung: Bestand *raus* statt *rein*.
 
-Und hier der zentrale Punkt: **Der Warenausgang muss vor der Fakturierung gebucht werden.** Der Grund ist einfach — die Rechnung soll nur das fakturieren, was tatsächlich versendet wurde. Liefe die Rechnung vor dem Warenausgang, könnte ein Kunde Ware in Rechnung gestellt bekommen, die noch im Lager liegt, oder die Buchhaltungsbelege wären nicht konsistent. Deshalb erzwingt SAP diese Reihenfolge.
+Und hier der zentrale Punkt: Der Warenausgang muss vor der Fakturierung gebucht werden. Der Grund ist einfach: die Rechnung soll nur das fakturieren, was tatsächlich versendet wurde. Liefe die Rechnung vor dem Warenausgang, könnte ein Kunde Ware in Rechnung gestellt bekommen, die noch im Lager liegt, oder die Buchhaltungsbelege wären nicht konsistent. Deshalb erzwingt SAP diese Reihenfolge.
 
 ## Schritt 5: Faktura erstellen
 
@@ -112,11 +112,7 @@ Die Faktura kann **auftragsbezogen** oder **lieferbezogen** sein. Im klassischen
 
 ## Schritt 6: Zahlungseingang buchen
 
-Der letzte Schritt ist der **Zahlungseingang** (englisch *Incoming Payment*). Der Kunde bezahlt die Rechnung, und die offene Forderung wird ausgeglichen. Dieser Schritt findet nicht mehr im Vertrieb statt, sondern in der **Finanzbuchhaltung (FI)** — gehört aber trotzdem zum O2C-Prozess. Typischerweise wird dabei:
-
-- der Geldeingang auf dem Bankkonto verbucht
-- der **offene Posten** beim Kunden **ausgeglichen**
-- gegebenenfalls Skonto, Rundungsdifferenz oder Teilzahlung behandelt
+Der letzte Schritt ist der **Zahlungseingang** (englisch *Incoming Payment*). Der Kunde bezahlt die Rechnung, und die offene Forderung wird ausgeglichen. Dieser Schritt findet nicht mehr im Vertrieb statt, sondern in der **Finanzbuchhaltung (FI)**, gehört aber trotzdem zum O2C-Prozess. Typischerweise wird dabei der Geldeingang auf dem Bankkonto verbucht und der offene Posten beim Kunden ausgeglichen; kommen Skonto, eine Rundungsdifferenz oder eine Teilzahlung ins Spiel, werden sie an dieser Stelle mitbehandelt.
 
 Man muss dafür nicht tief in die FI-Buchungen einsteigen. Es reicht der Merksatz: Vertrieb und Finanzbuchhaltung sind über die integrierte Buchung der Faktura verknüpft, und erst der Zahlungseingang schließt den Order-to-Cash-Kreis vollständig ab.
 
@@ -133,16 +129,20 @@ In jedem dieser Belege lässt sich der Belegfluss per Klick anzeigen. Damit sieh
 - ob der Warenausgang schon gebucht wurde
 - ob bereits eine Zahlung eingegangen ist
 
-Der Belegfluss garantiert **Nachvollziehbarkeit und Revisionssicherheit**: Jeder Cent, der bei einem Kunden eingeht, lässt sich bis zum ursprünglichen Auftrag zurückverfolgen. Genau das ist im Vertriebsalltag Gold wert.
+Der Belegfluss garantiert Nachvollziehbarkeit und Revisionssicherheit: Jeder Cent, der bei einem Kunden eingeht, lässt sich bis zum ursprünglichen Auftrag zurückverfolgen. Genau das ist im Vertriebsalltag Gold wert.
 
 ## Häufige Stolpersteine
+
+An genau diesen Stellen tauchen dieselben Denkfehler auf:
 
 - **Warenausgang und Faktura in der Reihenfolge verdrehen.** Erst Warenausgang, dann Faktura — nicht umgekehrt. Nur was das Lager verlassen hat, darf in Rechnung gestellt werden.
 - **Kundenauftrag und Auslieferung gleichsetzen.** Die Auslieferung ist kein Klon des Auftrags, sondern ein eigener Logistikbeleg mit Versandstelle, Lagerort und Warenausgangsdatum.
 - **Kommissionierung mit Warenausgang verwechseln.** Kommissionierung ist das physische Zusammenstellen, der Warenausgang die Buchung des Verlassens — zwei verschiedene Schritte.
 - **Auftrags- und lieferbezogene Faktura vermischen.** Bei physischer Ware ist die Faktura lieferbezogen, bei reinen Dienstleistungen auftragsbezogen.
 
-## Kurz zusammengefasst
+Dazu kommt ein Klassiker, der streng genommen kein Reihenfolge-, sondern ein Steuerungsthema ist: Kommt am Ende keine Faktura zustande, steckt oft eine Fakturasperre dahinter, die über Auftragsart oder Kunde gesetzt ist, und nicht ein Fehler im Belegfluss.
+
+## Zum Mitnehmen
 
 Order-to-Cash ist die durchgängige Kette vom Kundenauftrag bis zum Zahlungseingang. Ein Kunde bestellt (Kundenauftrag), das Lager bereitet die Sendung vor (Auslieferung), die Ware wird zusammengestellt (Kommissionierung), der Versand wird gebucht (Warenausgang mit Material- und Buchhaltungsbeleg), dem Kunden wird die Leistung in Rechnung gestellt (Faktura), und am Ende kommt das Geld an (Zahlungseingang in der Finanzbuchhaltung). Wer sich diese Erzählung und den **Belegfluss** als Bild einprägt, versteht den SAP-Vertrieb schon zu einem großen Teil — denn dann erkennt man nicht nur die Begriffe wieder, sondern auch, wie sie zusammenhängen.
 

@@ -25,11 +25,11 @@ faq:
     a: "Meist wegen einer bewertungsrelevanten Buchung — etwa eines Wareneingangs zu einem stark abweichenden Preis oder einer manuellen Umbewertung. Der Blick in den Materialbeleg und den verknüpften Buchhaltungsbeleg zeigt, was passiert ist."
 ---
 
-Jedes Unternehmen, das Waren auf Lager hält, muss diesen Bestand mit einem Wert in der Bilanz führen. In SAP passiert das über die **Materialbewertung** — den Mechanismus, der bei jeder Warenbewegung entscheidet, mit welchem Betrag ein Material zu Buche schlägt. Sie verbindet die operative Welt der Bestandsführung mit der Finanzbuchhaltung, und wer die Grundlogik einmal verstanden hat, durchschaut damit einen großen Teil dessen, was im Hintergrund gebucht wird.
+„Warum steht bei dem einen Material ein S und bei dem anderen ein V?“ Sobald wir im Materialstamm die Sicht Buchhaltung 1 öffnen, kommt fast reflexartig diese Frage. Dahinter steckt die Materialbewertung: der Mechanismus, der bei jeder Warenbewegung entscheidet, mit welchem Betrag ein Material zu Buche schlägt. Sie verbindet die operative Bestandsführung mit der Finanzbuchhaltung, und wer diese Grundlogik einmal durchschaut hat, versteht auch einen großen Teil dessen, was SAP im Hintergrund bucht.
 
-## Kurz gesagt: der Wert deines Lagers, automatisch gepflegt
+## Der Wert deines Lagers, laufend automatisch gepflegt
 
-Die **Materialbewertung** bestimmt, mit welchem *Wert* ein bestandsführendes Material in der Bilanz erscheint. Bei jeder Warenbewegung — Wareneingang, Warenausgang, Umbuchung — erzeugt SAP einen **Materialbeleg**. Ist der Vorgang bewertungsrelevant, kommt automatisch ein **Buchhaltungsbeleg** dazu, der die Sachkonten bebucht. So bleibt der Lagerwert in der Buchhaltung immer synchron mit dem physischen Bestand, ohne dass jemand von Hand rechnet.
+Die Materialbewertung bestimmt, mit welchem *Wert* ein bestandsführendes Material in der Bilanz erscheint. Bei jeder Warenbewegung, ob Wareneingang, Warenausgang oder Umbuchung, erzeugt SAP einen **Materialbeleg**. Ist der Vorgang bewertungsrelevant, kommt automatisch ein **Buchhaltungsbeleg** dazu, der die Sachkonten bebucht. So bleibt der Lagerwert in der Buchhaltung immer synchron mit dem physischen Bestand, ohne dass jemand von Hand rechnet.
 
 ## Materialbeleg und Buchhaltungsbeleg: zwei getrennte Welten
 
@@ -51,7 +51,7 @@ Merksatz: Ändert sich der Bestandswert auf Buchungskreisebene, entsteht ein Buc
 
 ### Woher kommt der Buchungskreis?
 
-Der Buchungskreis des Buchhaltungsbelegs wird **automatisch aus dem Werk abgeleitet**, in dem die Warenbewegung stattfindet. Du musst ihn also nicht angeben — das Werk bestimmt, in welcher rechtlichen Einheit gebucht wird.
+Der Buchungskreis des Buchhaltungsbelegs wird automatisch aus dem Werk abgeleitet, in dem die Warenbewegung stattfindet. Du musst ihn also nicht angeben — das Werk bestimmt, in welcher rechtlichen Einheit gebucht wird.
 
 ## Preissteuerung: Standardpreis (S) oder gleitender Durchschnittspreis (V)?
 
@@ -109,7 +109,7 @@ Im Buchhaltungsbeleg wird das WE/RE-Konto zum Bestellpreis ausgeglichen, der Kre
 - **Kreditorenkonto (Lieferant):** +220 € (= 100 × 2,20 € Rechnungspreis)
 - **Preisdifferenzen (Ertrag):** +20 € (= Differenz 2,40 € − 2,20 € × 100 Stück)
 
-Weil der Rechnungspreis unter dem Bestellpreis liegt, entsteht hier ein **Ertrag** aus Preisdifferenzen. Beide Richtungen — Aufwand wie Ertrag — sind völlig normal und hängen nur davon ab, ob der tatsächliche Preis über oder unter der Referenz liegt.
+Weil der Rechnungspreis unter dem Bestellpreis liegt, entsteht hier ein **Ertrag** aus Preisdifferenzen. Beide Richtungen, Aufwand wie Ertrag, sind völlig normal und hängen nur davon ab, ob der tatsächliche Preis über oder unter der Referenz liegt.
 
 ## Das WE/RE-Verrechnungskonto: der zentrale Mittler
 
@@ -117,41 +117,39 @@ Das **WE/RE-Verrechnungskonto** (englisch GR/IR account, von *goods receipt / in
 
 - Beim **Wareneingang** wird Bestellpreis × Menge dort gebucht.
 - Beim **Rechnungseingang** wird derselbe Betrag wieder ausgeglichen.
-- Ist die Ware da, aber die Rechnung noch nicht, zeigt der offene Saldo die **noch nicht abgerechneten Wareneingänge**.
-- Ist die Rechnung da, aber die Ware noch nicht, zeigt der Saldo (mit umgekehrtem Vorzeichen) die **noch nicht eingegangenen Lieferungen**.
+- Ist die Ware da, aber die Rechnung noch nicht, zeigt der offene Saldo die noch nicht abgerechneten Wareneingänge.
+- Ist die Rechnung da, aber die Ware noch nicht, zeigt der Saldo (mit umgekehrtem Vorzeichen) die noch nicht eingegangenen Lieferungen.
 
 Das Konto ist bilanzrelevant und gehört zu jedem Periodenabschluss: Es wird analysiert, um zu klären, welche Posten alt und unverrechnet sind und wo noch etwas fehlt. Ein lange offener WE/RE-Saldo ist ein verlässlicher Hinweis auf einen unvollständigen Prozess.
 
 ## Wie der Bestellpreis überhaupt entsteht
 
-Ein häufiges Missverständnis: In der Bestellung wird *nicht* der Bewertungspreis aus dem Materialstammsatz vorgeschlagen. Stattdessen sucht SAP den Preis hierarchisch, **vom Speziellen zum Allgemeinen**:
+Ein häufiges Missverständnis: In der Bestellung wird *nicht* der Bewertungspreis aus dem Materialstammsatz vorgeschlagen. Stattdessen sucht SAP den Preis hierarchisch vom Speziellen zum Allgemeinen. Zuerst sieht das System nach einem Einkaufsinfosatz zur Kombination Lieferant/Material auf der Ebene Einkaufsorganisation/Werk. Wird es dort nicht fündig, sucht es eine Stufe höher auf Ebene der Einkaufsorganisation, und erst wenn auch dort keine Daten liegen, muss der Preis manuell eingegeben werden.
 
-1. Zuerst sucht das System einen **Einkaufsinfosatz** zur Kombination Lieferant/Material auf der Ebene Einkaufsorganisation/Werk.
-2. Findet sich dort nichts, wird auf der Ebene der Einkaufsorganisation gesucht.
-3. Gibt es auch dort keine Daten, muss der Preis manuell eingegeben werden.
-
-Existiert ein Infosatz, haben **gültige Konditionen** Vorrang. Fehlen diese oder sind sie abgelaufen, liest das System die Nummer des letzten Einkaufsbelegs aus dem Infosatz und schlägt den Preis aus jenem Beleg vor.
+Existiert ein Infosatz, haben gültige Konditionen Vorrang. Fehlen diese oder sind sie abgelaufen, liest das System die Nummer des letzten Einkaufsbelegs aus dem Infosatz und schlägt den Preis aus jenem Beleg vor.
 
 Wenn du den vorgelagerten Schritt vertiefen willst, hilft der Artikel [Was ist eine Bestellanforderung in SAP?](/blog/de/was-ist-eine-bestellanforderung/) beim Einstieg in den Beschaffungsablauf.
 
 ## Was das für dich im Alltag bedeutet
 
-Die Preissteuerung und die Konfiguration der Bewertungskonten sind Sache des Customizings und der Buchhaltung — nicht des einzelnen Anwenders. Die *Wirkung* siehst du als Einkäufer oder Disponent aber täglich:
+Die Preissteuerung und die Konfiguration der Bewertungskonten sind Sache des Customizings und der Buchhaltung, nicht des einzelnen Anwenders. Die *Wirkung* siehst du als Einkäufer oder Disponent aber täglich:
 
-- Wenn du einen **Wareneingang buchst**, laufen die Buchhaltungsbuchungen automatisch — das System rechnet, du musst nichts tun.
-- Wenn eine **Rechnung mit Abweichung** kommt, siehst du im Rechnungsbeleg die Preisdifferenz, die auf das passende Konto gebucht wird.
-- Wenn ein Material einen **unerwarteten Bestandswert** hat, lohnt der Blick in die Materialbeleg-Übersicht und den verknüpften Buchhaltungsbeleg.
-- Wenn ein **WE/RE-Saldo** lange offen bleibt, deutet das auf eine fehlende Rechnung oder Lieferung hin — ein Klassiker für den Periodenabschluss.
+- Wenn du einen Wareneingang buchst, laufen die Buchhaltungsbuchungen automatisch: das System rechnet, du musst nichts tun.
+- Wenn eine Rechnung mit Abweichung kommt, siehst du im Rechnungsbeleg die Preisdifferenz, die auf das passende Konto gebucht wird.
+- Wenn ein Material einen unerwarteten Bestandswert hat, lohnt der Blick in die Materialbeleg-Übersicht und den verknüpften Buchhaltungsbeleg.
+- Wenn ein WE/RE-Saldo lange offen bleibt, deutet das auf eine fehlende Rechnung oder Lieferung hin, ein Klassiker für den Periodenabschluss.
 
 ## Häufige Stolpersteine
+
+Am ehesten verwechselt werden Standardpreis (S) und gleitender Durchschnittspreis (V) — und damit auch, was die Preissteuerung bei einer Buchung überhaupt bewirkt. Wer die folgenden Punkte im Kopf behält, umgeht die häufigsten Irrtümer.
 
 - **Bestandskonto mit dem Bestellpreis verwechseln.** Beim Standardpreis bewegt sich das Bestandskonto ausschließlich zum Standardpreis. Jede Abweichung landet auf dem Preisdifferenzen-Konto — nicht im Bestandswert.
 - **Preisdifferenzen für einen Fehler halten.** Aufwand oder Ertrag aus Preisdifferenzen sind bei Standardpreis-Steuerung völlig normal. Sie zeigen nur, ob der tatsächliche Preis über oder unter dem Standardpreis lag.
 - **Den offenen WE/RE-Saldo ignorieren.** Ein Saldo dort bedeutet fast immer, dass ein Prozess halb fertig ist — Ware ohne Rechnung oder Rechnung ohne Ware.
 
-## Kurz zusammengefasst
+## Worauf es ankommt
 
-Die Materialbewertung sorgt dafür, dass der **Wert deines Lagers** in der Buchhaltung jederzeit stimmt. Jede bewertungsrelevante Bewegung erzeugt neben dem Materialbeleg einen Buchhaltungsbeleg. Ob ein Material mit festem **Standardpreis (S)** oder mit **gleitendem Durchschnittspreis (V)** geführt wird, entscheidet, wie Preisabweichungen verbucht werden — beim Standardpreis über ein Preisdifferenzen-Konto, beim gleitenden Durchschnitt direkt im Bewertungspreis. Das WE/RE-Verrechnungskonto hält Wareneingang und Rechnung zusammen. Wer diese drei Bausteine verstanden hat — Bewertungsrelevanz, Preissteuerung und WE/RE-Konto — durchschaut die Bewertungslogik im gesamten SAP-System.
+Die Materialbewertung sorgt dafür, dass der Wert deines Lagers in der Buchhaltung jederzeit stimmt. Jede bewertungsrelevante Bewegung erzeugt neben dem Materialbeleg einen Buchhaltungsbeleg. Ob ein Material mit festem **Standardpreis (S)** oder mit **gleitendem Durchschnittspreis (V)** geführt wird, entscheidet, wie Preisabweichungen verbucht werden: beim Standardpreis über ein Preisdifferenzen-Konto, beim gleitenden Durchschnitt direkt im Bewertungspreis. Das WE/RE-Verrechnungskonto hält Wareneingang und Rechnung zusammen. Wer diese drei Bausteine verstanden hat, also Bewertungsrelevanz, Preissteuerung und WE/RE-Konto, durchschaut die Bewertungslogik im gesamten SAP-System.
 
 ## Häufige Fragen
 

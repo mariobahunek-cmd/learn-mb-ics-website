@@ -27,11 +27,11 @@ faq:
     a: "A quant is the stock of a particular product in a specific storage bin. It is the finest unit EWM uses to track what is where and in what quantity."
 ---
 
-At its core, every warehouse does the same thing: goods come in, get stored away, are later retrieved, packed and leave again. In SAP Extended Warehouse Management (EWM) these two directions are called **goods receipt** and **goods issue**. Once you understand them as a single connected story, you understand almost the entire day-to-day operation of an EWM warehouse. This article walks through both processes step by step — purely from a user's perspective, without any configuration.
+A truck pulls up to the dock, the goods are unloaded, disappear into the racks for a few days and later leave again as a parcel bound for the customer. Those two directions are exactly what SAP Extended Warehouse Management (EWM) calls **goods receipt** and **goods issue**. They follow the same logic, just mirrored. And once you grasp that logic as one continuous story, you can follow almost the entire day-to-day operation of an EWM warehouse, purely from a user's perspective and without ever touching configuration.
 
-## In short: into the warehouse, out of the warehouse
+## Into the warehouse, out of the warehouse
 
-Goods receipt and goods issue follow the same underlying logic in SAP EWM. It all starts with a **triggering document** from the ERP system — a purchase order for goods receipt, a sales order for goods issue. From that a **warehouse document in EWM** is created (the inbound delivery or the outbound delivery order), and this drives the **physical movement in the warehouse** through warehouse tasks and warehouse orders.
+Goods receipt and goods issue follow the same underlying logic in SAP EWM. It all starts with a triggering document from the ERP system: a purchase order for goods receipt, a sales order for goods issue. From that a warehouse document in EWM is created (the inbound delivery or the outbound delivery order), and this drives the physical movement in the warehouse through warehouse tasks and warehouse orders.
 
 The only difference is the direction:
 
@@ -42,7 +42,7 @@ Both use the same tools: an inbound delivery or an outbound delivery order, ware
 
 ## Goods receipt: purchase order, inbound delivery, putaway
 
-The goods receipt process does not begin in EWM but in the **ERP system, with a purchase order**. As soon as the supplier announces the shipment (for example via a shipping notification), an **inbound delivery** is created in ERP.
+The goods receipt process does not begin in EWM but in the ERP system, with a **purchase order**. As soon as the supplier announces the shipment (for example via a shipping notification), an **inbound delivery** is created in ERP.
 
 This ERP inbound delivery is handed over to SAP EWM and becomes the **inbound delivery in EWM** — the actual execution document the warehouse works with. Simplified, the chain looks like this:
 
@@ -51,29 +51,25 @@ This ERP inbound delivery is handed over to SAP EWM and becomes the **inbound de
 3. **Inbound delivery notification** in EWM — an intermediate document that newer, embedded EWM variants can skip
 4. **Inbound delivery in EWM** — the document the warehouse work hangs on
 
-An important point for understanding: changes made to the EWM inbound delivery are **reported back to ERP**. Once warehouse execution is complete, the document forms the basis for the goods receipt posting in ERP. That keeps the warehouse and ERP inventory in sync.
+An important point for understanding: changes made to the EWM inbound delivery are reported back to ERP. Once warehouse execution is complete, the document forms the basis for the goods receipt posting in ERP. That keeps the warehouse and ERP inventory in sync.
 
 ### Two storage locations in goods receipt
 
-A common pattern: SAP EWM can represent goods receipt across **two storage locations**. As long as the stock is still in the putaway process, it belongs to a goods receipt location. Only once the goods have reached their final bin is the stock moved to the location "available".
+A common pattern: SAP EWM can represent goods receipt across two storage locations. As long as the stock is still in the putaway process, it belongs to a goods receipt location. Only once the goods have reached their final bin is the stock moved to the location "available".
 
 The benefit: ERP inventory management already sees the stock, but it stays visible that from a warehouse perspective it is *not yet fully available*. That prevents goods still sitting at the door from being promised elsewhere.
 
 ## Where do the goods go? Putaway
 
-Once the inbound delivery exists in EWM, the system has to decide **which storage bin** the goods go to. This is **putaway**.
+Once the inbound delivery exists in EWM, the system has to decide which storage bin the goods go to. This is **putaway**.
 
-To do this, the inbound delivery generates a **warehouse task for putaway**. This warehouse task contains the **destination** — storage type, storage section and storage bin. Which bin is proposed is driven by stored rules that take into account, among other things:
-
-- properties of the product (for example batch, serial number or hazardous material)
-- the type of packaging (packed or unpacked)
-- the activity area in the warehouse
+To do this, the inbound delivery generates a **warehouse task for putaway**. It contains the destination, meaning storage type, storage section and storage bin. Which bin is proposed is driven by stored rules. Those rules look at things like the properties of the product (for example batch, serial number or hazardous material), the type of packaging (packed or unpacked) and which activity area of the warehouse the work belongs to.
 
 As a user you do not maintain these rules yourself. What matters is the principle: the inbound delivery produces a warehouse task, and that task tells the worker exactly where the goods should go.
 
 ## Goods issue: order, picking, packing, shipping
 
-The goods issue process typically starts with a **sales order** in the ERP system (a stock transfer is also possible). The sales order becomes an **outbound delivery** in ERP, and as soon as that concerns an EWM-managed warehouse, it is passed on to EWM:
+The goods issue process typically starts with a **sales order** in the ERP system (a stock transfer is also possible). The sales order becomes an outbound delivery in ERP, and as soon as that concerns an EWM-managed warehouse, it is passed on to EWM:
 
 1. **Sales order** in ERP
 2. **Outbound delivery** in ERP
@@ -85,17 +81,17 @@ When the outbound delivery order is created, a fair amount happens in the backgr
 
 ### Picking
 
-During **picking**, the goods are retrieved from the storage bin and brought to the goods issue area. Here too a **warehouse task** drives the movement — this time for picking. It contains the **source** (storage type and bin) and the **destination** (the staging zone).
+During **picking**, the goods are retrieved from the storage bin and brought to the goods issue area. Here too a warehouse task drives the movement, this time for picking. It contains the source (storage type and bin) and the destination (the staging zone).
 
 For the worker this is a clear work item: "Fetch product X in quantity Y from bin Z and bring it to the staging zone." Once carried out, the task is confirmed.
 
 ### Packing
 
-**Packing** can happen at different stages. SAP EWM can work with **packaging specifications** that define how a product is packed — for example how many units go on a pallet. The packed units are tracked as **handling units (HUs)**, so it stays traceable what is inside each package at any time.
+**Packing** can happen at different stages. SAP EWM can work with **packaging specifications** that define how a product is packed, for example how many units go on a pallet. The packed units are tracked as **handling units (HUs)**, so it stays traceable what is inside each package at any time.
 
 ### Posting goods issue
 
-Once the goods have been picked and sit in the staging zone, the **goods issue posting** follows. The EWM outbound delivery reports it back to the ERP system, where the matching inventory and financial documents are created automatically. With that, the goods have left the warehouse — physically and in the system.
+Once the goods have been picked and sit in the staging zone, the **goods issue posting** follows. The EWM outbound delivery reports it back to the ERP system, where the matching inventory and financial documents are created automatically. With that, the goods have left the warehouse, physically and in the system.
 
 ## Warehouse task versus warehouse order — what's the difference?
 
@@ -103,7 +99,7 @@ These two terms are the ones people mix up most, yet the difference is simple.
 
 ### Warehouse task
 
-The warehouse task is **the single movement instruction**. It tells the warehouse worker exactly what to do, for example: "Move three pallets of product Y to bin ABC." Warehouse tasks are needed for, among other things:
+The warehouse task is the single movement instruction. It tells the warehouse worker exactly what to do, for example: "Move three pallets of product Y to bin ABC." Warehouse tasks are needed for, among other things:
 
 - picking
 - putaway
@@ -114,32 +110,32 @@ Once the task has been carried out, it has to be **confirmed**. With confirmatio
 
 ### Warehouse order
 
-The warehouse order is the next level up: **a work package** that one worker processes within a certain time frame. It contains **one or more warehouse tasks**. So several individual warehouse tasks are bundled into one or more warehouse orders — following rules defined in the background.
+The warehouse order is the next level up: a work package that one worker processes within a certain time frame. It contains one or more warehouse tasks. So several individual warehouse tasks are bundled into one or more warehouse orders, following rules defined in the background.
 
-As a memory aid: **warehouse task = what to do, warehouse order = which work package.**
+As a memory aid: warehouse task = what to do, warehouse order = which work package.
 
 ## The warehouse structure: warehouse number, storage type, storage bin
 
 To make goods receipt and goods issue work, it helps to look at the structure of an EWM warehouse. It is clearly hierarchical:
 
 - **Warehouse number:** the top organisational unit, in practice usually a building or a distribution centre.
-- **Storage type:** a physical or logical subdivision — for example high-rack storage, a goods receipt zone, a goods issue zone or a packing area.
+- **Storage type:** a physical or logical subdivision, for example high-rack storage, a goods receipt zone, a goods issue zone or a packing area.
 - **Storage section:** a finer subdivision within a storage type (such as "fast movers" versus "slow movers").
-- **Storage bin:** the **smallest spatial unit** of the warehouse. This is where the actual stock ends up.
+- **Storage bin:** the smallest spatial unit of the warehouse. This is where the actual stock ends up.
 
 The stock of a product in a storage bin is called a **quant**. It is the unit EWM uses to track what is where and in what quantity.
 
 ## Common pitfalls
 
-- **Confusing warehouse task and warehouse order.** The warehouse task is the single instruction; the warehouse order is the larger work package that bundles several tasks.
-- **Equating the inbound delivery notification with the inbound delivery.** The notification is the intermediate document in EWM; the inbound delivery in EWM is the actual execution document the work is based on.
-- **Forgetting to confirm.** A movement that has been carried out is only done in the system once it has been confirmed.
-- **Looking for the purchase order in the wrong system.** The purchase order is created in ERP, not in EWM. EWM only starts at the inbound delivery.
-- **Treating ERP and EWM master data as identical.** There is a transfer between the two, but the data models are not the same — the warehouse view in EWM stands on its own.
+- Confusing warehouse task and warehouse order: the warehouse task is the single instruction; the warehouse order is the larger work package that bundles several tasks.
+- Equating the inbound delivery notification with the inbound delivery: the notification is the intermediate document in EWM; the inbound delivery in EWM is the actual execution document the work is based on.
+- Forgetting to confirm: a movement that has been carried out is only done in the system once it has been confirmed.
+- Looking for the purchase order in the wrong system: it is created in ERP, not in EWM. EWM only starts at the inbound delivery.
+- Treating ERP and EWM master data as identical: there is a transfer between the two, but the data models are not the same, and the warehouse view in EWM stands on its own.
 
-## In a nutshell
+## What it comes down to
 
-Goods receipt and goods issue are two directions of the same underlying logic in SAP EWM: a document from the ERP system kicks off the process, EWM turns it into a warehouse document, and that document drives the physical movement through warehouse tasks and warehouse orders — into the warehouse for goods receipt, out of it for goods issue. Once you remember both paths as one continuous story — purchase order, inbound delivery, putaway on one side; order, picking, packing, goods issue on the other — you understand the operational heart of an EWM warehouse.
+Goods receipt and goods issue are two directions of the same underlying logic in SAP EWM: a document from the ERP system kicks off the process, EWM turns it into a warehouse document, and that document drives the physical movement through warehouse tasks and warehouse orders, into the warehouse for goods receipt, out of it for goods issue. Remember both paths as one continuous story: purchase order, inbound delivery, putaway on one side; order, picking, packing, goods issue on the other. Do that, and you understand the operational heart of an EWM warehouse.
 
 ## Frequently asked questions
 

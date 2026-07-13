@@ -27,11 +27,11 @@ faq:
     a: "Nein. Die Lagerstruktur wird einmalig beim Aufbau des Lagers oder bei Erweiterungen über das Customizing eingerichtet. Im Tagesgeschäft bewegt sich jeder Anwender aber in dieser Struktur: Bei Wareneingang, Lageraufgabe, Scan oder Inventur arbeitest du immer entlang der Hierarchie Lagernummer, Lagertyp, Lagerbereich, Lagerplatz."
 ---
 
-Ein Lager wirkt von außen wie ein einziger großer Raum voller Regale. Damit ein System wie SAP Extended Warehouse Management jede Ware punktgenau verwalten kann, muss dieser Raum aber in klare Ebenen zerlegt sein. Genau das leistet die Lagerstruktur: Lagernummer, Lagertyp, Lagerbereich und Lagerplatz — eine Hierarchie, die von „das ganze Lager“ bis zum einzelnen Stellplatz reicht. Dieser Artikel erklärt die Ebenen in klarer Sprache, mit praktischen Beispielen.
+Ein Lager wirkt von außen wie ein einziger großer Raum voller Regale. Damit ein System wie SAP Extended Warehouse Management jede Ware punktgenau verwalten kann, muss dieser Raum aber in klare Ebenen zerlegt sein. Genau das leistet die Lagerstruktur: Lagernummer, Lagertyp, Lagerbereich und Lagerplatz, eine Hierarchie, die von „das ganze Lager“ bis zum einzelnen Stellplatz reicht. Kennt man diese vier Ebenen, wird jede Lageraufgabe im System zur simplen Wegbeschreibung.
 
-## Kurz gesagt: die Landkarte deines Lagers
+## Die Landkarte deines Lagers
 
-Die Lagerstruktur in SAP EWM ist die hierarchische Abbildung eines realen Lagers im System. Sie geht von oben nach unten: Die **Lagernummer** steht für das gesamte Lager, der **Lagertyp** für einen Bereich darin, der **Lagerbereich** für eine Gruppe ähnlicher Plätze und der **Lagerplatz** für den einzelnen Stellplatz. So weiß das System jederzeit, wo eine Ware physisch liegt — und kann dir sagen, wohin sie beim Einlagern soll und wo sie beim Kommissionieren zu holen ist.
+Die Lagerstruktur in SAP EWM ist die hierarchische Abbildung eines realen Lagers im System. Sie geht von oben nach unten: Die **Lagernummer** steht für das gesamte Lager, der **Lagertyp** für einen Bereich darin, der **Lagerbereich** für eine Gruppe ähnlicher Plätze und der **Lagerplatz** für den einzelnen Stellplatz. So weiß das System jederzeit, wo eine Ware physisch liegt, und kann dir sagen, wohin sie beim Einlagern soll und wo sie beim Kommissionieren zu holen ist.
 
 SAP EWM steht für **Extended Warehouse Management**, also die erweiterte Lagerverwaltung. Es ist die Software, mit der viele Unternehmen ihre großen, komplexen Lager steuern — von der Anlieferung am Tor bis zum Versand.
 
@@ -56,23 +56,17 @@ Ein Lagerort selbst enthält keine physischen Unterstrukturen. Die kommen erst �
 
 ## Ebene 1 — die Lagernummer: das ganze Lager
 
-Die **Lagernummer** ist die oberste Ebene der Lagerorganisation. Unter ihr werden im Customizing die organisatorischen und physischen Eigenschaften des Lagergebäudes hinterlegt. Dazu gehören zum Beispiel:
-
-- **Gewichtseinheit** — in welcher Einheit Gewichte geführt werden
-- **Volumeneinheit** — in welcher Einheit Volumina geführt werden
-- **Zeiteinheit** — die Basiseinheit für Zeitangaben
-
-Auch Findungsschemata für Palettierungsdaten und Packspezifikationen hängen an der Lagernummer. In der Praxis entspricht eine Lagernummer meist **einem Gebäude oder einem Distributionszentrum**. Liegen deine Lagerstätten in verschiedenen Städten weit auseinander, bekommt jeder Komplex sinnvollerweise eine eigene Lagernummer.
+Die **Lagernummer** ist die oberste Ebene der Lagerorganisation. Unter ihr sind die organisatorischen und physischen Eigenschaften des Lagergebäudes hinterlegt: die Gewichts- und die Volumeneinheit, in denen das System Gewichte und Volumina führt, und die Zeiteinheit als Basis für alle Zeitangaben. Auch Findungsschemata für Palettierungsdaten und Packspezifikationen hängen an der Lagernummer. In der Praxis entspricht eine Lagernummer meist einem Gebäude oder einem Distributionszentrum. Liegen deine Lagerstätten in verschiedenen Städten weit auseinander, bekommt jeder Komplex sinnvollerweise eine eigene Lagernummer.
 
 ### Die Supply-Chain-Unit (SCU)
 
-Zu jeder Lagernummer gehört eine eindeutige **Supply-Chain-Unit (SCU)** — eine physische oder organisatorische Einheit, die im Logistikprozess mit betriebswirtschaftlichen Eigenschaften versehen ist. Die SCU trägt wichtige Rahmeninformationen wie **Land, Region und Zeitzone**. Für die Anzeige aller Datums- und Uhrzeitfelder greift das System auf die Zeitzone dieser SCU zurück. Praktisch heißt das: Die SCU sorgt dafür, dass Zeiten im Lager immer korrekt und ortsbezogen dargestellt werden.
+Zu jeder Lagernummer gehört eine eindeutige **Supply-Chain-Unit (SCU)**, eine physische oder organisatorische Einheit, die im Logistikprozess mit betriebswirtschaftlichen Eigenschaften versehen ist. Die SCU trägt wichtige Rahmeninformationen wie Land, Region und Zeitzone. Für die Anzeige aller Datums- und Uhrzeitfelder greift das System auf die Zeitzone dieser SCU zurück. Praktisch heißt das: Die SCU sorgt dafür, dass Zeiten im Lager immer korrekt und ortsbezogen dargestellt werden.
 
 ## Ebene 2 — der Lagertyp: ein Bereich im Lager
 
-Ein **Lagertyp** ist eine physische oder logische Unterteilung des Lagerkomplexes. Charakterisiert wird er durch die **Lagertechnik, den Platzbedarf, die Organisationsform oder die Funktion** — kurz: durch das, was in diesem Bereich passiert. Technisch ist der Lagertyp ein **vierstelliger Code**, der im Customizing definiert wird.
+Ein **Lagertyp** ist eine physische oder logische Unterteilung des Lagerkomplexes. Charakterisiert wird er durch Lagertechnik, Platzbedarf, Organisationsform oder Funktion, kurz: durch das, was in diesem Bereich passiert. Technisch ist der Lagertyp ein vierstelliger Code aus dem Customizing.
 
-Jeder Lagertyp hat eine **Lagertyprolle**, die festlegt, wofür er da ist. Ein regulärer Lagertyp lagert Ware; andere Rollen decken die Zwischenstationen ab, die Ware auf ihrem Weg durch das Lager durchläuft. Die wichtigsten Rollen im Überblick:
+Jeder Lagertyp hat eine **Lagertyprolle**, die festlegt, wofür er da ist. Ein regulärer Lagertyp lagert Ware; andere Rollen decken die Zwischenstationen ab, die Ware auf ihrem Weg durch das Lager durchläuft. Diese Rollen einzurichten ist Sache des Projekts; für dich als Anwender genügt es, die Begriffe einordnen zu können, wenn sie dir im System begegnen:
 
 - **Regulärer Lagertyp** — ein physischer Bereich, in dem Produkte tatsächlich gelagert werden
 - **Identifikationspunkt** — hier wird Ware beim Einlagern etikettiert, identifiziert oder geprüft
@@ -86,7 +80,7 @@ Jeder Lagertyp hat eine **Lagertyprolle**, die festlegt, wofür er da ist. Ein r
 - **Automatisiertes Lager** — ein Hochregallager mit Regalbediengerät
 - **Produktionsversorgung** — Bereich, in dem Ware nahe der Produktionslinie bereitgestellt wird
 
-Die wesentlichen Einstellungen für Einlagerung, Auslagerung und Warenbewegungssteuerung werden im Customizing des Lagertyps festgelegt. Der Lagertyp ist damit die Ebene, auf der du entscheidest, wie ein Bereich funktioniert.
+Die wesentlichen Einstellungen für Einlagerung, Auslagerung und Warenbewegungssteuerung sind im Lagertyp hinterlegt. Der Lagertyp ist damit die Ebene, auf der festgelegt ist, wie ein Bereich funktioniert.
 
 ## Ebene 3 — der Lagerbereich: Plätze mit ähnlichen Eigenschaften
 
@@ -119,14 +113,9 @@ Ein Lagerplatz trägt eine Reihe von Merkmalen, die zusammen beschreiben, was er
 
 Weil sich die Position eines Lagerplatzes meist aus einem Koordinatensystem ableitet, heißt sie **Platzkoordinate**. Sie kann bis zu **18 Zeichen** lang sein. Ein Beispiel: Die Koordinate `01-02-03` steht für Gang 1, Säule 2 und Ebene 3.
 
-Wichtig ist ein Grundsatz: Die Platzkoordinate ist **innerhalb eines Lagers eindeutig**. Kein Platz teilt sich seine Koordinate mit einem anderen — sonst wüsste das System nicht, wo die Ware wirklich liegt.
+Wichtig ist ein Grundsatz: Die Platzkoordinate ist innerhalb eines Lagers eindeutig. Kein Platz teilt sich seine Koordinate mit einem anderen, sonst wüsste das System nicht, wo die Ware wirklich liegt.
 
-Das Anlegen der Koordinaten läuft im Customizing in zwei Schritten:
-
-1. **Koordinatenstruktur definieren** — also die „Kodierung“ des Platzes festlegen: welche Zeichen für Gang, Säule, Ebene und weitere Komponenten stehen
-2. **Vorlagen erstellen** — mit denen sich die Lagerplatz-Stammdaten automatisch erzeugen lassen, statt jeden Platz von Hand anzulegen
-
-Für die Koordinaten kannst du jede Kombination aus **Buchstaben und Zahlen** verwenden.
+Wie diese Koordinaten zustande kommen, ist reine Einrichtungssache und läuft im Customizing ab. Für dich reicht es, die beiden Begriffe dahinter einordnen zu können: Die *Koordinatenstruktur* ist die „Kodierung“ des Platzes, sie legt fest, welche Zeichen für Gang, Säule, Ebene und weitere Komponenten stehen. Daraus erzeugte *Vorlagen* legen die Lagerplatz-Stammdaten automatisch an, statt dass jemand jeden Platz einzeln anlegen muss. Erlaubt ist dabei jede Kombination aus Buchstaben und Zahlen.
 
 ### Weitere Eigenschaften
 
@@ -142,17 +131,11 @@ Jeder Lagerplatz gehört zu genau einem Lagertyp und kann einem Lagerbereich zug
 
 Neben der reinen Raumhierarchie gibt es eine zweite, quer dazu liegende Ordnung: den **Aktivitätsbereich**. Lageraktivitäten wie Einlagern, Kommissionieren und Inventur werden in solchen Bereichen organisiert. Ein Aktivitätsbereich besteht aus einem oder mehreren zugeordneten Lagerplätzen.
 
-Das Besondere daran:
-
-- Ein Lagerplatz kann je nach Tätigkeit **mehreren Aktivitätsbereichen** zugeordnet sein
-- Für die Sortierung dienen Merkmale des Lagerplatzes wie Gang, Säule oder Ebene als Kriterien — so entsteht eine sinnvolle Laufreihenfolge
-- Aktivitätsbereiche sind **grundsätzlich optional** — mit einer Ausnahme
-
-Diese Ausnahme ist die **Inventur**: Dort ist der Aktivitätsbereich Pflicht. Für alle anderen Aktivitäten kannst du ihn nutzen, musst es aber nicht.
+Das Besondere daran: Ein und derselbe Lagerplatz kann je nach Tätigkeit zu mehreren Aktivitätsbereichen gehören. Für die Sortierung dienen Merkmale wie Gang, Säule oder Ebene als Kriterien, sodass eine sinnvolle Laufreihenfolge entsteht. Grundsätzlich sind Aktivitätsbereiche optional, mit einer Ausnahme: der **Inventur**. Dort ist der Aktivitätsbereich Pflicht. Für alle anderen Aktivitäten kannst du ihn nutzen, musst es aber nicht.
 
 ## Wie sieht eine komplette Lagerstruktur aus?
 
-Zur Veranschaulichung ein illustratives Beispiel — ein Lager mit der Lagernummer `1010` und mehreren Lagertypen, die zusammen den Weg der Ware durch das Lager abbilden:
+Zur Veranschaulichung ein Beispiel: ein Lager mit der Lagernummer `1010` und mehreren Lagertypen, die zusammen den Weg der Ware durch das Lager abbilden:
 
 | Lagertyp | Funktion | Beispiel-Bereiche |
 | --- | --- | --- |
@@ -164,11 +147,11 @@ Zur Veranschaulichung ein illustratives Beispiel — ein Lager mit der Lagernumm
 | `9020` Bereitstellung Ausgang | Warenausgangszone | Ausgang 1, Ausgang 2 |
 | `9050` Yard | angrenzender Hof | Prüfung, Tore |
 
-So bewegt sich eine Ware von der Anlieferung (Eingangszone) über die Lagerung (Hochregal) bis zum Versand (Ausgangszone) — und jede Station ist ein Lagertyp mit seinen Bereichen und Plätzen.
+So bewegt sich eine Ware von der Anlieferung (Eingangszone) über die Lagerung (Hochregal) bis zum Versand (Ausgangszone), und jede Station ist ein Lagertyp mit seinen Bereichen und Plätzen.
 
 ## Was Anwender im Alltag mit der Struktur zu tun haben
 
-Die Lagerstruktur legt nicht der einzelne Lagerist täglich an. Sie wird einmalig beim Aufbau des Lagers oder bei Erweiterungen über das Customizing eingerichtet. Im Tagesgeschäft aber bewegt sich **jeder Anwender ständig in dieser Struktur**. Konkret zum Beispiel, wenn du:
+Die Lagerstruktur legt nicht der einzelne Lagerist täglich an. Sie wird einmalig beim Aufbau des Lagers oder bei Erweiterungen über das Customizing eingerichtet. Im Tagesgeschäft aber bewegt sich jeder Anwender ständig in dieser Struktur. Konkret zum Beispiel, wenn du:
 
 - **einen Wareneingang verbuchst** — du wählst die Ziel-Lagernummer, und das System schlägt anhand von Lagertyp und Lagerbereich den passenden Lagerplatz vor
 - **eine Lageraufgabe bearbeitest** — sie sagt dir „von Lagerplatz A nach Lagerplatz B“
@@ -177,7 +160,7 @@ Die Lagerstruktur legt nicht der einzelne Lagerist täglich an. Sie wird einmali
 
 In all diesen Fällen bewegst du dich entlang der Kette **Lagernummer → Lagertyp → Lagerbereich → Lagerplatz**. Wer diese vier Ebenen einmal sauber auseinanderhält, versteht auf einen Schlag einen großen Teil dessen, was im Lager passiert.
 
-## Kurz zusammengefasst
+## Zum Mitnehmen
 
 Die Lagerstruktur in SAP EWM übersetzt ein reales Lager in vier klare Ebenen: Die **Lagernummer** ist das gesamte Lager, der **Lagertyp** ein Bereich darin, der **Lagerbereich** eine Gruppe ähnlicher Plätze und der **Lagerplatz** der einzelne Stellplatz mit seiner eindeutigen Koordinate. Quer dazu bündelt der **Aktivitätsbereich** Plätze für eine bestimmte Tätigkeit — Pflicht nur bei der Inventur. Wer diese Bausteine kennt, liest jede Lageraufgabe, jeden Scan und jede Einlagerung wie eine Landkarte.
 

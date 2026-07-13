@@ -27,11 +27,11 @@ faq:
     a: "An open item is a posted receivable that has not yet been paid. When the payment arrives, the incoming payment is cleared against the invoice and the item counts as settled. Only unpaid open items are considered in a dunning run."
 ---
 
-Anyone working in accounting with SAP S/4HANA deals with customer receivables almost every day: an invoice goes out, the money comes in, an item is cleared, a late payer receives a reminder. Accounts Receivable is exactly where all of this comes together. This article explains, in plain language, how it is built and how the individual pieces fit together.
+An invoice goes out, the money comes in a few weeks later, the item is cleared, and whoever pays late gets a reminder. Anyone working in accounting with SAP S/4HANA runs through this cycle almost every day. Accounts Receivable is where all of it comes together, and its structure turns out to be surprisingly straightforward once you separate the building blocks that carry it.
 
-## In short: the sub-ledger for customer receivables
+## The sub-ledger for customer receivables
 
-Accounts Receivable (**FI-AR**) is the sub-ledger in SAP financial accounting that manages everything your **customers owe you**. In SAP, a customer is called a **customer account** in the ledger sense, and every transaction with one — invoice, credit memo, incoming payment, dunning notice — is recorded in Accounts Receivable and mirrored in the general ledger through a **reconciliation account**.
+Accounts Receivable (**FI-AR**) is the sub-ledger in SAP financial accounting that manages everything your customers owe you. In SAP, a customer is called a **customer account** in the ledger sense, and every transaction with one, whether an invoice, credit memo, incoming payment or dunning notice, is recorded in Accounts Receivable and mirrored in the general ledger through a **reconciliation account**.
 
 The key idea behind it: the sub-ledger keeps the detail customer by customer, and the general ledger keeps the total. The reconciliation account keeps both in step automatically, so the balance sheet is consistent at all times, with no one having to reconcile by hand.
 
@@ -50,7 +50,7 @@ However varied these sound, three building blocks keep coming back at the core: 
 
 ## The customer in the business partner concept
 
-In SAP S/4HANA, a customer is no longer created as a standalone object but as a **business partner with the role “FI customer”**. This unification arrived with S/4HANA: previously there were separate worlds for customer, vendor (supplier) and business partner. Today the business partner is the central object, and one person or company can carry several roles — for example customer and supplier at the same time.
+In SAP S/4HANA, a customer is no longer created as a standalone object but as a **business partner** with the role “FI customer”. This unification arrived with S/4HANA: previously there were separate worlds for customer, vendor (supplier) and business partner. Today the business partner is the central object, and one person or company can carry several roles, for example customer and supplier at the same time.
 
 The fields of a customer master record split across two levels:
 
@@ -65,17 +65,13 @@ The fields of a customer master record split across two levels:
 
 ### Company-code level — the company-specific data
 
-A **company code** is the smallest independent legal unit in SAP for which a complete set of accounts is kept — in practice, a legal entity that produces its own balance sheet. **Company-code level** holds the details that apply only to that one entity:
-
-- **Account management** — this is where the reconciliation account sits
-- **Payment transactions**
-- **Correspondence** — this is where the dunning data sits
+A **company code** is the smallest independent legal unit in SAP for which a complete set of accounts is kept, in practice a legal entity that produces its own balance sheet. Company-code level holds the details that apply only to that one entity. These cover account management, where the reconciliation account sits, the payment transactions for that entity, and correspondence, under which the dunning data sits.
 
 **Practical rule:** the entry at company-code level takes precedence over the entry at client level. If bank details are maintained at both levels, the company-code entry wins. Bank master records themselves, by the way, are created at client level and can then be assigned to any customer or supplier — which avoids maintaining the same data twice.
 
 ## How is a customer invoice posted?
 
-Like every posting in financial accounting, a customer invoice consists of a **document header** (date, company code, document type) and **line items** (the individual lines). The **document type** controls the number range and the account types allowed. Accounts Receivable uses its own document types — for example one for customer invoices, one for credit memos and one for incoming payments. The system proposes the right type automatically, depending on which app you are using.
+Like every posting in financial accounting, a customer invoice consists of a **document header** (date, company code, document type) and **line items** (the individual lines). The **document type** controls the number range and the account types allowed. Accounts Receivable uses its own document types, for example one for customer invoices, one for credit memos and one for incoming payments. The system proposes the right type automatically, depending on which app you are using.
 
 An illustrative example: you post an invoice of **220,000 €** to a customer. The invoice contains 200,000 € of goods value plus 20,000 € of output tax (10 % here). That produces:
 
@@ -89,13 +85,13 @@ The receivable from the customer sits on the **debit** side (they owe you money)
 
 ## How are incoming payments and open items handled?
 
-As soon as an invoice is posted, the receivable becomes an **open item** — a posted receivable that has not yet been paid. When the money arrives, the **incoming payment** is cleared against the matching invoice. The open item is then settled and no longer appears in any dunning notice.
+As soon as an invoice is posted, the receivable becomes an **open item**, a posted receivable that has not yet been paid. When the money arrives, the incoming payment is cleared against the matching invoice. The open item is then settled and no longer appears in any dunning notice.
 
-This **open-item management** is the heart of Accounts Receivable: for each customer you can see at a glance which invoices are still open and which are already cleared. Payments can be assigned manually or — in high volumes — processed through the automatic **payment run**. In a payment run, the system posts, clears open items and feeds the print programs with the data they need. For incoming payments it can, for example, collect by **SEPA direct debit**, provided a valid direct-debit mandate from the customer is on file.
+This **open-item management** is the heart of Accounts Receivable: for each customer you can see at a glance which invoices are still open and which are already cleared. Payments can be assigned manually or, in high volumes, processed through the automatic **payment run**. In a payment run, the system posts, clears open items and feeds the print programs with the data they need. For incoming payments it can, for example, collect by SEPA direct debit, provided a valid direct-debit mandate from the customer is on file.
 
 ## When a partner is both customer and supplier
 
-In practice a business partner is sometimes both at once: your **customer** and your **supplier** (vendor). If the link is maintained in both master records, the payment run can **offset** the open items of the two accounts.
+In practice a business partner is sometimes both at once: your customer and your supplier (vendor). If the link is maintained in both master records, the payment run can **offset** the open items of the two accounts.
 
 An illustrative example: you owe the partner 5,000 € (as a supplier) and they owe you 8,000 € (as a customer). Instead of moving both amounts separately, the payment run nets them — you transfer only the 3,000 € difference. That saves payment traffic and makes the relationship easier to read.
 
@@ -110,7 +106,7 @@ The flow has four steps:
 3. **Edit the dunning proposal** — you can change, delete or rebuild the proposal until the result fits.
 4. **Start the printout** — the notices are printed or emailed, and the dunning data in master records and documents is updated in one step.
 
-One quirk: even a **supplier** can be dunned — namely when a credit memo means they exceptionally owe you something.
+One quirk: even a supplier can be dunned, namely when a credit memo means they exceptionally owe you something.
 
 ### The dunning fields in the master record
 
@@ -145,9 +141,9 @@ Not every transaction with a customer is an ordinary receivable. **Special G/L t
 
 They run through separate **special G/L accounts** and are reported apart — so a down payment received isn't confused with an open receivable. That keeps it clearly visible what is genuine credit and what is still an outstanding receivable.
 
-## In a nutshell
+## The bottom line
 
-Accounts Receivable is the sub-ledger for all **customer receivables**. It rests on three building blocks: the **master record** (the customer as a business partner), the **document** (invoice, credit memo, incoming payment) and the **dunning notice** (collecting overdue amounts automatically). The payment run clears open items, the dunning program chases late payers, and the **reconciliation account** keeps the sub-ledger and general ledger in step at all times. Keep those building blocks apart and you'll understand the receivables side of an S/4HANA system quickly and with confidence.
+Accounts Receivable is the sub-ledger for all customer receivables. It rests on three building blocks: the **master record** (the customer as a business partner), the **document** (invoice, credit memo, incoming payment) and the **dunning notice** (collecting overdue amounts automatically). The payment run clears open items, the dunning program chases late payers, and the **reconciliation account** keeps the sub-ledger and general ledger in step at all times. Keep those building blocks apart and you'll understand the receivables side of an S/4HANA system quickly and with confidence.
 
 ## Frequently asked questions
 

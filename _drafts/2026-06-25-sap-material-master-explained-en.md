@@ -25,13 +25,13 @@ faq:
     a: "Often a view is missing. Without the purchasing view you cannot order the material; without the accounting view you cannot post value movements. If a view is missing for a given plant, SAP reports the material as not created there."
 ---
 
-Anyone working with SAP runs into one term sooner or later that shows up almost everywhere: **material master data**. It is at the heart of nearly every logistics and commercial process in the system. Whether it is purchasing, sales, the warehouse or accounting — without clean material master data, very little runs smoothly in SAP. This article explains, in plain language, what's behind it.
+“Not created for this plant.” Almost everyone who creates their first purchase order in SAP meets this message, and behind it there is rarely a genuine error, usually just a missing view in the **material master**. From many MM courses I know this is where the knot sits: the material master is at the heart of nearly every logistics and commercial process, yet how it's actually built stays hazy for a long time. That's what we'll pull apart here.
 
-## In short: the central data object for every material
+## The central data object for every material
 
-Material master data describes everything a company buys, stores, produces or sells — raw materials, semi-finished goods, finished products, trading goods or services. Each of these materials gets its own **material master record** in the system, with a unique **material number**.
+Material master data describes everything a company buys, stores, produces or sells: raw materials, semi-finished goods, finished products, trading goods or services. Each of these materials gets its own **material master record** in the system, with a unique **material number**.
 
-This material number is **unique across the whole client**: it exists only once in the entire system and therefore stands for exactly one specific material. When you create a purchase order, put goods into stock or capture a sales order, SAP always refers back to this material master. If the data there is wrong or incomplete, the whole process stalls. That's why the rule holds: **master data is the foundation for all logistics processes.**
+This material number is unique across the whole client: it exists only once in the entire system and therefore stands for exactly one specific material. When you create a purchase order, put goods into stock or capture a sales order, SAP always refers back to this material master. If the data there is wrong or incomplete, the whole process stalls. That's why the rule holds: master data is the foundation for all logistics processes.
 
 ## Master data versus transactional data
 
@@ -52,7 +52,7 @@ The most important views at a glance:
 
 ### Basic data
 
-Basic data is the foundation of every material master. It applies **to the entire company** and holds general information such as the material description, base unit of measure (piece, kilogram, litre and so on), material group, and weights and dimensions. This view must **always** be created — without basic data, the material doesn't exist.
+Basic data is the foundation of every material master. It applies to the entire company and holds general information such as the material description, base unit of measure (piece, kilogram, litre and so on), material group, and weights and dimensions. This view must always be created, because without basic data the material doesn't exist.
 
 ### Purchasing
 
@@ -64,15 +64,15 @@ The sales views (often split across several sub-areas) contain selling data, shi
 
 ### Storage
 
-The storage views describe how and where the material is stored — storage conditions, temperature requirements, shelf-life data or hazardous-material indicators. They are mainly maintained when the material has special storage requirements.
+The storage views describe how and where the material is stored: storage conditions, temperature requirements, shelf-life data or hazardous-material indicators. They are mainly maintained when the material has special storage requirements.
 
 ### Accounting
 
-The accounting view is the bridge to the finance world. It holds the valuation class, the price control (standard price or moving average price) and the current material price. Without this view SAP cannot post any value movements for the material — no inventory valuation, no goods receipt posting and no invoice verification.
+The accounting view is the bridge to the finance world. It holds the valuation class, the price control (standard price or moving average price) and the current material price. Without this view SAP cannot post any value movements for the material, meaning no inventory valuation, no goods receipt posting and no invoice verification.
 
 ### Planning
 
-The planning views control how demand for the material is determined and covered: MRP type, lot-sizing procedure, safety stock, reorder point and planned delivery time. They are the basis for automatic requirements planning — the same logic from which a [purchase requisition](/blog/en/what-is-a-purchase-requisition/) can be created automatically.
+The planning views control how demand for the material is determined and covered: MRP type, lot-sizing procedure, safety stock, reorder point and planned delivery time. They are the basis for automatic requirements planning, the same logic from which a [purchase requisition](/blog/en/what-is-a-purchase-requisition/) can be created automatically.
 
 ## Material type and industry sector: the switches
 
@@ -86,7 +86,7 @@ Typical standard material types include, for example, raw materials (bought, not
 
 ### The industry sector
 
-The industry sector field influences which views and fields the material master offers. An “engineering” sector shows different fields than “pharmaceuticals” or “food”, for example. Importantly, the sector is set when the material is first created and **cannot be changed** afterwards. Overlook that and you may face a tedious re-creation.
+The industry sector field influences which views and fields the material master offers. An “engineering” sector shows different fields than “pharmaceuticals” or “food”, for example. Importantly, the sector is set when the material is first created and cannot be changed afterwards. Overlook that and you may face a tedious re-creation.
 
 ## How a material master is created
 
@@ -102,7 +102,7 @@ Whether you use the classic SAP GUI or a modern Fiori app makes no difference to
 
 ## Organisational levels: client, plant, storage location
 
-Material master data isn't only “global”. Much of the data is tied to **organisational levels** — that is, to the places in the company where the material is actually used.
+Material master data isn't only “global”. Much of the data is tied to **organisational levels**, that is, to the places in the company where the material is actually used.
 
 ### Client level
 
@@ -116,19 +116,21 @@ The **plant** is the central organisational unit in logistics — a production s
 
 Within a plant there are one or more **storage locations**. At this level, storage-related data is maintained. When you post stock, it always happens on the combination of plant plus storage location.
 
-This logic is decisive: whenever you create and maintain data, it always matters **for which organisational unit** you are entering it.
+This logic is decisive: whenever you create and maintain data, it always matters for which organisational unit you are entering it.
 
 ## Common pitfalls
+
+Two mistakes stand out. The first: material type and material group get mixed up, even though the material type controls system behaviour while the material group is more of a grouping and reporting term. Just as often it stays unclear which view is maintained at which organisational level, and views maintained incompletely only surface much later in the process.
 
 - **Confusing views.** Valuation data lives in the accounting view, not in basic data. Look for it in the wrong place and you won't find it.
 - **Mixing up plant and client data.** Basic data applies across the client, while many other views are plant-specific. When in doubt, it's worth checking which level a field sits on.
 - **Wanting to change the sector later.** The sector is fixed after creation. So it needs to be right from the start.
 - **Creating views incompletely.** If the purchasing or accounting view is missing, the material can't be used in that process — SAP then reports it as not created for the plant.
-- **Treating the material number as not unique.** It is unique across the client and cannot be assigned twice — not even in different plants.
+- **Treating the material number as not unique.** It is unique across the client and cannot be assigned twice, not even in different plants.
 
-## In a nutshell
+## The takeaway
 
-Material master data is the central data object for every material in SAP and the foundation for purchasing, sales, warehousing, planning and accounting. Once you understand how the material master is built from **views**, what role **material type** and **industry sector** play, and how the **organisational levels** client, plant and storage location fit together, you've grasped a large part of the logic that holds the system together. Master data isn't tedious overhead — it's the reason SAP runs smoothly day to day.
+Material master data is the central data object for every material in SAP and the foundation for purchasing, sales, warehousing, planning and accounting. Once you understand how the material master is built from **views**, what role **material type** and **industry sector** play, and how the **organisational levels** client, plant and storage location fit together, you've grasped a large part of the logic that holds the system together. Master data isn't tedious overhead, but the reason SAP runs smoothly day to day.
 
 ## Frequently asked questions
 

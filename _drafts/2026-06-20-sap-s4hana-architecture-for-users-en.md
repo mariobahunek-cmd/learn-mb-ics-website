@@ -27,25 +27,21 @@ faq:
     a: "In the cloud, SAP (or a partner) runs the system in a data centre and you access it over the network. On-premise, the system runs on the company's own servers, and the company then handles maintenance and updates itself."
 ---
 
-You hear “S/4HANA” constantly in the SAP world — on slides, in project meetings, in the training room. To many people it sounds like pure technology: servers, plumbing, something only IT needs to understand. Yet the architecture of SAP S/4HANA can be explained surprisingly clearly, without a single line of code. This article shows you, in plain language, how the system is built and what that means for you as a user in everyday work.
+When I ask in a training session what the difference between HANA and S/4HANA actually is, there's almost always a short silence first. No wonder: the terms sound alike, they always show up together, and even project teams cheerfully mix them up. Yet you don't need a single line of code to understand the architecture of SAP S/4HANA. One picture that sticks is enough.
 
-## In short: a house with three floors
+## A house with three floors
 
-The easiest way to picture SAP S/4HANA is as a **building with three floors**:
+The easiest way to picture SAP S/4HANA is as a building with three floors:
 
-- **At the bottom** sits the **SAP HANA** database — the foundation that holds all the data.
-- **In the middle** sits the actual **S/4HANA ERP system** — the business application you work with.
-- **At the top** sits the **SAP Fiori** interface — what you see and operate on screen.
+- At the bottom sits the **SAP HANA** database, the foundation that holds all the data.
+- In the middle sits the actual **S/4HANA** ERP system, the business application you work with.
+- At the top sits the **SAP Fiori** interface, what you see and operate on screen.
 
-Once you keep these three layers apart, you immediately understand why the terms sometimes get mixed up: HANA, S/4HANA, and Fiori are not the same thing — they build on one another.
+Once you keep these three layers apart, you immediately understand why the terms sometimes get mixed up: HANA, S/4HANA, and Fiori are not the same thing, they build on one another.
 
 ## SAP S/4HANA in one sentence
 
-SAP S/4HANA is the **current generation of SAP business applications** — the successor to the earlier SAP R/3 and SAP ERP systems. Three things make it distinctive on the technical side:
-
-- The **in-memory platform SAP HANA** as its database foundation.
-- A **simplified, unified data structure** with far fewer tables than before.
-- The **modern user interface SAP Fiori**.
+SAP S/4HANA is the current generation of SAP business applications, the successor to the earlier SAP R/3 and SAP ERP systems. What makes it distinctive on the technical side is, above all, three things: the in-memory platform **SAP HANA** as its database foundation, a much leaner data structure with far fewer tables than before, and the modern **SAP Fiori** interface.
 
 ## Layer 1 — SAP HANA: the in-memory database
 
@@ -91,6 +87,8 @@ SAP S/4HANA comes in several operating variants. The difference lies mainly in *
 - **Cloud, Private Edition** — a cloud ERP with more room for individual customisation. Frequently used by large enterprises.
 - **On-premise** — the system runs on the company's own servers. Maximum customisability, but operation, maintenance, and updates stay in-house.
 
+In practice, many companies mix these variants, for instance an on-premise core with individual cloud solutions around it. That combination is exactly what people mean by a “hybrid” setup.
+
 Around the introduction of the system, you'll often hear two names: **GROW with SAP** is aimed at companies that want to introduce the Cloud Public Edition quickly, and **RISE with SAP** at companies that want to modernise their existing ERP towards the cloud.
 
 ## Why is it called “S/4HANA” anyway?
@@ -114,15 +112,13 @@ You don't need to be able to program to benefit from this architecture. Three ad
 - **Simpler operation** — thanks to Fiori, fewer clicks, fewer screen switches, and usability across different devices.
 - **Figures inside the workflow** — key values are visible right where you work, not only in a separate reporting tool.
 
-## Common pitfalls
+## Where people trip up most in training
 
-- **Confusing HANA and S/4HANA.** HANA is the database in the basement; S/4HANA is the application above it. Treat the two as the same and you'll later be puzzled by terms that don't line up.
-- **Mistaking BTP for the database.** BTP is the platform around the system, not the database beneath S/4HANA. This is one of the most common mix-ups.
-- **Thinking of Fiori as “one program.”** Fiori is a design concept with many individual apps, not a single tool you launch.
+Three mix-ups come up again and again. By far the most common is treating HANA and S/4HANA as the same thing. HANA is the database in the basement, S/4HANA the application above it, and if you treat the two as one you'll later be puzzled by terms that don't line up. Almost as often, BTP gets mistaken for the database, when in fact it's the platform around the system, not the database beneath S/4HANA. And third, some people think of Fiori as “one program” they launch, when it's really a design concept made up of many individual apps.
 
-## In a nutshell
+## The one thing to remember
 
-SAP S/4HANA is a **building with three layers**: the in-memory database **HANA** as the foundation, the **S/4HANA ERP system** as the application on top, and the **Fiori interface** as what you see and operate. Add to that the **BTP** platform as the connecting layer to the outside world. Once you've grasped this structure, you can place almost any S/4HANA term with ease — and you'll understand why modern SAP systems are faster, tidier, and closer to real time than their predecessors.
+Stick with the house: **HANA** is the foundation that holds the data, **S/4HANA** the application on top that you work with, and **Fiori** what you operate on screen. On top of that comes **BTP** as the connecting layer to the outside world. Once you have this structure in your head, you can place almost any S/4HANA term with ease, and you'll see why modern SAP systems are faster, tidier, and closer to real time than their predecessors.
 
 ## Frequently asked questions
 

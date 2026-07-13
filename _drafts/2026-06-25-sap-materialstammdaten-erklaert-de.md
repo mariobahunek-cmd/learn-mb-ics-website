@@ -25,13 +25,13 @@ faq:
     a: "Häufig fehlt die passende Sicht. Ohne Einkaufssicht kannst du das Material nicht bestellen, ohne Buchhaltungssicht keine Wertbewegungen buchen. Fehlt eine Sicht für das jeweilige Werk, meldet SAP das Material dort als nicht angelegt."
 ---
 
-Wer mit SAP arbeitet, stößt früher oder später auf einen Begriff, der praktisch überall auftaucht: die **Materialstammdaten**. Sie sind das Herzstück fast aller logistischen und kaufmännischen Abläufe im System. Ob Einkauf, Vertrieb, Lager oder Buchhaltung — ohne saubere Materialstammdaten läuft in SAP wenig rund. Dieser Artikel erklärt in klarer Sprache, was dahintersteckt.
+„Für dieses Werk nicht angelegt.“ Diese Meldung bekommt fast jeder zu sehen, der in SAP zum ersten Mal eine Bestellung anlegt, und dahinter steckt selten ein echter Fehler, meist nur eine fehlende Sicht im **Materialstamm**. Aus vielen MM-Kursen weiß ich: genau hier sitzt der Knoten – der Materialstamm ist das Herzstück fast aller logistischen und kaufmännischen Abläufe, aber wie er aufgebaut ist, bleibt lange nebulös. Genau das nehmen wir hier auseinander.
 
-## Kurz gesagt: das zentrale Datenobjekt für jedes Material
+## Das zentrale Datenobjekt für jedes Material
 
-Materialstammdaten beschreiben alles, was ein Unternehmen einkauft, lagert, produziert oder verkauft — Rohstoffe, Halbfabrikate, Fertigerzeugnisse, Handelsware oder Dienstleistungen. Jedes dieser Materialien bekommt im System einen eigenen **Materialstammsatz** mit einer eindeutigen **Materialnummer**.
+Materialstammdaten beschreiben alles, was ein Unternehmen einkauft, lagert, produziert oder verkauft: Rohstoffe, Halbfabrikate, Fertigerzeugnisse, Handelsware oder Dienstleistungen. Jedes dieser Materialien bekommt im System einen eigenen **Materialstammsatz** mit einer eindeutigen **Materialnummer**.
 
-Diese Materialnummer ist **mandantenweit eindeutig**: Sie existiert im gesamten System nur einmal und steht damit für genau ein bestimmtes Material. Wenn du eine Bestellung anlegst, eine Ware einlagerst oder einen Kundenauftrag erfasst, greift SAP immer auf diesen Materialstamm zurück. Sind die Daten dort fehlerhaft oder unvollständig, klemmt der ganze Prozess. Deshalb gilt: **Stammdaten sind die Basis für alle Logistikprozesse.**
+Diese Materialnummer ist mandantenweit eindeutig: Sie existiert im gesamten System nur einmal und steht damit für genau ein bestimmtes Material. Wenn du eine Bestellung anlegst, eine Ware einlagerst oder einen Kundenauftrag erfasst, greift SAP immer auf diesen Materialstamm zurück. Sind die Daten dort fehlerhaft oder unvollständig, klemmt der ganze Prozess. Deshalb gilt: Stammdaten sind die Basis für alle Logistikprozesse.
 
 ## Stammdaten gegen Bewegungsdaten
 
@@ -52,7 +52,7 @@ Die wichtigsten Sichten im Überblick:
 
 ### Grunddaten
 
-Die Grunddaten sind die Basis jedes Materialstamms. Sie gelten **für das gesamte Unternehmen** und enthalten allgemeine Informationen wie Materialkurztext, Basismengeneinheit (etwa Stück, Kilogramm, Liter), Warengruppe sowie Gewichte und Abmessungen. Diese Sicht muss **immer** angelegt werden — ohne Grunddaten existiert kein Material.
+Die Grunddaten sind die Basis jedes Materialstamms. Sie gelten für das gesamte Unternehmen und enthalten allgemeine Informationen wie Materialkurztext, Basismengeneinheit (etwa Stück, Kilogramm, Liter), Warengruppe sowie Gewichte und Abmessungen. Diese Sicht muss immer angelegt werden, denn ohne Grunddaten existiert kein Material.
 
 ### Einkauf
 
@@ -64,15 +64,15 @@ Die Vertriebssichten (oft in mehreren Teilbereichen) enthalten Verkaufsdaten, Ve
 
 ### Lagerung
 
-Die Lagersichten beschreiben, wie und wo das Material gelagert wird — Lagerbedingungen, Temperaturanforderungen, Haltbarkeitsdaten oder Gefahrgutkennzeichen. Sie werden vor allem dann gepflegt, wenn das Material besondere Anforderungen an die Lagerung stellt.
+Die Lagersichten beschreiben, wie und wo das Material gelagert wird: Lagerbedingungen, Temperaturanforderungen, Haltbarkeitsdaten oder Gefahrgutkennzeichen. Sie werden vor allem dann gepflegt, wenn das Material besondere Anforderungen an die Lagerung stellt.
 
 ### Buchhaltung
 
-Die Buchhaltungssicht ist das Bindeglied zur Finanzwelt. Hier stehen Bewertungsklasse, Preissteuerung (Standardpreis oder gleitender Durchschnittspreis) und der aktuelle Materialpreis. Ohne diese Sicht kann SAP keine Wertbewegungen für das Material verbuchen — also keine Bestandsbewertung, keine Wareneingangsbuchung und keine Rechnungsprüfung.
+Die Buchhaltungssicht ist das Bindeglied zur Finanzwelt. Hier stehen Bewertungsklasse, Preissteuerung (Standardpreis oder gleitender Durchschnittspreis) und der aktuelle Materialpreis. Ohne diese Sicht kann SAP keine Wertbewegungen für das Material verbuchen, also keine Bestandsbewertung, keine Wareneingangsbuchung und keine Rechnungsprüfung.
 
 ### Disposition
 
-Die Dispositionssichten steuern, wie Bedarfe für das Material ermittelt und gedeckt werden: Dispositionsmerkmal, Losgrößenverfahren, Sicherheitsbestand, Meldebestand und Planlieferzeit. Sie sind die Grundlage für die automatische Bedarfsplanung — dieselbe Logik, aus der auch eine [Bestellanforderung](/blog/de/was-ist-eine-bestellanforderung/) automatisch entstehen kann.
+Die Dispositionssichten steuern, wie Bedarfe für das Material ermittelt und gedeckt werden: Dispositionsmerkmal, Losgrößenverfahren, Sicherheitsbestand, Meldebestand und Planlieferzeit. Sie sind die Grundlage für die automatische Bedarfsplanung, dieselbe Logik, aus der auch eine [Bestellanforderung](/blog/de/was-ist-eine-bestellanforderung/) automatisch entstehen kann.
 
 ## Materialart und Branche: die Weichensteller
 
@@ -86,7 +86,7 @@ Typische Materialarten im SAP-Standard sind zum Beispiel Rohstoffe (wird eingeka
 
 ### Die Branche
 
-Das Branchenfeld beeinflusst, welche Sichten und Felder im Materialstamm angeboten werden. Eine Branche „Maschinenbau“ zeigt zum Beispiel andere Felder als „Pharma“ oder „Lebensmittel“. Wichtig: Die Branche wird beim erstmaligen Anlegen festgelegt und lässt sich später **nicht mehr ändern**. Wer das übersieht, steht im Zweifel vor einer mühsamen Neuanlage.
+Das Branchenfeld beeinflusst, welche Sichten und Felder im Materialstamm angeboten werden. Eine Branche „Maschinenbau“ zeigt zum Beispiel andere Felder als „Pharma“ oder „Lebensmittel“. Wichtig: Die Branche wird beim erstmaligen Anlegen festgelegt und lässt sich später nicht mehr ändern. Wer das übersieht, steht im Zweifel vor einer mühsamen Neuanlage.
 
 ## So entsteht ein Materialstamm
 
@@ -102,7 +102,7 @@ Ob du dabei die klassische SAP GUI oder eine moderne Fiori-App nutzt, spielt fü
 
 ## Organisationsebenen: Mandant, Werk, Lagerort
 
-Materialstammdaten gibt es nicht nur „global“. Viele Daten sind an **Organisationsebenen** gebunden — also an die Stellen im Unternehmen, an denen das Material tatsächlich verwendet wird.
+Materialstammdaten gibt es nicht nur „global“. Viele Daten sind an **Organisationsebenen** gebunden, also an die Stellen im Unternehmen, an denen das Material tatsächlich verwendet wird.
 
 ### Mandantenebene
 
@@ -116,19 +116,21 @@ Das **Werk** ist die zentrale Organisationseinheit in der Logistik — Produktio
 
 Innerhalb eines Werks gibt es einen oder mehrere **Lagerorte**. Auf dieser Ebene werden lagerbezogene Daten gepflegt. Wenn du Bestände buchst, geschieht das immer auf der Kombination Werk plus Lagerort.
 
-Diese Logik ist entscheidend: Beim Anlegen und Pflegen ist immer wichtig, **für welche Organisationseinheit** du gerade Daten erfasst.
+Diese Logik ist entscheidend: Beim Anlegen und Pflegen ist immer wichtig, für welche Organisationseinheit du gerade Daten erfasst.
 
 ## Häufige Stolpersteine
+
+Zwei Fehler sehe ich besonders oft. Der erste: Materialart und Warengruppe werden verwechselt, dabei steuert die Materialart das Systemverhalten, während die Warengruppe eher ein Ordnungs- und Auswertungsbegriff ist. Ähnlich oft bleibt unklar, welche Sicht auf welcher Organisationsebene gepflegt wird, und unvollständig gepflegte Sichten fallen erst spät im Prozess auf.
 
 - **Sichten verwechseln.** Bewertungsdaten stehen in der Buchhaltungssicht, nicht in den Grunddaten. Wer sie an der falschen Stelle sucht, findet sie nicht.
 - **Werks- und Mandantendaten vermischen.** Grunddaten gelten mandantenweit, viele andere Sichten sind werkspezifisch. Es lohnt sich, im Zweifel zu prüfen, auf welcher Ebene ein Feld liegt.
 - **Branche nachträglich ändern wollen.** Die Branche ist nach der Anlage fix. Deshalb sollte sie von Anfang an stimmen.
 - **Sichten unvollständig anlegen.** Fehlt die Einkaufs- oder Buchhaltungssicht, lässt sich das Material im jeweiligen Prozess nicht nutzen — SAP meldet es dann für das Werk als nicht angelegt.
-- **Materialnummer als nicht eindeutig ansehen.** Sie ist mandantenweit eindeutig und kann nicht zweimal vergeben werden — auch nicht in verschiedenen Werken.
+- **Materialnummer als nicht eindeutig ansehen.** Sie ist mandantenweit eindeutig und kann nicht zweimal vergeben werden, auch nicht in verschiedenen Werken.
 
-## Kurz zusammengefasst
+## Zum Mitnehmen
 
-Materialstammdaten sind das zentrale Datenobjekt für jedes Material in SAP und die Grundlage für Einkauf, Vertrieb, Lager, Disposition und Buchhaltung. Wer versteht, wie der Materialstamm in **Sichten** aufgebaut ist, welche Rolle **Materialart** und **Branche** spielen und wie die **Organisationsebenen** Mandant, Werk und Lagerort zusammenhängen, hat einen großen Teil der Logik verstanden, die das System zusammenhält. Stammdaten sind kein lästiges Beiwerk — sie sind der Grund, warum SAP im Alltag rund läuft.
+Materialstammdaten sind das zentrale Datenobjekt für jedes Material in SAP und die Grundlage für Einkauf, Vertrieb, Lager, Disposition und Buchhaltung. Wer versteht, wie der Materialstamm in **Sichten** aufgebaut ist, welche Rolle **Materialart** und **Branche** spielen und wie die **Organisationsebenen** Mandant, Werk und Lagerort zusammenhängen, hat einen großen Teil der Logik verstanden, die das System zusammenhält. Stammdaten sind kein lästiges Beiwerk, sondern der Grund, warum SAP im Alltag rund läuft.
 
 ## Häufige Fragen
 

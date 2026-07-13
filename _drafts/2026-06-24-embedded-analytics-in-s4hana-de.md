@@ -27,9 +27,11 @@ faq:
     a: "Nicht zwingend. Embedded Analytics deckt operative Auswertungen direkt in S/4HANA ab. Die SAP Analytics Cloud ist eine optionale Cloud-Plattform für weitergehende Aufgaben wie unternehmensweite Dashboards, Planung und Predictive Analytics über mehrere Datenquellen hinweg."
 ---
 
-Auswerten und arbeiten sind in SAP S/4HANA nicht mehr zwei getrennte Welten. Wer eine Bestellung anlegt, eine Rechnung bucht oder einen Auftrag bearbeitet, kann dieselben Daten im selben System sofort auswerten — in Echtzeit, ohne Umweg über ein separates Reporting-Tool. Genau dafür steht der Begriff Embedded Analytics. Dieser Artikel erklärt in klarer Sprache, was dahintersteckt und wie die einzelnen Bausteine zusammenspielen.
+Auswerten und arbeiten sind in SAP S/4HANA nicht mehr zwei getrennte Welten. Wer eine Bestellung anlegt, eine Rechnung bucht oder einen Auftrag bearbeitet, kann dieselben Daten im selben System sofort auswerten, in Echtzeit und ohne Umweg über ein separates Reporting-Tool. Genau dafür steht der Begriff Embedded Analytics.
 
-## Kurz gesagt: Reporting direkt im laufenden System
+Immer wenn wir im Kurs an diese Stelle kommen, taucht dieselbe Frage auf: „Muss ich dafür nicht in ein anderes Tool oder ins BW wechseln?“ Der Aha-Moment ist jedes Mal derselbe: Die Auswertung liegt bereits da, direkt im Arbeitsablauf.
+
+## Worum es geht: Reporting direkt im laufenden System
 
 Embedded Analytics bedeutet, dass analytische Funktionen fest in SAP S/4HANA integriert sind. Du brauchst kein separates Business-Intelligence-System mehr, um Auswertungen zu erstellen. Operatives System und Analyse sind eins: Du arbeitest auf denselben Live-Daten, in Echtzeit, ohne dass Daten vorher irgendwohin kopiert werden müssen.
 
@@ -42,13 +44,13 @@ Früher hattest du zwei getrennte Systeme:
 - Das **ERP-System** für die operativen Prozesse: Bestellungen, Aufträge, Buchungen.
 - Ein eigenes **BI-System** wie SAP BW (Business Warehouse) für die Auswertungen.
 
-Zwischen beiden mussten die Daten erst wandern. Sie wurden aus dem ERP **extrahiert, transformiert und ins BW geladen** — oft über Nacht. Erst danach konntest du Reports darauf bauen. Das bedeutete: Deine Auswertung zeigte den Stand von gestern, nicht den von jetzt.
+Zwischen beiden mussten die Daten erst wandern. Sie wurden aus dem ERP extrahiert, transformiert und ins BW geladen, oft über Nacht. Erst danach konntest du Reports darauf bauen. Das bedeutete: Deine Auswertung zeigte den Stand von gestern, nicht den von jetzt.
 
-In SAP S/4HANA fällt dieser Umweg weg. **Analyse und operatives System sind dasselbe System.** Die Bestellung, die du gerade gebucht hast, taucht sofort in der passenden Auswertung auf.
+In SAP S/4HANA fällt dieser Umweg weg. Analyse und operatives System sind dasselbe System. Die Bestellung, die du gerade gebucht hast, taucht sofort in der passenden Auswertung auf.
 
 ## Warum funktioniert das? Der HANA-Faktor
 
-Möglich gemacht hat das die **SAP HANA In-Memory-Datenbank**. Der Name sagt schon das Wesentliche: Sie hält die Daten im Arbeitsspeicher (englisch *in memory*) statt hauptsächlich auf der Festplatte. Berechnungen laufen dadurch extrem schnell — auch auf großen Datenmengen und selbst dann, wenn du sie live auf den operativen Daten anstößt.
+Möglich gemacht hat das die **SAP HANA In-Memory-Datenbank**. Der Name sagt schon das Wesentliche: Sie hält die Daten im Arbeitsspeicher (englisch *in memory*) statt hauptsächlich auf der Festplatte. Berechnungen laufen dadurch extrem schnell, auch auf großen Datenmengen und selbst dann, wenn du sie live auf den operativen Daten anstößt.
 
 Praktisch bedeutet das:
 
@@ -63,7 +65,7 @@ Dieser Echtzeit-Charakter ist der Kern der Idee. Wenn irgendwo von „Auswertung
 
 Damit Auswertungen direkt auf den operativen Daten funktionieren, braucht es eine Schicht, die diese Daten für die Analyse aufbereitet. Diese Schicht heißt **CDS Views**, kurz für *Core Data Services*.
 
-Stell dir CDS Views als **Datenmodell-Schicht** vor. Sie bauen auf den klassischen Datenbank-Views auf und beschreiben, welche Daten aus welchen Tabellen für welche Auswertung zusammengeführt werden — inklusive Beziehungen, Berechnungen und aussagekräftiger Feldnamen. Sie sind damit das technische Fundament für nahezu alle analytischen Apps und Reports in S/4HANA.
+Stell dir CDS Views als **Datenmodell-Schicht** vor. Sie bauen auf den klassischen Datenbank-Views auf und beschreiben, welche Daten aus welchen Tabellen für welche Auswertung zusammengeführt werden, inklusive Beziehungen, Berechnungen und aussagekräftiger Feldnamen. Sie sind damit das technische Fundament für nahezu alle analytischen Apps und Reports in S/4HANA.
 
 Für dich als Anwender ist wichtig:
 
@@ -79,11 +81,7 @@ Das Fiori Launchpad ist die Startseite in S/4HANA — eine Sammlung von Kacheln,
 
 **Analytische Apps** sind reine Auswertungs-Apps. Sie liefern dir Listen, Kennzahlen und visuelle Aufbereitungen, ohne dass du ein separates Tool öffnen musst. Ein typisches Beispiel ist eine App, die dir auf einen Blick zeigt, welche Aufträge in welchem Zustand sind und wo es hakt.
 
-Wichtig zur Einordnung:
-
-- Analytische Apps sind **keine operativen Apps** — du buchst damit nichts, du wertest aus.
-- Sie greifen direkt auf **Live-Daten** zu, ohne Umweg über ein BI-System.
-- Sie liegen wie alle anderen Apps im **Fiori Launchpad**.
+Zur Einordnung: Analytische Apps sind keine operativen Apps, du buchst damit nichts, sondern wertest aus. Sie greifen direkt auf Live-Daten zu, ohne Umweg über ein BI-System, und liegen wie alle anderen Apps im Fiori Launchpad.
 
 ### KPI-Kacheln (dynamische Kacheln)
 
@@ -98,13 +96,13 @@ Der Wert aktualisiert sich automatisch und zeigt immer den aktuellen Stand. So e
 
 ### Übersichtsseiten und Karten
 
-Ein zentraler datengetriebener App-Typ ist die **Übersichtsseite** (Overview Page). Sie bündelt alle Informationen, die du für eine Aufgabe brauchst, auf einer einzigen Seite — passend zu deinem Aufgabengebiet oder deiner Rolle. Aufgebaut ist sie aus mehreren **Karten** (Cards), die jeweils etwas anderes zeigen:
+Ein zentraler datengetriebener App-Typ ist die **Übersichtsseite** (Overview Page). Sie bündelt alle Informationen, die du für eine Aufgabe brauchst, auf einer einzigen Seite, passend zu deinem Aufgabengebiet oder deiner Rolle. Aufgebaut ist sie aus mehreren **Karten** (Cards), die jeweils etwas anderes zeigen:
 
 - **Analysekarte** — visualisiert eine Kennzahl grafisch, etwa den gesamten Bestellwert als Diagramm.
 - **Listenkarte** — zeigt eine Liste relevanter Datensätze, etwa dringende Anforderungen.
 - **Tabellenkarte** — präsentiert tabellarische Daten mit Spalten, etwa Ausgaben nach Periode und Wert.
 
-Ergänzend gibt es die **Objektseite** (Object Page). Sie zeigt alle Details zu einem konkreten Geschäftsobjekt — etwa einer Bestellung, einem Material oder einem Kunden — auf einer Seite, gegliedert in Kopfbereich, Abschnitte und Blöcke.
+Ergänzend gibt es die **Objektseite** (Object Page). Sie zeigt alle Details zu einem konkreten Geschäftsobjekt, etwa einer Bestellung, einem Material oder einem Kunden, auf einer Seite, gegliedert in Kopfbereich, Abschnitte und Blöcke.
 
 ## Von der Kennzahl zum Detail: Drill-Down
 
@@ -120,7 +118,7 @@ Ein Beispiel für den Weg von oben nach unten:
 
 So findest du heraus, woher eine Abweichung stammt, ohne fünf verschiedene Reports zu öffnen. Aus einer einzigen Kennzahl wird eine ganze Analyse-Geschichte.
 
-Wenn du mehrere Blickwinkel gleichzeitig betrachten willst, helfen **mehrdimensionale Auswertungen** (Multidimensional Reports). Damit siehst du zum Beispiel den Umsatz nach Produkt, nach Region und nach Quartal in einer einzigen Auswertung — und kannst Filter und Sichten jederzeit ändern. Auch das läuft direkt im S/4HANA-System, in Echtzeit, ohne externe Tools.
+Wenn du mehrere Blickwinkel gleichzeitig betrachten willst, helfen **mehrdimensionale Auswertungen** (Multidimensional Reports). Damit siehst du zum Beispiel den Umsatz nach Produkt, nach Region und nach Quartal in einer einzigen Auswertung, und du kannst Filter und Sichten jederzeit ändern. Auch das läuft direkt im S/4HANA-System, in Echtzeit, ohne externe Tools.
 
 ## Wie findet man die passende Auswertung?
 
@@ -141,7 +139,7 @@ Wichtig zur Einordnung: Die SAP Analytics Cloud ist **kein Pflichtbestandteil**.
 
 ## Embedded Analytics im Vergleich zum Data Warehouse
 
-Eine häufige Verständnisfrage dreht sich um den Unterschied zwischen Embedded Analytics und einem klassischen **Data Warehouse** wie SAP BW (Business Warehouse). Beide haben ihre Berechtigung — sie lösen unterschiedliche Aufgaben.
+Genau hier passiert die häufigste Verwechslung: Embedded Analytics und ein klassisches **Data Warehouse** wie SAP BW (Business Warehouse) werden schnell in einen Topf geworfen. Beide haben ihre Berechtigung, sie lösen aber unterschiedliche Aufgaben.
 
 | Merkmal | Embedded Analytics | Data Warehouse (z. B. SAP BW) |
 | --- | --- | --- |
@@ -178,7 +176,7 @@ Wenn du verstehst, wie diese Bausteine zusammenspielen, ordnest du auch unbekann
 - **Query Browser** — App zum Durchsuchen verfügbarer Auswertungen
 - **SAP Analytics Cloud (SAC)** — optionale Cloud-Plattform für weitergehende BI-Aufgaben
 
-## Kurz zusammengefasst
+## Zum Mitnehmen
 
 Embedded Analytics ist kein technisches Buzzword, sondern ein zentrales Konzept in SAP S/4HANA: Auswertungen laufen direkt im operativen System, in Echtzeit, ohne den Umweg über ein klassisches Data Warehouse. Möglich macht das die HANA In-Memory-Datenbank zusammen mit CDS Views als Datenfundament. Im Fiori Launchpad begegnet dir das Ganze als analytische Apps, KPI-Kacheln, Übersichtsseiten und Drill-Down. Wer diese Bausteine einmal auseinanderhält, versteht schnell, warum Auswerten und Arbeiten in S/4HANA zusammengehören.
 

@@ -25,11 +25,11 @@ faq:
     a: "Usually because of a valuation-relevant posting — for example a goods receipt at a very different price, or a manual revaluation. Looking at the material document and the linked accounting document shows what happened."
 ---
 
-Every company that keeps goods in stock has to carry that inventory at a value on its balance sheet. In SAP this is handled by **material valuation** — the mechanism that decides, on every stock movement, what amount a material contributes. It ties the operational world of inventory management to financial accounting, and once you understand the basic logic you can see through a large part of what SAP is posting behind the scenes.
+"Why does one material show an S and the other a V?" The moment we open the Accounting 1 view in the material master, that question almost reflexively comes up. Behind it sits material valuation: the mechanism that decides, on every stock movement, what amount a material contributes. It ties operational inventory management to financial accounting, and once you've grasped that basic logic you also understand a large part of what SAP posts behind the scenes.
 
-## In short: the value of your stock, kept up to date automatically
+## The value of your stock, kept up to date automatically
 
-**Material valuation** determines the *value* at which a stock-managed material appears on the balance sheet. Every stock movement — goods receipt, goods issue, transfer posting — produces a **material document**. If the transaction is valuation-relevant, SAP automatically adds an **accounting document** that posts to the general ledger accounts. That way the inventory value in accounting always stays in sync with the physical stock, without anyone doing the maths by hand.
+Material valuation determines the *value* at which a stock-managed material appears on the balance sheet. Every stock movement, whether goods receipt, goods issue or transfer posting, produces a **material document**. If the transaction is valuation-relevant, SAP automatically adds an **accounting document** that posts to the general ledger accounts. That way the inventory value in accounting always stays in sync with the physical stock, without anyone doing the maths by hand.
 
 ## Material document and accounting document: two separate worlds
 
@@ -51,7 +51,7 @@ Rule of thumb: if the stock value changes at company-code level, an accounting d
 
 ### Where does the company code come from?
 
-The company code of the accounting document is **derived automatically from the plant** in which the stock movement takes place. You don't enter it — the plant determines which legal entity the posting lands in.
+The company code of the accounting document is derived automatically from the plant in which the stock movement takes place. You don't enter it — the plant determines which legal entity the posting lands in.
 
 ## Price control: standard price (S) or moving average price (V)?
 
@@ -109,7 +109,7 @@ In the accounting document the GR/IR account is cleared at the order price, the 
 - **Vendor account:** +EUR 220 (= 100 × EUR 2.20 invoice price)
 - **Price differences (income):** +EUR 20 (= difference EUR 2.40 − EUR 2.20 × 100 pieces)
 
-Because the invoice price is below the order price, this time the price difference is booked as **income**. Both directions — expense and income — are entirely normal and depend only on whether the actual price sits above or below the reference.
+Because the invoice price is below the order price, this time the price difference is booked as **income**. Both directions, expense and income, are entirely normal and depend only on whether the actual price sits above or below the reference.
 
 ## The GR/IR clearing account: the central go-between
 
@@ -117,41 +117,39 @@ The **GR/IR clearing account** (goods receipt / invoice receipt) is one of the m
 
 - On the **goods receipt**, order price × quantity is posted to it.
 - On the **invoice receipt**, the same amount is cleared again.
-- If the goods are here but the invoice isn't, the open balance shows the **goods received but not yet invoiced**.
-- If the invoice is here but the goods aren't, the balance (with the opposite sign) shows the **deliveries not yet received**.
+- If the goods are here but the invoice isn't, the open balance shows the goods received but not yet invoiced.
+- If the invoice is here but the goods aren't, the balance (with the opposite sign) shows the deliveries not yet received.
 
 The account is balance-sheet-relevant and belongs to every period-end close: it is analysed to work out which items are old and uncleared and where something is still missing. A GR/IR balance that stays open for a long time is a reliable sign of an incomplete process.
 
 ## How the order price is determined in the first place
 
-A common misconception: the purchase order does *not* propose the valuation price from the material master. Instead SAP searches for the price hierarchically, **from the specific to the general**:
+A common misconception: the purchase order does *not* propose the valuation price from the material master. Instead SAP searches for the price hierarchically, from the specific to the general. First it looks for a purchasing info record for the vendor/material combination at purchasing-organisation/plant level. If nothing turns up there, it searches one level higher at purchasing-organisation level, and only when there is no data at that level either does the price have to be entered manually.
 
-1. First it looks for a **purchasing info record** for the vendor/material combination at purchasing-organisation/plant level.
-2. If nothing is found there, it searches at purchasing-organisation level.
-3. If there is no data at that level either, the price has to be entered manually.
-
-If an info record exists, **valid conditions** take priority. If those are missing or expired, the system reads the number of the last purchasing document from the info record and proposes the price from that document.
+If an info record exists, valid conditions take priority. If those are missing or expired, the system reads the number of the last purchasing document from the info record and proposes the price from that document.
 
 If you want to look at the upstream step, [What is a purchase requisition in SAP?](/blog/en/what-is-a-purchase-requisition/) is a good starting point into the procurement flow.
 
 ## What this means for you day to day
 
-Price control and the configuration of the valuation accounts are the job of customising and accounting — not of the individual user. But you see the *effect* every day as a buyer or planner:
+Price control and the configuration of the valuation accounts are the job of customising and accounting, not of the individual user. But you see the *effect* every day as a buyer or planner:
 
-- When you **post a goods receipt**, the accounting postings run automatically — the system does the maths, you do nothing.
-- When an **invoice with a deviation** comes in, you see the price difference in the invoice document, posted to the appropriate account.
-- When a material shows an **unexpected stock value**, it's worth looking at the material document overview and the linked accounting document.
-- When a **GR/IR balance** stays open for a long time, it points to a missing invoice or delivery — a classic for the period-end close.
+- When you post a goods receipt, the accounting postings run automatically: the system does the maths, you do nothing.
+- When an invoice with a deviation comes in, you see the price difference in the invoice document, posted to the appropriate account.
+- When a material shows an unexpected stock value, it's worth looking at the material document overview and the linked accounting document.
+- When a GR/IR balance stays open for a long time, it points to a missing invoice or delivery, a classic for the period-end close.
 
 ## Common pitfalls
+
+Standard price (S) and moving average price (V) are what most easily get mixed up — and with them what price control actually does to a posting. Keeping the following points in mind avoids the most common mistakes.
 
 - **Confusing the stock account with the order price.** With the standard price, the stock account only ever moves at the standard price. Any deviation lands on the price-difference account — not in the stock value.
 - **Mistaking price differences for an error.** Expense or income from price differences is entirely normal under standard-price control. It only shows whether the actual price was above or below the standard price.
 - **Ignoring the open GR/IR balance.** A balance there almost always means a process is half finished — goods without an invoice, or an invoice without goods.
 
-## In a nutshell
+## What it comes down to
 
-Material valuation keeps the **value of your stock** correct in accounting at all times. Every valuation-relevant movement creates an accounting document alongside the material document. Whether a material runs on a fixed **standard price (S)** or a **moving average price (V)** decides how price deviations are booked — under the standard price via a price-difference account, under the moving average directly in the valuation price. The GR/IR clearing account keeps goods receipt and invoice tied together. Once you've grasped those three building blocks — valuation relevance, price control and the GR/IR account — the valuation logic across the whole SAP system falls into place.
+Material valuation keeps the value of your stock correct in accounting at all times. Every valuation-relevant movement creates an accounting document alongside the material document. Whether a material runs on a fixed **standard price (S)** or a **moving average price (V)** decides how price deviations are booked: under the standard price via a price-difference account, under the moving average directly in the valuation price. The GR/IR clearing account keeps goods receipt and invoice tied together. Once you've grasped those three building blocks, namely valuation relevance, price control and the GR/IR account, the valuation logic across the whole SAP system falls into place.
 
 ## Frequently asked questions
 
